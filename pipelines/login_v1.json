@@ -22,8 +22,7 @@
         "output": [
           {"key": "userId", "id": "1050"}
         ]
-      },
-      {
+      }, {
         "type": "auth",
         "input": [
           {"key": "userId", "id": "1050"}
@@ -31,8 +30,7 @@
         "output": [
           {"key": "success", "id": "1030"}
         ]
-      },
-      {
+      }, {
         "type": "extension",
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/checkAuthSuccess.js",
