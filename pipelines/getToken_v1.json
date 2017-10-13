@@ -1,0 +1,26 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "getTokens_v1",
+    "public": true,
+    "input": [
+      {"key": "isLoggedIn", "id": "1"}
+    ],
+    "output": [
+      {"key": "token", "id": "100"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/token/getToken.js",
+        "input": [
+          {"key": "isLoggedIn", "id": "1"}
+        ],
+        "output": [
+          {"key": "token", "id": "100"}
+        ]
+      }
+    ]
+  }
+}
