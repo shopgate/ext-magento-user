@@ -4,7 +4,7 @@
     "id": "getTokens_v1",
     "public": true,
     "input": [
-      {"key": "isLoggedIn", "id": "1"}
+      {"key": "sgxsMeta", "id": "1"}
     ],
     "output": [
       {"key": "token", "id": "100"}
@@ -15,7 +15,7 @@
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/token/getToken.js",
         "input": [
-          {"key": "isLoggedIn", "id": "1"}
+          {"key": "sgxsMeta", "id": "1"}
         ],
         "output": [
           {"key": "token", "id": "100"}

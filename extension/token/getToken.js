@@ -12,7 +12,7 @@ exports.module = function (context, input, cb) {
   const storages = context.storage
   const log = context.log
   const request = context.tracedRequest
-  const isLoggedIn = input.isLoggedIn
+  const isLoggedIn = !!input.sgxsMeta.userId
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
 
