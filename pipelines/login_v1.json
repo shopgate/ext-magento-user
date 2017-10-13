@@ -1,0 +1,66 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "login_v1",
+    "public": true,
+    "input": [
+      {"key": "strategy", "id": "1010"},
+      {"key": "parameters", "id": "1020"}
+    ],
+    "output": [
+      {"key": "success", "id": "1030"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/login.js",
+        "input": [
+          {"key": "strategy", "id": "1010"},
+          {"key": "parameters", "id": "1020"}
+        ],
+        "output": [
+          {"key": "userId", "id": "1050"}
+        ]
+      }, {
+        "type": "auth",
+        "input": [
+          {"key": "userId", "id": "1050"}
+        ],
+        "output": [
+          {"key": "success", "id": "1030"}
+        ]
+      }, {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/checkAuthSuccess.js",
+        "input": [
+          {"key": "authSuccess", "id": "1030"},
+          {"key": "authType", "id": "1010"}
+        ],
+        "output": []
+      }, {
+        "type": "staticValue",
+        "input": [],
+        "values": [
+          {
+            "key": "deletions",
+            "value": [
+              {"storage": "device", "key": "tokens"},
+              {"storage": "device", "key": "cartId"}
+            ]
+          }
+        ],
+        "output": [{"key": "deletions", "id": "1060"}]
+      }, {
+        "type": "pipeline",
+        "id": "clearStorageKeys_v1",
+        "trusted": false,
+        "input": [
+          {"key": "deletions", "id": "1060"}
+        ],
+        "output": []
+      }
+    ]
+  }
+}
