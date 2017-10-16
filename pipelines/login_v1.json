@@ -46,8 +46,8 @@
           {
             "key": "deletions",
             "value": [
-              {"storage": "device", "key": "tokens"},
-              {"storage": "device", "key": "cartId"}
+              {"storage": "device", "key": "cartId"},
+              {"storage": "user", "key": "cartId"}
             ]
           }
         ],
