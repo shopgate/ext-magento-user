@@ -1,11 +1,9 @@
 {
   "version": "1",
   "pipeline": {
-    "id": "getTokens_v1",
+    "id": "getToken_v1",
     "public": true,
-    "input": [
-      {"key": "sgxsMeta", "id": "1"}
-    ],
+    "input": [],
     "output": [
       {"key": "token", "id": "100"}
     ],
@@ -14,9 +12,7 @@
         "type": "extension",
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/token/getToken.js",
-        "input": [
-          {"key": "sgxsMeta", "id": "1"}
-        ],
+        "input": [],
         "output": [
           {"key": "token", "id": "100"}
         ]

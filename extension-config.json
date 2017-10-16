@@ -5,6 +5,7 @@
     "steps": "./extension/",
     "pipelines": "./pipelines/"
   },
+  "trusted": true,
   "steps": [],
   "configuration": {
     "magentoUrl" : {

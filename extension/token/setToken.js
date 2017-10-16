@@ -1,11 +1,5 @@
 const TokenHandler = require('../helpers/tokenHandler')
 
-/**
- *
- * @param {object} context
- * @param {object} input
- * @param {function} cb
- */
 module.exports = function (context, input, cb) {
   const clientCredentials = context.config.credentials
   const authUrl = context.config.magentoUrl + '/auth/token'
@@ -13,12 +7,13 @@ module.exports = function (context, input, cb) {
   const log = context.log
   const request = context.tracedRequest
 
-  const isLoggedIn = !!context.meta.userId
+  const response = input.magentoTokenResponse
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
 
-  th.getToken(isLoggedIn, (err, token) => {
+  log.debug(`setting tokens ${response.tokens}`)
+  th.setTokenInStorage('user', 'token', response.tokens, response.lifeSpan, (err) => {
     if (err) return cb(err)
-    cb(null, {token})
+    return cb(null, {})
   })
 }

@@ -18,13 +18,17 @@ class TokenHandler {
    */
   getToken (isLoggedIn, cb) {
     if (isLoggedIn) {
+      this.log.debug('trying to get token for user')
       return this._getUserToken((err, token) => {
         if (err) return cb(err)
+        cb(null, token)
       })
     }
 
+    this.log.debug('trying to get token for guest')
     this._getGuestToken((err, token) => {
       if (err) return cb(err)
+      cb(null, token)
     })
   }
 
@@ -33,26 +37,28 @@ class TokenHandler {
    * @param {function} cb
    */
   _getGuestToken (cb) {
-    this._getTokensFromStorage(this.storages.device, TOKEN_KEY, (err, tokens) => {
+    this._getTokensFromStorage('device', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // If not in device storage || access expired
       if (!tokens || !tokens.accessToken) {
         // get token from magento by client credentials
         const options = {
           url: this.authUrl,
-          json: { grant_type: 'client_credentials' },
-          headers: { 'Authorization': `Basic ${Buffer.from(`${this.credentials.id}:${this.credentials.secret}`).toString('base64')}` }
+          json: { 'grant_type': 'client_credentials' },
+          headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` }
         }
 
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) return cb(err)
           // write to device storage
-          this.setTokenInStorage(this.storages.device, TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
+          this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             return cb(null, response.tokens.accessToken)
           })
         })
       }
+
+      cb(null, tokens.accessToken)
     })
   }
 
@@ -61,7 +67,7 @@ class TokenHandler {
    * @param {function} cb
    */
   _getUserToken (cb) {
-    this._getTokensFromStorage(this.storages.user, TOKEN_KEY, (err, tokens) => {
+    this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // user not logged in
       else if (!tokens) return cb(new Error('user is not logged in'))
@@ -70,24 +76,25 @@ class TokenHandler {
         // use refresh token for new token
         const options = {
           url: this.authUrl,
-          headers: { 'Authorization': `Basic ${Buffer.from(`${this.credentials.id}:${this.credentials.secret}`).toString('base64')}` },
-          form: {
-            'grand_type': 'refresh_token',
+          headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` },
+          json: {
+            'grant_type': 'refresh_token',
             'refresh_token': tokens.refreshToken
-          },
-          json: true
+          }
         }
 
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) return cb(err)
           // write to user storage
-          this.setTokenInStorage(this.storages.user, TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
+          this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token
             return cb(null, response.tokens.accessToken)
           })
         })
       }
+
+      cb(null, tokens.accessToken)
     })
   }
 
@@ -101,23 +108,17 @@ class TokenHandler {
     // get token from magento
     const options = {
       url: this.authUrl,
-      headers: { 'Authorization': `Basic ${Buffer.from(`${this.credentials.id}:${this.credentials.secret}`).toString('base64')}` },
-      form: {
-        'grand_type': 'password',
+      headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` },
+      json: {
+        'grant_type': 'password',
         'username': username,
         'password': password
-      },
-      json: true
+      }
     }
 
     this._getTokensFromMagento(options, (err, response) => {
       if (err) return cb(err)
-      // write to user storage
-      this.setTokenInStorage(this.storages.user, TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
-        if (err) return cb(err)
-        // return token
-        return cb(null, response.tokens.accessToken)
-      })
+      cb(null, response)
     })
   }
 
@@ -126,7 +127,7 @@ class TokenHandler {
    * @param {function} cb
    */
   logout (cb) {
-    this.storages.user.delete(TOKEN_KEY, (err) => {
+    this.storages.user.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
       cb(null)
     })
@@ -134,7 +135,7 @@ class TokenHandler {
 
   /**
    *
-   * @param {object} storage
+   * @param {string} storage
    * @param {string} key
    * @param {function} cb
    */
@@ -154,7 +155,7 @@ class TokenHandler {
 
   /**
    *
-   * @param {object} storage
+   * @param {string} storage
    * @param {string} key
    * @param {object} tokens
    * @param {integer} lifeSpan
@@ -205,7 +206,7 @@ class TokenHandler {
    * @param {function} cb
    */
   deleteGuestTokens (cb) {
-    this.storages.device.delete(TOKEN_KEY, (err) => {
+    this.storages.device.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
       cb(null)
     })

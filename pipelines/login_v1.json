@@ -20,7 +20,8 @@
           {"key": "parameters", "id": "1020"}
         ],
         "output": [
-          {"key": "userId", "id": "1050"}
+          {"key": "userId", "id": "1050"},
+          {"key": "magentoTokenResponse", "id": "1070"}
         ]
       }, {
         "type": "auth",
@@ -37,6 +38,14 @@
         "input": [
           {"key": "authSuccess", "id": "1030"},
           {"key": "authType", "id": "1010"}
+        ],
+        "output": []
+      }, {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/token/setToken.js",
+        "input": [
+          {"key": "magentoTokenResponse", "id": "1070"}
         ],
         "output": []
       }, {
