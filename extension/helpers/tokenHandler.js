@@ -68,7 +68,15 @@ class TokenHandler {
       // if expired
       else if (!tokens.accessToken && tokens.refreshToken) {
         // use refresh token for new token
-        const options = {} // TODO: build options for refresh token request
+        const options = {
+          url: this.authUrl,
+          headers: { 'Authorization': `Basic ${Buffer.from(`${this.credentials.id}:${this.credentials.secret}`).toString('base64')}` },
+          form: {
+            'grand_type': 'refresh_token',
+            'refresh_token': tokens.refreshToken
+          },
+          json: true
+        }
 
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) return cb(err)
@@ -85,12 +93,22 @@ class TokenHandler {
 
   /**
    *
-   * @param {object} userCredentials
+   * @param {string} username
+   * @param {string} password
    * @param {function} cb
    */
-  login (userCredentials, cb) {
+  login (username, password, cb) {
     // get token from magento
-    const options = {} // TODO: build options for user credential request
+    const options = {
+      url: this.authUrl,
+      headers: { 'Authorization': `Basic ${Buffer.from(`${this.credentials.id}:${this.credentials.secret}`).toString('base64')}` },
+      form: {
+        'grand_type': 'password',
+        'username': username,
+        'password': password
+      },
+      json: true
+    }
 
     this._getTokensFromMagento(options, (err, response) => {
       if (err) return cb(err)
@@ -108,7 +126,7 @@ class TokenHandler {
    * @param {function} cb
    */
   logout (cb) {
-    this.storages.user.delete('TOKEN_KEY', (err) => {
+    this.storages.user.delete(TOKEN_KEY, (err) => {
       if (err) return cb(err)
       cb(null)
     })
@@ -179,6 +197,17 @@ class TokenHandler {
       }
 
       cb(null, tokenData)
+    })
+  }
+
+  /**
+   *
+   * @param {function} cb
+   */
+  deleteGuestTokens (cb) {
+    this.storages.device.delete(TOKEN_KEY, (err) => {
+      if (err) return cb(err)
+      cb(null)
     })
   }
 }
