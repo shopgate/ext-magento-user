@@ -26,6 +26,16 @@ describe('setToken', () => {
     meta: {}
   }
 
+  const input = {
+    magentoTokenResponse: {
+      tokens: {
+        accessToken: 'a1',
+        refreshToken: 'r1'
+      },
+      expires: (new Date()).getTime()
+    }
+  }
+
   beforeEach(() => {
     request = {
       post: () => {}
@@ -34,6 +44,20 @@ describe('setToken', () => {
   })
 
   it('should set the token', (done) => {
-    done()
+    context.storage.user.set = (key, value, cb) => { cb(null) }
+
+    step(context, input, (err) => {
+      assert.ifError(err)
+      done()
+    })
+  })
+
+  it('should return an error', (done) => {
+    context.storage.user.set = (key, value, cb) => { cb(new Error('error')) }
+
+    step(context, input, (err) => {
+      assert.equal(err.message, 'error')
+      done()
+    })
   })
 })
