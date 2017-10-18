@@ -36,8 +36,7 @@
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/helpers/checkAuthSuccess.js",
         "input": [
-          {"key": "authSuccess", "id": "1030"},
-          {"key": "authType", "id": "1010"}
+          {"key": "authSuccess", "id": "1030"}
         ],
         "output": []
       }, {
