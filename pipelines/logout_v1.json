@@ -1,0 +1,47 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "login_v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "success", "id": "100"}
+    ],
+    "steps": [
+      {
+        "type": "staticValue",
+        "input": [],
+        "values": [
+          {"key": "userId", "value": false}
+        ],
+        "output": [
+          {"key": "userId", "id": "1"}
+        ]
+      }, {
+        "type": "auth",
+        "input": [
+          {"key": "userId", "id": "1"}
+        ],
+        "output": [
+          {"key": "success", "id": "10"}
+        ]
+      }, {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/helpers/checkAuthSuccess.js",
+        "input": [
+          {"key": "authSuccess", "id": "10"}
+        ],
+        "output": []
+      }, {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/logout.js",
+        "input": [],
+        "output": [
+          {"key": "success", "id": "100"}
+        ]
+      }
+    ]
+  }
+}

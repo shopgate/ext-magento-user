@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "getToken_v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "token", "id": "100"}
+    ],
+    "steps": [
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/token/getToken.js",
+        "input": [],
+        "output": [
+          {"key": "token", "id": "100"}
+        ]
+      }
+    ]
+  }
+}
