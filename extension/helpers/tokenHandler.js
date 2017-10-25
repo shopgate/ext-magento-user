@@ -84,7 +84,10 @@ class TokenHandler {
         }
 
         return this._getTokensFromMagento(options, (err, response) => {
-          if (err) return cb(err)
+          if (err) {
+            this.log.error(err)
+            return this.logout((intErr) => cb(intErr || err))
+          }
           // write to user storage
           this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
@@ -183,17 +186,12 @@ class TokenHandler {
       if (err) return cb(err)
       if (res.statusCode !== 200) return cb(new Error(`Got ${res.statusCode} from magento: ${JSON.stringify(body)}`))
 
-      if (!(Array.isArray(body.success) && body.success.length === 1 && body.success[0].access_token)) {
-        cb(new Error(`received invalid response from magento: ${JSON.stringify(body)}`))
-      }
-
       const tokenData = {
-        // TODO: structure is hopefully subject to change!
-        lifeSpan: body.success[0].expires_in,
+        lifeSpan: body.expires_in,
         tokens: {
-          accessToken: body.success[0].access_token,
+          accessToken: body.access_token,
           // this is null in case of an guest token req
-          refreshToken: body.success[0].refresh_token
+          refreshToken: body.refresh_token
         }
       }
 

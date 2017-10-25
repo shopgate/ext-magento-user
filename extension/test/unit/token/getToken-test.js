@@ -19,11 +19,13 @@ describe('getToken', () => {
       },
       user: {
         get: null,
-        set: null
+        set: null,
+        del: null
       }
     },
     log: {
-      debug: (msg) => {}
+      debug: (msg) => {},
+      error: (msg) => {}
     },
     tracedRequest: () => {
       return request
@@ -39,6 +41,7 @@ describe('getToken', () => {
     context.storage.device.set = () => {}
     context.storage.user.get = () => {}
     context.storage.user.set = () => {}
+    context.storage.user.del = () => {}
   })
 
   describe('guest token', () => {
@@ -63,12 +66,8 @@ describe('getToken', () => {
       context.storage.device.get = (key, cb) => { cb(null, null) }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a1'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a1'
       }
 
       request.post = (options, cb) => { cb(null, {statusCode: 200}, magentoResponse) }
@@ -101,12 +100,8 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2'
       }
 
       request.post = (options, cb) => { cb(null, {statusCode: 200}, magentoResponse) }
@@ -194,13 +189,9 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2',
-            'refresh_token': 'r2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2',
+        'refresh_token': 'r2'
       }
 
       request.post = (options, cb) => { cb(null, {statusCode: 200}, magentoResponse) }
@@ -248,6 +239,10 @@ describe('getToken', () => {
         })
       }
 
+      context.storage.user.del = (key, cb) => {
+        cb(null)
+      }
+
       request.post = (options, cb) => { cb(null, {statusCode: 456}, {foo: 'bar'}) }
 
       step(context, null, (err, result) => {
@@ -255,6 +250,7 @@ describe('getToken', () => {
         done()
       })
     })
+
     it('should return an error because set token failed', (done) => {
       context.meta.userId = 'u1'
 
