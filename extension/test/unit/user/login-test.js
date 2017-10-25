@@ -49,20 +49,16 @@ describe('login', () => {
 
   it('should login to magento', (done) => {
     const magentoResponse = {
-      success: [
-        {
-          'expires_in': 3600,
-          'access_token': 'a1',
-          'refresh_token': 'r1'
-        }
-      ]
+      'expires_in': 3600,
+      'access_token': 'a1',
+      'refresh_token': 'r1'
     }
 
     const magentoTokenResponse = {
-      lifeSpan: magentoResponse.success[0].expires_in,
+      lifeSpan: magentoResponse.expires_in,
       tokens: {
-        accessToken: magentoResponse.success[0]['access_token'],
-        refreshToken: magentoResponse.success[0]['refresh_token']
+        accessToken: magentoResponse['access_token'],
+        refreshToken: magentoResponse['refresh_token']
       }
     }
 

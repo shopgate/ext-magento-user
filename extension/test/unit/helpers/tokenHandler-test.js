@@ -56,14 +56,5 @@ describe('Tokenhandler', () => {
         done()
       })
     })
-
-    it('should return an error because of invalid response from magento', (done) => {
-      request.post = (options, cb) => { cb(null, {statusCode: 200}, {}) }
-
-      th._getTokensFromMagento(null, (err) => {
-        assert.equal(err.message, 'received invalid response from magento: {}')
-        done()
-      })
-    })
   })
 })
