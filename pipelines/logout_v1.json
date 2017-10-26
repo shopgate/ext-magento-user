@@ -5,17 +5,25 @@
     "public": true,
     "input": [],
     "output": [
-      {"key": "success", "id": "100"}
+      {"key": "success", "id": "1000"}
     ],
     "steps": [
       {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/logout.js",
+        "input": [],
+        "output": []
+      }, {
         "type": "staticValue",
         "input": [],
         "values": [
-          {"key": "userId", "value": false}
+          {"key": "userId", "value": false},
+          {"key": "success", "value": true}
         ],
         "output": [
-          {"key": "userId", "id": "1"}
+          {"key": "userId", "id": "1"},
+          {"key": "success", "id": "1000"}
         ]
       }, {
         "type": "auth",
@@ -33,14 +41,6 @@
           {"key": "authSuccess", "id": "10"}
         ],
         "output": []
-      }, {
-        "type": "extension",
-        "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/logout.js",
-        "input": [],
-        "output": [
-          {"key": "success", "id": "100"}
-        ]
       }
     ]
   }
