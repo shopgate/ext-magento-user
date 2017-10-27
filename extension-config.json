@@ -8,6 +8,13 @@
   "trusted": true,
   "steps": [],
   "configuration": {
+    "registrationUrl": {
+      "type" : "static",
+      "destination" : "backend",
+      "params" : {
+        "value" : "https://team-pirate-sg-cloud.shopgatedev.com/shopping_carts/Magento/1.9.2.1/59c24b36620d4/index.php/customer/account/create/"
+      }
+    },
     "magentoUrl" : {
       "type" : "static",
       "destination" : "backend",
