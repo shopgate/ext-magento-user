@@ -12,5 +12,7 @@ module.exports = function (context, input, cb) {
       lastName: 'Zull'
     })
   }
-  cb(new Error('user is not logged in (getUser)'))
+
+  const mockedError = {code: 'EACCESS', message: 'user is not logged in (getUser)'}
+  cb(mockedError)
 }
