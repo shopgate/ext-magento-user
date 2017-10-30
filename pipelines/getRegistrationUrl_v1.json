@@ -3,6 +3,7 @@
   "pipeline": {
     "id": "getRegistrationUrl_v1",
     "public": true,
+    "input": [],
     "output": [
       {"key": "url", "id": "1010"}
     ],
@@ -11,6 +12,7 @@
         "type": "extension",
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/getRegistrationUrl.js",
+        "input": [],
         "output": [
           {"key": "url", "id": "1010"}
         ]
