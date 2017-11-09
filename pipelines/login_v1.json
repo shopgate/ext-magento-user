@@ -56,24 +56,10 @@
         ],
         "output": []
       }, {
-        "type": "staticValue",
-        "input": [],
-        "values": [
-          {
-            "key": "deletions",
-            "value": [
-              {"storage": "device", "key": "cartId"}
-            ]
-          }
-        ],
-        "output": [{"key": "deletions", "id": "1060"}]
-      }, {
         "type": "pipeline",
-        "id": "clearStorageKeys_v1",
+        "id": "deleteCartId_v1",
         "trusted": false,
-        "input": [
-          {"key": "deletions", "id": "1060"}
-        ],
+        "input": [],
         "output": []
       }, {
         "type": "extension",
