@@ -12,6 +12,14 @@
     ],
     "steps": [
       {
+        "type": "pipeline",
+        "id": "getCartId_int_v1",
+        "trusted": false,
+        "input": [],
+        "output": [
+          {"key": "cartId", "id": "1"}
+        ]
+      }, {
         "type": "extension",
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/login.js",
@@ -48,23 +56,26 @@
         ],
         "output": []
       }, {
-        "type": "staticValue",
+        "type": "pipeline",
+        "id": "deleteCartId_v1",
+        "trusted": false,
         "input": [],
-        "values": [
-          {
-            "key": "deletions",
-            "value": [
-              {"storage": "device", "key": "cartId"}
-            ]
-          }
-        ],
-        "output": [{"key": "deletions", "id": "1060"}]
+        "output": []
+      }, {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/token/getToken.js",
+        "input": [],
+        "output": [
+          {"key": "token", "id": "2"}
+        ]
       }, {
         "type": "pipeline",
-        "id": "clearStorageKeys_v1",
+        "id": "setCartCustomer_int_v1",
         "trusted": false,
         "input": [
-          {"key": "deletions", "id": "1060"}
+          {"key": "cartId", "id": "1"},
+          {"key": "token", "id": "2"}
         ],
         "output": []
       }
