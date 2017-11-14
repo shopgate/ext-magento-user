@@ -1,4 +1,5 @@
 const TokenHandler = require('../helpers/tokenHandler')
+const InvalidCredentialsError = require('../models/Errors/InvalidCredentialsError')
 
 /**
  * @param {object} context
@@ -20,7 +21,10 @@ module.exports = function (context, input, cb) {
   // TODO: clarify if that is correct
   if (strategy !== 'basic') cb(new Error('invalid login strategy'))
   login(th, userCredentials, (err, magentoTokenResponse) => {
-    if (err) return cb(err)
+    if (err) {
+      return cb(new InvalidCredentialsError('Invalid credentials were entered.'))
+    }
+
     // delete token from device storage if it exists
     // TODO: initiate cart merging here by passing sth. to the next step
     th.deleteGuestTokens((err) => {
