@@ -22,9 +22,9 @@ module.exports = function (context, input, cb) {
   if (strategy !== 'basic') cb(new Error('invalid login strategy'))
   login(th, userCredentials, (err, magentoTokenResponse) => {
     if (err) {
-      let invalidCredentialsError = new InvalidCredentialsError('Invalid credentials were entered.')
-      return cb(invalidCredentialsError)
+      return cb(new InvalidCredentialsError('Invalid credentials were entered.'))
     }
+
     // delete token from device storage if it exists
     // TODO: initiate cart merging here by passing sth. to the next step
     th.deleteGuestTokens((err) => {
