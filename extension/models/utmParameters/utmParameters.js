@@ -1,18 +1,29 @@
 /**
  * Creates specific UTM-Parameters to be added to an URL.
- * As Magento uses not URL-Query-Parameters, but Router-Parameters, the format of these are fitting for the
- * Magento-Routing.
  *
  * @example /utm_source/yourSource/utm_medium/yourMedium
  */
 class UtmParameters {
 
-  constructor () {
-    this._source = null
-    this._medium = null
-    this._campaign = null
-    this._term = null
-    this._content = null
+  /**
+   * Can be used with setter/getter or with the config-source where those parameters are defined
+   * @param configSource
+   */
+  constructor (configSource = null) {
+
+    if (!configSource) {
+      this._source    = null
+      this._medium    = null
+      this._campaign  = null
+      this._term      = null
+      this._content   = null
+    } else {
+      this._source    = configSource.utm_source
+      this._medium    = configSource.utm_medium
+      this._campaign  = configSource.utm_campaign
+      this._term      = configSource.utm_term
+      this._content   = configSource.utm_content
+    }
   }
 
   get source () {
@@ -57,6 +68,9 @@ class UtmParameters {
 
   /**
    * Concats all parameters to URL-Query, which can be added to an URL
+   * As Magento uses not URL-Query-Parameters, but Router-Parameters, the format of these are fitting for the
+   * Magento-Routing.
+   * @TODO Create another function which can be used to create Query-Parameters like ?utm_source=abc&utm_medium=def...
    * @returns {string}
    */
   getQueryParameters() {
