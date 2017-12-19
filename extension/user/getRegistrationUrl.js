@@ -11,6 +11,6 @@ const UtmParameters = require ('../models/utmParameters/utmParameters')
  */
 module.exports = function (context, input, cb) {
 
-  const RegistrationUrlUtmParameters = new UtmParameters(context.config.utmParameters.registrationUrl)
+  const RegistrationUrlUtmParameters = new UtmParameters(context.config.utmParameters)
   cb(null, {url: context.config.registrationUrl + RegistrationUrlUtmParameters.getQueryParameters()})
 }
