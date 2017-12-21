@@ -103,20 +103,33 @@ class TokenHandler {
 
   /**
    *
-   * @param {string} username
-   * @param {string} password
+   * @param {object} userCredentials
+   * @param {string} strategy
    * @param {function} cb
    */
-  login (username, password, cb) {
+  login (userCredentials, strategy, cb) {
     // get token from magento
+    let jsonData = {}
+    switch (strategy) {
+      case 'basic' :
+        jsonData = {
+          'grant_type': 'password',
+          'username': userCredentials.login,
+          'password': userCredentials.password
+        }
+        break
+      case 'auth_code' :
+        jsonData = {
+          'grant_type': 'authorization_code',
+          'code': userCredentials.code
+        }
+        break
+    }
+
     const options = {
       url: this.authUrl,
       headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` },
-      json: {
-        'grant_type': 'password',
-        'username': username,
-        'password': password
-      }
+      json: jsonData
     }
 
     this._getTokensFromMagento(options, (err, response) => {
