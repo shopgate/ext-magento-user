@@ -14,13 +14,16 @@ module.exports = function (context, input, cb) {
   const request = context.tracedRequest
 
   const strategy = input.strategy
-  const userCredentials = input.parameters // should contain params 'login' and 'password'
+  const userCredentials = input.parameters // should contain params ('login' and 'password') or 'code'
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
 
   // TODO: clarify if that is correct
-  if (strategy !== 'basic') cb(new Error('invalid login strategy'))
-  login(th, userCredentials, (err, magentoTokenResponse) => {
+  if (!_isValidStrategy(strategy)) {
+    return cb(new Error('invalid login strategy'))
+  }
+
+  login(th, userCredentials, strategy, (err, magentoTokenResponse) => {
     if (err) {
       return cb(new InvalidCredentialsError('Invalid credentials were entered.'))
     }
@@ -29,7 +32,7 @@ module.exports = function (context, input, cb) {
     // TODO: initiate cart merging here by passing sth. to the next step
     th.deleteGuestTokens((err) => {
       if (err) return cb(err)
-      cb(null, {userId: userCredentials.login, magentoTokenResponse})
+      cb(null, {userId: _getUserId(strategy, userCredentials), magentoTokenResponse})
     })
   })
 }
@@ -38,11 +41,43 @@ module.exports = function (context, input, cb) {
  *
  * @param {object} tokenHandler
  * @param {object} userCredentials
+ * @param {string} strategy
  * @param {function} cb
  */
-function login (tokenHandler, userCredentials, cb) {
-  tokenHandler.login(userCredentials.login, userCredentials.password, (err, magentoTokenResponse) => {
+function login (tokenHandler, userCredentials, strategy, cb) {
+  tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
     if (err) return cb(err)
     cb(null, magentoTokenResponse)
   })
+}
+
+/**
+ *
+ * @param string strategy
+ * @return {boolean}
+ * @private
+ */
+function _isValidStrategy (strategy) {
+  const strategies = [
+    'basic',
+    'auth_code'
+  ]
+
+  return strategies.indexOf(strategy) > -1
+}
+
+/**
+ *
+ * @param {string} strategy
+ * @param {object} userCredentials
+ * @return {*}
+ * @private
+ */
+function _getUserId (strategy, userCredentials) {
+  switch (strategy) {
+    case 'auth_code' :
+      return userCredentials.code
+    default :
+      return userCredentials.login
+  }
 }
