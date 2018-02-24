@@ -1,3 +1,5 @@
+const UnauthorizedError = require('../models/Errors/UnauthorizedError')
+
 /**
  * @param {object} context
  * @param {object} input
@@ -12,7 +14,5 @@ module.exports = function (context, input, cb) {
       lastName: ''
     })
   }
-
-  const mockedError = {code: 'EACCESS', message: 'user is not logged in (getUser)'}
-  cb(mockedError)
+  cb(new UnauthorizedError())
 }
