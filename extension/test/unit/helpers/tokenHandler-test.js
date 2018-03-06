@@ -1,9 +1,14 @@
 const assert = require('assert')
-const TokenHandler = require('../../../helpers/tokenHandler')
+const rewire = require('rewire')
+const TokenHandler = rewire('../../../helpers/tokenHandler')
 
 // NOTE: All the other tests are implicitly done in getToken-test.js and setToken-test.js
 
 describe('Tokenhandler', () => {
+  const credentials = {
+    id: null,
+    secret: null
+  }
   const storages = {
     user: {
       del: null
@@ -11,11 +16,19 @@ describe('Tokenhandler', () => {
   }
 
   const log = {
-    debug: () => {}
+    debug: () => {
+    },
+    error: () => {
+    }
   }
 
   const request = {
-    post: null
+    defaults: () => {
+      return {
+        post: () => {
+        }
+      }
+    }
   }
 
   const tracedRequest = () => {
@@ -23,12 +36,12 @@ describe('Tokenhandler', () => {
   }
 
   beforeEach(() => {
-    request.post = () => {}
-    storages.user.del = (key, cb) => { cb(null) }
+    storages.user.del = (key, cb) => {
+      cb(null)
+    }
   })
 
-  const th = new TokenHandler(null, 'http://some.url', storages, log, tracedRequest)
-
+  const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
   describe('logout', () => {
     it('should logout the user by deleting the tokens', (done) => {
       th.logout((err) => {
@@ -38,7 +51,9 @@ describe('Tokenhandler', () => {
     })
 
     it('should return an error because deleting the tokens failed', (done) => {
-      storages.user.del = (key, cb) => { cb(new Error('error')) }
+      storages.user.del = (key, cb) => {
+        cb(new Error('error'))
+      }
 
       th.logout((err) => {
         assert.equal(err.message, 'error')
@@ -49,10 +64,25 @@ describe('Tokenhandler', () => {
 
   describe('_getTokensFromMagento', () => {
     it('should return an error because deleting the tokens failed', (done) => {
-      request.post = (options, cb) => { cb(new Error('error')) }
+      th.request.post = (options, cb) => {
+        cb(new Error('error'))
+      }
 
+      // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(null, (err) => {
         assert.equal(err.message, 'error')
+        done()
+      })
+    })
+    it('should return a magento endpoint error because the endpoint returned a bad result', (done) => {
+      th.request.post = (options, cb) => {
+        cb(null, {statusCode: 500}, {error: 'error'})
+      }
+
+      // noinspection JSAccessibilityCheck
+      th._getTokensFromMagento(null, (err) => {
+        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.code, 'EINTERNAL')
         done()
       })
     })

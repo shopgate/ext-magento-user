@@ -1,20 +1,37 @@
-const Buffer = require('buffer').Buffer
 const util = require('util')
-
+const MagentoError = require('../models/Errors/MagentoEndpointError')
+const InvalidCallError = require('../models/Errors/InvalidCallError')
 const TOKEN_KEY = 'token'
 
+/**
+ * @class
+ * @classdesc Handles all token related operations
+ */
 class TokenHandler {
+  /**
+   * @param {StepContextCredentials} clientCredentials
+   * @param {string} authUrl
+   * @param {StepStorage[]} storages
+   * @param {Logger} log
+   * @param {Request} request
+   */
   constructor (clientCredentials, authUrl, storages, log, request) {
-    this.clientCredentials = clientCredentials
-    this.authUrl = authUrl
     this.log = log
     this.storages = storages
-    this.request = request
+    this.request = request().defaults(
+      {
+        url: authUrl,
+        auth: {
+          username: clientCredentials.id,
+          password: clientCredentials.secret
+        }
+      }
+    )
   }
 
   /**
    * @param {boolean} isLoggedIn
-   * @param {function} cb
+   * @param {StepCallback} cb
    */
   getToken (isLoggedIn, cb) {
     if (isLoggedIn) {
@@ -33,8 +50,8 @@ class TokenHandler {
   }
 
   /**
-   *
-   * @param {function} cb
+   * @private
+   * @param {StepCallback} cb
    */
   _getGuestToken (cb) {
     this._getTokensFromStorage('device', TOKEN_KEY, (err, tokens) => {
@@ -43,9 +60,7 @@ class TokenHandler {
       if (!tokens || !tokens.accessToken) {
         // get token from magento by client credentials
         const options = {
-          url: this.authUrl,
-          json: { 'grant_type': 'client_credentials' },
-          headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` }
+          json: {'grant_type': 'client_credentials'}
         }
 
         return this._getTokensFromMagento(options, (err, response) => {
@@ -63,20 +78,20 @@ class TokenHandler {
   }
 
   /**
-   *
-   * @param {function} cb
+   * @private
+   * @param {StepCallback} cb
+   * @param {?Error} cb.err
+   * @param {?{accessToken: string}} cb.accessToken
    */
   _getUserToken (cb) {
     this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // user not logged in
-      else if (!tokens) return cb(new Error('user is not logged in'))
+      else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
       // if expired
       else if (!tokens.accessToken && tokens.refreshToken) {
         // use refresh token for new token
         const options = {
-          url: this.authUrl,
-          headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` },
           json: {
             'grant_type': 'refresh_token',
             'refresh_token': tokens.refreshToken
@@ -102,10 +117,12 @@ class TokenHandler {
   }
 
   /**
-   *
-   * @param {object} userCredentials
+   * @param {UserLoginInputParameters} userCredentials
    * @param {string} strategy
-   * @param {function} cb
+   *
+   * @param {StepCallback} cb
+   * @param {?Error} cb.err
+   * @Param {?SgTokenData} cb.response
    */
   login (userCredentials, strategy, cb) {
     // get token from magento
@@ -127,8 +144,6 @@ class TokenHandler {
     }
 
     const options = {
-      url: this.authUrl,
-      headers: { 'Authorization': `Basic ${Buffer.from(`${this.clientCredentials.id}:${this.clientCredentials.secret}`).toString('base64')}` },
       json: jsonData
     }
 
@@ -139,7 +154,6 @@ class TokenHandler {
   }
 
   /**
-   *
    * @param {function} cb
    */
   logout (cb) {
@@ -150,10 +164,10 @@ class TokenHandler {
   }
 
   /**
-   *
+   * @private
    * @param {string} storage
    * @param {string} key
-   * @param {function} cb
+   * @param {StepCallback} cb
    */
   _getTokensFromStorage (storage, key, cb) {
     this.storages[storage].get(key, (err, tokenData) => {
@@ -170,12 +184,11 @@ class TokenHandler {
   }
 
   /**
-   *
    * @param {string} storage
    * @param {string} key
-   * @param {object} tokens
-   * @param {integer} lifeSpan
-   * @param {function} cb
+   * @param {Object} tokens
+   * @param {number} lifeSpan
+   * @param {StepCallback} cb
    */
   setTokenInStorage (storage, key, tokens, lifeSpan, cb) {
     const tokenData = {
@@ -184,20 +197,36 @@ class TokenHandler {
     }
     this.storages[storage].set(key, tokenData, (err) => {
       if (err) return cb(err)
-      cb(null)
+      cb()
     })
   }
 
   /**
-   *
-   * @param {object} options
-   * @param {function} cb
+   * @typedef {Object} SgTokenData
+   * @property {string} lifeSpan
+   * @property {SgTokenDataToken} tokens
+   */
+
+  /**
+   * @typedef {Object} SgTokenDataToken
+   * @property {string} accessToken
+   * @property {string} refreshToken
+   */
+  /**
+   * @private
+   * @param {Object} options
+   * @param {StepCallback} cb
+   * @param {?Error} cb.err
+   * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
     this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
-    this.request('Magento:tokens').post(options, (err, res, body) => {
+    this.request.post(options, (err, res, body) => {
       if (err) return cb(err)
-      if (res.statusCode !== 200) return cb(new Error(`Got ${res.statusCode} from magento: ${JSON.stringify(body)}`))
+      if (res.statusCode !== 200) {
+        this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(body)}`)
+        return cb(new MagentoError())
+      }
 
       const tokenData = {
         lifeSpan: body.expires_in,
@@ -213,13 +242,14 @@ class TokenHandler {
   }
 
   /**
-   *
-   * @param {function} cb
+   * @param {StepCallback} cb
+   * @param {?Error} cb.err
+   * @param {?Object} cb.result
    */
   deleteGuestTokens (cb) {
     this.storages.device.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
-      cb(null)
+      cb()
     })
   }
 }

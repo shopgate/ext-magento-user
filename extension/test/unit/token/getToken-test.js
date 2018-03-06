@@ -28,7 +28,11 @@ describe('getToken', () => {
       error: (msg) => {}
     },
     tracedRequest: () => {
-      return request
+      return {
+        defaults: () => {
+          return request
+        }
+      }
     },
     meta: {}
   }
@@ -120,8 +124,9 @@ describe('getToken', () => {
 
       request.post = (options, cb) => { cb(null, {statusCode: 456}, {foo: 'bar'}) }
 
-      step(context, null, (err, result) => {
-        assert.equal(err.message, 'Got 456 from magento: {"foo":"bar"}')
+      step(context, null, (err) => {
+        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.code, 'EINTERNAL')
         done()
       })
     })
@@ -221,7 +226,7 @@ describe('getToken', () => {
 
       context.storage.user.get = (key, cb) => { cb(null, null) }
 
-      step(context, null, (err, result) => {
+      step(context, null, (err) => {
         assert.equal(err.message, 'user is not logged in')
         done()
       })
@@ -245,8 +250,9 @@ describe('getToken', () => {
 
       request.post = (options, cb) => { cb(null, {statusCode: 456}, {foo: 'bar'}) }
 
-      step(context, null, (err, result) => {
-        assert.equal(err.message, 'Got 456 from magento: {"foo":"bar"}')
+      step(context, null, (err) => {
+        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.code, 'EINTERNAL')
         done()
       })
     })
@@ -277,7 +283,7 @@ describe('getToken', () => {
 
       context.storage.user.set = (key, value, cb) => { cb(new Error('error')) }
 
-      step(context, null, (err, result) => {
+      step(context, null, (err) => {
         assert.equal(err.message, 'error')
         done()
       })

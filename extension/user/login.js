@@ -2,9 +2,20 @@ const TokenHandler = require('../helpers/tokenHandler')
 const InvalidCredentialsError = require('../models/Errors/InvalidCredentialsError')
 
 /**
- * @param {object} context
- * @param {object} input
- * @param {function} cb
+ * @typedef {Object} UserLoginInput
+ * @property {string} strategy
+ * @property  {UserLoginInputParameters} parameters
+ */
+/**
+ * @typedef {{login: string, password: string}|{code: string}} UserLoginInputParameters - which one is passed is based on login strategy
+ */
+/**
+ * @param {StepContext} context
+ * @param {UserLoginInput} input
+ *
+ * @param {StepCallback} cb
+ * @param {?Error} cb.error
+ * @param {{userId: string}} cb.result
  */
 module.exports = function (context, input, cb) {
   const clientCredentials = context.config.credentials
@@ -14,7 +25,7 @@ module.exports = function (context, input, cb) {
   const request = context.tracedRequest
 
   const strategy = input.strategy
-  const userCredentials = input.parameters // should contain params ('login' and 'password') or 'code'
+  const userCredentials = input.parameters
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
 
@@ -38,11 +49,13 @@ module.exports = function (context, input, cb) {
 }
 
 /**
- *
- * @param {object} tokenHandler
- * @param {object} userCredentials
+ * @param {TokenHandler} tokenHandler
+ * @param {UserLoginInputParameters} userCredentials
  * @param {string} strategy
- * @param {function} cb
+ *
+ * @param {StepCallback} cb
+ * @param {?Error} cb.error
+ * @param {?object} cb.result
  */
 function login (tokenHandler, userCredentials, strategy, cb) {
   tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
@@ -52,8 +65,7 @@ function login (tokenHandler, userCredentials, strategy, cb) {
 }
 
 /**
- *
- * @param string strategy
+ * @param {string} strategy
  * @return {boolean}
  * @private
  */
@@ -67,9 +79,8 @@ function _isValidStrategy (strategy) {
 }
 
 /**
- *
  * @param {string} strategy
- * @param {object} userCredentials
+ * @param {Object} userCredentials
  * @return {*}
  * @private
  */
