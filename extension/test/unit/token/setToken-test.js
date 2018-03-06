@@ -21,7 +21,11 @@ describe('setToken', () => {
       debug: (msg) => {}
     },
     tracedRequest: () => {
-      return request
+      return {
+        defaults: () => {
+          return request
+        }
+      }
     },
     meta: {}
   }

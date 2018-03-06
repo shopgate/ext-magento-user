@@ -9,24 +9,30 @@ const TOKEN_KEY = 'token'
  */
 class TokenHandler {
   /**
-   * @param {StepContextCredentials} clientCredentials
+   * @param {?StepContextCredentials} clientCredentials
    * @param {string} authUrl
    * @param {StepStorage[]} storages
    * @param {Logger} log
-   * @param {Request} request
+   * @param {?Request} request
    */
   constructor (clientCredentials, authUrl, storages, log, request) {
     this.log = log
     this.storages = storages
-    this.request = request().defaults(
-      {
+
+    /**
+     * This is a bit weird, but shows that the design of this class was not thought out well.
+     * For example, logout step does provide credentials or the request object
+     * @todo-sg: refactor this class
+     */
+    if (request && clientCredentials) {
+      this.request = request().defaults({
         url: authUrl,
         auth: {
           username: clientCredentials.id,
           password: clientCredentials.secret
         }
-      }
-    )
+      })
+    }
   }
 
   /**
