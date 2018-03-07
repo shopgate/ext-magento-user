@@ -25,10 +25,17 @@ describe('login', () => {
       }
     },
     log: {
-      debug: () => {}
+      debug: () => {
+      },
+      error: () => {
+      }
     },
     tracedRequest: () => {
-      return request
+      return {
+        defaults: () => {
+          return request
+        }
+      }
     }
   }
 
@@ -93,7 +100,8 @@ describe('login', () => {
     }
 
     step(context, input, (err) => {
-      assert.equal(err.message, 'Got 456 from magento: {"foo":"bar"}')
+      assert.equal(err.constructor.name, 'InvalidCredentialsError')
+      assert.equal(err.code, 'EINVALIDCREDENTIALS')
       done()
     })
   })
@@ -109,14 +117,6 @@ describe('login', () => {
       ]
     }
 
-    const magentoTokenResponse = {
-      lifeSpan: magentoResponse.success[0].expires_in,
-      tokens: {
-        accessToken: magentoResponse.success[0]['access_token'],
-        refreshToken: magentoResponse.success[0]['refresh_token']
-      }
-    }
-
     request.post = (options, cb) => {
       cb(null, {statusCode: 200}, magentoResponse)
     }
@@ -125,7 +125,7 @@ describe('login', () => {
       cb(new Error('error'))
     }
 
-    step(context, input, (err, result) => {
+    step(context, input, (err) => {
       assert.equal(err.message, 'error')
       done()
     })

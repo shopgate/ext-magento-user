@@ -1,6 +1,7 @@
 .DS_Store
+.idea
 build
+npm-debug.log
 extension/coverage
 extension/node_modules
-.idea/
-npm-debug.log
+extension/config.json
