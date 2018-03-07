@@ -44,7 +44,7 @@ describe('Tokenhandler', () => {
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
   describe('logout', () => {
     it('should logout the user by deleting the tokens', (done) => {
-      th.logout((err) => {
+      TokenHandler.logout(storages, (err) => {
         assert.ifError(err)
         done()
       })
@@ -55,7 +55,7 @@ describe('Tokenhandler', () => {
         cb(new Error('error'))
       }
 
-      th.logout((err) => {
+      TokenHandler.logout(storages, (err) => {
         assert.equal(err.message, 'error')
         done()
       })

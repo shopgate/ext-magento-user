@@ -7,12 +7,18 @@
  * @property {StepContextConfig} config - Configuration file, reference config.json for values
  * @property {Request} tracedRequest - Request class allows making external REST calls
  * @property {StepContextMeta} meta
- * @property {StepStorage[]} storage - defines different types of storage's to save intermediate data to
+ * @property {StepContextStorageContainer} storage - defines different types of storage's to save intermediate data to
  */
 /**
- * @typedef {Object} StepStorage
- * @function get
- * @function set
+ * @typedef {(Object|Array)} StepContextStorageContainer
+ * @property {StepContextStorage} user - temporary user related storage that saves or retrieves data
+ * @property {StepContextStorage} device  - temporary anonymous device storage that saves or retrieves data
+ */
+/**
+ * @typedef {Object} StepContextStorage
+ * @function get - retrieve storage data
+ * @function set - set storage data
+ * @function del - remove storage data
  */
 /**
  * @typedef {Object} StepContextConfig

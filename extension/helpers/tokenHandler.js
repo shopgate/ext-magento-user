@@ -11,28 +11,25 @@ class TokenHandler {
   /**
    * @param {?StepContextCredentials} clientCredentials
    * @param {string} authUrl
-   * @param {StepStorage[]} storages
+   * @param {StepContextStorageContainer} storages
    * @param {Logger} log
    * @param {?Request} request
+   *
+   * @throws {InvalidCallError}
    */
   constructor (clientCredentials, authUrl, storages, log, request) {
     this.log = log
     this.storages = storages
-
-    /**
-     * This is a bit weird, but shows that the design of this class was not thought out well.
-     * For example, logout step does provide credentials or the request object
-     * @todo-sg: refactor this class
-     */
-    if (request && clientCredentials) {
-      this.request = request().defaults({
-        url: authUrl,
-        auth: {
-          username: clientCredentials.id,
-          password: clientCredentials.secret
-        }
-      })
+    if (!request || !clientCredentials) {
+      throw new InvalidCallError('request or client credentials are not defined')
     }
+    this.request = request().defaults({
+      url: authUrl,
+      auth: {
+        username: clientCredentials.id,
+        password: clientCredentials.secret
+      }
+    })
   }
 
   /**
@@ -84,41 +81,13 @@ class TokenHandler {
   }
 
   /**
-   * @private
-   * @param {StepCallback} cb
-   * @param {?Error} cb.err
-   * @param {?{accessToken: string}} cb.accessToken
+   * @param {StepContextStorageContainer} storages
+   * @param {function} cb
    */
-  _getUserToken (cb) {
-    this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
+  static logout (storages, cb) {
+    storages.user.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
-      // user not logged in
-      else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
-      // if expired
-      else if (!tokens.accessToken && tokens.refreshToken) {
-        // use refresh token for new token
-        const options = {
-          json: {
-            'grant_type': 'refresh_token',
-            'refresh_token': tokens.refreshToken
-          }
-        }
-
-        return this._getTokensFromMagento(options, (err, response) => {
-          if (err) {
-            this.log.error(err)
-            return this.logout((intErr) => cb(intErr || err))
-          }
-          // write to user storage
-          this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
-            if (err) return cb(err)
-            // return token
-            return cb(null, response.tokens.accessToken)
-          })
-        })
-      }
-
-      cb(null, tokens.accessToken)
+      cb()
     })
   }
 
@@ -160,12 +129,41 @@ class TokenHandler {
   }
 
   /**
-   * @param {function} cb
+   * @private
+   * @param {StepCallback} cb
+   * @param {?Error} cb.err
+   * @param {?{accessToken: string}} cb.accessToken
    */
-  logout (cb) {
-    this.storages.user.del(TOKEN_KEY, (err) => {
+  _getUserToken (cb) {
+    this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
-      cb(null)
+      // user not logged in
+      else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
+      // if expired
+      else if (!tokens.accessToken && tokens.refreshToken) {
+        // use refresh token for new token
+        const options = {
+          json: {
+            'grant_type': 'refresh_token',
+            'refresh_token': tokens.refreshToken
+          }
+        }
+
+        return this._getTokensFromMagento(options, (err, response) => {
+          if (err) {
+            this.log.error(err)
+            return TokenHandler.logout(this.storages, (intErr) => cb(intErr || err))
+          }
+          // write to user storage
+          this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
+            if (err) return cb(err)
+            // return token
+            return cb(null, response.tokens.accessToken)
+          })
+        })
+      }
+
+      cb(null, tokens.accessToken)
     })
   }
 
