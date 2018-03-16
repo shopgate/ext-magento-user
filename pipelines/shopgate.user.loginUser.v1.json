@@ -1,7 +1,7 @@
 {
   "version": "1",
   "pipeline": {
-    "id": "login_v1",
+    "id": "shopgate.user.loginUser.v1",
     "public": true,
     "input": [
       {"key": "strategy", "id": "1010"},
@@ -13,7 +13,7 @@
     "steps": [
       {
         "type": "pipeline",
-        "id": "getCartId_int_v1",
+        "id": "shopgate.cart.getCartIdInt.v1",
         "trusted": false,
         "input": [],
         "output": [
@@ -57,7 +57,7 @@
         "output": []
       }, {
         "type": "pipeline",
-        "id": "deleteCartId_v1",
+        "id": "shopgate.cart.deleteCartId.v1",
         "trusted": false,
         "input": [],
         "output": []
@@ -71,7 +71,7 @@
         ]
       }, {
         "type": "pipeline",
-        "id": "setCartCustomer_int_v1",
+        "id": "shopgate.cart.setCartCustomerInt.v1",
         "trusted": false,
         "input": [
           {"key": "cartId", "id": "1"},
