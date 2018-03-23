@@ -158,11 +158,14 @@ class TokenHandler {
           this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token
+            this.log.debug('[WEBC-633, tokenHandler, 161. accessToken:' + response.tokens.accessToken)
+            this.log.debug('[WEBC-633, tokenHandler, 162. lifeSpan:' + response.lifeSpan)
             return cb(null, response.tokens.accessToken)
           })
         })
       }
 
+      this.log.debug('[WEBC-633, tokenHandler, 167. accessToken:' + tokens.accessToken)
       cb(null, tokens.accessToken)
     })
   }
