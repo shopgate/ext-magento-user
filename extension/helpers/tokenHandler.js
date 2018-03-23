@@ -178,6 +178,7 @@ class TokenHandler {
    */
   _getTokensFromStorage (storage, key, cb) {
     this.storages[storage].get(key, (err, tokenData) => {
+      this.log.debug('[WEBC-633, tokenHandler, 182. tokenData.expires:' + tokenData.expires)
       if (err) return cb(err)
       if (!tokenData || !tokenData.expires) return cb(null, null)
       if (tokenData.expires < (new Date()).getTime() - 60 * 1000) {
