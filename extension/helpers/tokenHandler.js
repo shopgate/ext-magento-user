@@ -68,6 +68,11 @@ class TokenHandler {
 
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) return cb(err)
+
+          if (!response.refreshToken && tokens.refreshToken) {
+            response.tokens.refreshToken = tokens.refreshToken
+          }
+
           // write to device storage
           this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
@@ -154,18 +159,20 @@ class TokenHandler {
             this.log.error(err)
             return TokenHandler.logout(this.storages, (intErr) => cb(intErr || err))
           }
+
+          if (!response.refreshToken && tokens.refreshToken) {
+            response.tokens.refreshToken = tokens.refreshToken
+          }
+
           // write to user storage
           this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token
-            this.log.debug('[WEBC-633, tokenHandler, 161. accessToken:' + response.tokens.accessToken)
-            this.log.debug('[WEBC-633, tokenHandler, 162. lifeSpan:' + response.lifeSpan)
             return cb(null, response.tokens.accessToken)
           })
         })
       }
 
-      this.log.debug('[WEBC-633, tokenHandler, 167. accessToken:' + tokens.accessToken)
       cb(null, tokens.accessToken)
     })
   }
@@ -178,7 +185,6 @@ class TokenHandler {
    */
   _getTokensFromStorage (storage, key, cb) {
     this.storages[storage].get(key, (err, tokenData) => {
-      this.log.debug('[WEBC-633, tokenHandler, 182. tokenData.expires:' + tokenData.expires)
       if (err) return cb(err)
       if (!tokenData || !tokenData.expires) return cb(null, null)
       if (tokenData.expires < (new Date()).getTime() - 60 * 1000) {
