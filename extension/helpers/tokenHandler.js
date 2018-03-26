@@ -68,6 +68,12 @@ class TokenHandler {
 
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) return cb(err)
+
+          // if invalidating refresh token is disabled, we have to pass the former refresh token to the storage
+          if (!response.refreshToken && tokens.refreshToken) {
+            response.tokens.refreshToken = tokens.refreshToken
+          }
+
           // write to device storage
           this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
@@ -154,6 +160,12 @@ class TokenHandler {
             this.log.error(err)
             return TokenHandler.logout(this.storages, (intErr) => cb(intErr || err))
           }
+
+          // if invalidating refresh token is disabled, we have to pass the former refresh token to the storage
+          if (!response.refreshToken && tokens.refreshToken) {
+            response.tokens.refreshToken = tokens.refreshToken
+          }
+
           // write to user storage
           this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
