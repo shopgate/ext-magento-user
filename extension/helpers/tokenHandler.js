@@ -70,7 +70,7 @@ class TokenHandler {
           if (err) return cb(err)
 
           // if invalidating refresh token is disabled, we have to pass the former refresh token to the storage
-          if (!response.refreshToken && tokens.refreshToken) {
+          if (tokens && !response.refreshToken && tokens.refreshToken) {
             response.tokens.refreshToken = tokens.refreshToken
           }
 
@@ -162,7 +162,7 @@ class TokenHandler {
           }
 
           // if invalidating refresh token is disabled, we have to pass the former refresh token to the storage
-          if (!response.refreshToken && tokens.refreshToken) {
+          if (tokens && !response.refreshToken && tokens.refreshToken) {
             response.tokens.refreshToken = tokens.refreshToken
           }
 
