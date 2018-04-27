@@ -15,10 +15,6 @@ describe('getToken', () => {
     storage: {
       device: {
         get: null,
-        set: null
-      },
-      user: {
-        get: null,
         set: null,
         del: null
       }
@@ -43,9 +39,7 @@ describe('getToken', () => {
     }
     context.storage.device.get = () => {}
     context.storage.device.set = () => {}
-    context.storage.user.get = () => {}
-    context.storage.user.set = () => {}
-    context.storage.user.del = () => {}
+    context.storage.device.del = () => {}
   })
 
   describe('guest token', () => {
@@ -165,7 +159,7 @@ describe('getToken', () => {
     it('should get a token from storage', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => {
+      context.storage.device.get = (key, cb) => {
         cb(null, {
           expires: (new Date()).getTime(),
           tokens: {
@@ -184,7 +178,7 @@ describe('getToken', () => {
     it('should get a token from magento via refresh token', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => {
+      context.storage.device.get = (key, cb) => {
         cb(null, {
           tokens: {
             refreshToken: 'r2'
@@ -201,7 +195,7 @@ describe('getToken', () => {
 
       request.post = (options, cb) => { cb(null, {statusCode: 200}, magentoResponse) }
 
-      context.storage.user.set = (key, value, cb) => { cb(null) }
+      context.storage.device.set = (key, value, cb) => { cb(null) }
 
       step(context, null, (err, result) => {
         assert.ifError(err)
@@ -213,7 +207,7 @@ describe('getToken', () => {
     it('should return an error because the storage failed', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => { cb(new Error('error')) }
+      context.storage.device.get = (key, cb) => { cb(new Error('error')) }
 
       step(context, null, (err) => {
         assert.equal(err.message, 'error')
@@ -224,7 +218,7 @@ describe('getToken', () => {
     it('should return an error because user is not logged in', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => { cb(null, null) }
+      context.storage.device.get = (key, cb) => { cb(null, null) }
 
       step(context, null, (err) => {
         assert.equal(err.message, 'user is not logged in')
@@ -235,7 +229,7 @@ describe('getToken', () => {
     it('should return an error because magento failed', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => {
+      context.storage.device.get = (key, cb) => {
         cb(null, {
           tokens: {
             refreshToken: 'r2'
@@ -244,7 +238,7 @@ describe('getToken', () => {
         })
       }
 
-      context.storage.user.del = (key, cb) => {
+      context.storage.device.del = (key, cb) => {
         cb(null)
       }
 
@@ -260,7 +254,7 @@ describe('getToken', () => {
     it('should return an error because set token failed', (done) => {
       context.meta.userId = 'u1'
 
-      context.storage.user.get = (key, cb) => {
+      context.storage.device.get = (key, cb) => {
         cb(null, {
           tokens: {
             refreshToken: 'r2'
@@ -281,7 +275,7 @@ describe('getToken', () => {
 
       request.post = (options, cb) => { cb(null, {statusCode: 200}, magentoResponse) }
 
-      context.storage.user.set = (key, value, cb) => { cb(new Error('error')) }
+      context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 
       step(context, null, (err) => {
         assert.equal(err.message, 'error')

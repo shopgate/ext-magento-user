@@ -10,7 +10,7 @@ describe('Tokenhandler', () => {
     secret: null
   }
   const storages = {
-    user: {
+    device: {
       del: null
     }
   }
@@ -36,7 +36,7 @@ describe('Tokenhandler', () => {
   }
 
   beforeEach(() => {
-    storages.user.del = (key, cb) => {
+    storages.device.del = (key, cb) => {
       cb(null)
     }
   })
@@ -51,7 +51,7 @@ describe('Tokenhandler', () => {
     })
 
     it('should return an error because deleting the tokens failed', (done) => {
-      storages.user.del = (key, cb) => {
+      storages.device.del = (key, cb) => {
         cb(new Error('error'))
       }
 

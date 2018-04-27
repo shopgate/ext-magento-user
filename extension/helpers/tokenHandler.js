@@ -91,7 +91,7 @@ class TokenHandler {
    * @param {function} cb
    */
   static logout (storages, cb) {
-    storages.user.del(TOKEN_KEY, (err) => {
+    storages.device.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
       cb()
     })
@@ -141,7 +141,7 @@ class TokenHandler {
    * @param {?{accessToken: string}} cb.accessToken
    */
   _getUserToken (cb) {
-    this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
+    this._getTokensFromStorage('device', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // user not logged in
       else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
@@ -166,8 +166,8 @@ class TokenHandler {
             response.tokens.refreshToken = tokens.refreshToken
           }
 
-          // write to user storage
-          this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
+          // write to device storage
+          this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token
             return cb(null, response.tokens.accessToken)
