@@ -13,7 +13,7 @@ describe('setToken', () => {
       magentoUrl: 'https://some.url'
     },
     storage: {
-      user: {
+      device: {
         set: null
       }
     },
@@ -44,11 +44,11 @@ describe('setToken', () => {
     request = {
       post: () => {}
     }
-    context.storage.user.set = () => {}
+    context.storage.device.set = () => {}
   })
 
   it('should set the token', (done) => {
-    context.storage.user.set = (key, value, cb) => { cb(null) }
+    context.storage.device.set = (key, value, cb) => { cb(null) }
 
     step(context, input, (err) => {
       assert.ifError(err)
@@ -57,7 +57,7 @@ describe('setToken', () => {
   })
 
   it('should return an error', (done) => {
-    context.storage.user.set = (key, value, cb) => { cb(new Error('error')) }
+    context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 
     step(context, input, (err) => {
       assert.equal(err.message, 'error')

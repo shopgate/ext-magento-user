@@ -91,7 +91,7 @@ class TokenHandler {
    * @param {function} cb
    */
   static logout (storages, cb) {
-    storages.user.del(TOKEN_KEY, (err) => {
+    storages.device.del(TOKEN_KEY, (err) => {
       if (err) return cb(err)
       cb()
     })
@@ -166,7 +166,7 @@ class TokenHandler {
             response.tokens.refreshToken = tokens.refreshToken
           }
 
-          // write to user storage
+          // write to device storage
           this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token

@@ -7,7 +7,7 @@ describe('logout', () => {
       magentoUrl: 'http://some.url'
     },
     storage: {
-      user: {
+      device: {
         del: null
       }
     },
@@ -17,11 +17,11 @@ describe('logout', () => {
   }
 
   beforeEach(() => {
-    context.storage.user.del = () => {}
+    context.storage.device.del = () => {}
   })
 
-  it('should logout the user by deleting the tokens from user storage', (done) => {
-    context.storage.user.del = (key, cb) => { cb(null) }
+  it('should logout the user by deleting the tokens from device storage', (done) => {
+    context.storage.device.del = (key, cb) => { cb(null) }
     step(context, null, (err, result) => {
       assert.ifError(err)
       assert.ok(result.success)
@@ -30,7 +30,7 @@ describe('logout', () => {
   })
 
   it('should return an error because deletion failed', (done) => {
-    context.storage.user.del = (key, cb) => { cb(new Error('error')) }
+    context.storage.device.del = (key, cb) => { cb(new Error('error')) }
     step(context, null, (err, result) => {
       assert.equal(err.message, 'error')
       done()
