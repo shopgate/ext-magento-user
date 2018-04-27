@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "prototype",
   "scripts": {
-    "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mocha-jenkins-reporter",
-    "cover": "istanbul cover _mocha -- --recursive",
     "standard": "./node_modules/.bin/standard"
   },
   "repository": {
@@ -12,19 +10,15 @@
     "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-cart.git"
   },
   "license": "UNLICENSED",
-  "dependencies": {
-    "lodash": "^4.17.5"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "istanbul": "^0.4.5",
-    "mocha": "^3.2.0",
-    "mocha-jenkins-reporter": "^0.3.7",
-    "nock": "^9.0.13",
-    "rewire": "^2.5.2",
+    "@shopgate/pwa-common": "^5.2.0",
+    "@shopgate/pwa-common-commerce": "^5.2.0",
+    "@shopgate/eslint-config": "^5.2.0",
+    "@shopgate/tracking-core": "^5.2.0",
     "standard": "^11.0.1"
   },
   "standard": {
-    "ignore": [],
     "env": {
       "mocha": true
     }
