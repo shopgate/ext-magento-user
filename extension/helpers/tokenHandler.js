@@ -141,7 +141,7 @@ class TokenHandler {
    * @param {?{accessToken: string}} cb.accessToken
    */
   _getUserToken (cb) {
-    this._getTokensFromStorage('user', TOKEN_KEY, (err, tokens) => {
+    this._getTokensFromStorage('device', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // user not logged in
       else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
@@ -167,7 +167,7 @@ class TokenHandler {
           }
 
           // write to user storage
-          this.setTokenInStorage('user', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
+          this.setTokenInStorage('device', TOKEN_KEY, response.tokens, response.lifeSpan, (err) => {
             if (err) return cb(err)
             // return token
             return cb(null, response.tokens.accessToken)
