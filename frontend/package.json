@@ -1,0 +1,21 @@
+{
+  "name": "@shopgate/magento-user",
+  "version": "1.0.0",
+  "description": "prototype",
+  "scripts": {
+    "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-cart.git"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@shopgate/eslint-config": "^5.2.0",
+    "@shopgate/pwa-common": "^5.2.0",
+    "@shopgate/pwa-common-commerce": "^5.2.0",
+    "@shopgate/tracking-core": "^5.2.0",
+    "eslint": "^4.19.1"
+  }
+}

@@ -4,7 +4,8 @@
   "description": "prototype",
   "scripts": {
     "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mocha-jenkins-reporter",
-    "cover": "istanbul cover _mocha -- --recursive"
+    "cover": "istanbul cover _mocha -- --recursive",
+    "standard": "./node_modules/.bin/standard"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,8 @@
     "mocha": "^3.2.0",
     "mocha-jenkins-reporter": "^0.3.7",
     "nock": "^9.0.13",
-    "rewire": "^2.5.2"
+    "rewire": "^2.5.2",
+    "standard": "^11.0.1"
   },
   "standard": {
     "ignore": [],
