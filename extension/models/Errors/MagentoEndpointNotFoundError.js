@@ -10,12 +10,12 @@ const ERROR_CODE = 'EMAGENTOENDPOINTNOTFOUND'
  * @default Requested endpoint url could not be found or is not implemented.
  */
 class MagentoEndpointNotFound extends Error {
-    constructor (message) {
-        super(message !== '' && isString(message)
-            ? message
-            : 'Requested endpoint url could not be found or is not implemented.')
-        this.code = ERROR_CODE
-    }
+  constructor(message) {
+    super(message !== '' && isString(message)
+      ? message
+      : 'Requested endpoint url could not be found or is not implemented.')
+    this.code = ERROR_CODE
+  }
 }
 
 module.exports = MagentoEndpointNotFound
