@@ -5,7 +5,7 @@ const MagentoRequest = require('../lib/MagentoRequest')
  * @param {object} context
  * @param {object} input
  */
-module.exports = async(context, input) => {
+module.exports = async (context, input) => {
   if (!context.meta || !context.meta.userId) {
     throw new UnauthorizedError()
   }

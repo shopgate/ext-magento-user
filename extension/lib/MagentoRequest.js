@@ -14,7 +14,7 @@ class MagentoRequest {
    * @param {string} token
    * @returns {Object}
    */
-  static async send(url, context, token) {
+  static async send (url, context, token) {
     return new Promise((resolve, reject) => {
       request({
         url: url,
