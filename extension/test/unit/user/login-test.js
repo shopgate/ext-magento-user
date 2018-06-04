@@ -1,56 +1,133 @@
-const nock = require('nock')
 const assert = require('assert')
-const describe = require('mocha').describe
-const it = require('mocha').it
-const before = require('mocha').before
+const step = require('../../../user/login')
 
-const getUser = require('../../../user/getUser')
+describe('login', () => {
+  let request = null
 
-const context = {
-  meta: {
-    userId: 123
-  },
-  config: {
-    magentoUrl: 'http://magento.shopgate.com/shopgate/v2'
-  },
-  log: {
-    error: (message) => {
-      console.log(message)
+  const context = {
+    config: {
+      credentials: {
+        id: 'i1',
+        secret: 's1'
+      },
+      magentoUrl: 'https://some.url'
+    },
+    storage: {
+      device: {
+        set: null,
+        get: null,
+        del: null
+      },
+      user: {
+        set: null,
+        get: null,
+        del: null
+      }
+    },
+    log: {
+      debug: () => {
+      },
+      error: () => {
+      }
+    },
+    tracedRequest: () => {
+      return {
+        defaults: () => {
+          return request
+        }
+      }
     }
   }
-}
 
-const input = {
-  token: 'test-token'
-}
-
-describe('getUser', () => {
-  const magentoResponse = {
-    'customer_id': 123,
-    'email': 'john.doe@shopgate.com',
-    'firstname': 'John',
-    'lastname': 'Doe'
+  const input = {
+    strategy: null,
+    parameters: {
+      login: 'u1',
+      password: 'p1'
+    }
   }
 
-  before(() => {
-    nock('http://magento.shopgate.com/shopgate/v2')
-      .get('/customers/me')
-      .reply(200, magentoResponse)
-  })
-
-  it('should return valid user data', async () => {
-    const userData = await getUser(context, input)
-    assert.equal(magentoResponse.email, userData.mail)
-    assert.equal(magentoResponse.customer_id, userData.id)
-    assert.equal(magentoResponse.firstname, userData.firstName)
-    assert.equal(magentoResponse.lastname, userData.lastName)
-  })
-
-  it('should return unauthorized error because of missing context.meta', async () => {
-    try {
-      await getUser({}, input)
-    } catch (e) {
-      assert.equal('EACCESS', e.code)
+  beforeEach(() => {
+    input.strategy = 'basic'
+    request = {
+      post: () => {}
     }
+  })
+
+  it('should login to magento', (done) => {
+    const magentoResponse = {
+      'expires_in': 3600,
+      'access_token': 'a1',
+      'refresh_token': 'r1'
+    }
+
+    const magentoTokenResponse = {
+      lifeSpan: magentoResponse.expires_in,
+      tokens: {
+        accessToken: magentoResponse['access_token'],
+        refreshToken: magentoResponse['refresh_token']
+      }
+    }
+
+    request.post = (options, cb) => {
+      cb(null, {statusCode: 200}, magentoResponse)
+    }
+
+    context.storage.device.del = (key, cb) => {
+      cb(null)
+    }
+
+    step(context, input, (err, result) => {
+      assert.ifError(err)
+      assert.equal(result.userId, input.parameters.login)
+      assert.deepEqual(result.magentoTokenResponse, magentoTokenResponse)
+      done()
+    })
+  })
+
+  it('should return an error because the input strategy is not supported', (done) => {
+    input.strategy = 'sthWeird'
+
+    step(context, input, (err) => {
+      assert.equal(err.message, 'invalid login strategy')
+      done()
+    })
+  })
+
+  it('should return an error because login to magento failed', (done) => {
+    request.post = (options, cb) => {
+      cb(null, {statusCode: 456}, {foo: 'bar'})
+    }
+
+    step(context, input, (err) => {
+      assert.equal(err.constructor.name, 'InvalidCredentialsError')
+      assert.equal(err.code, 'EINVALIDCREDENTIALS')
+      done()
+    })
+  })
+
+  it('should return an error because deleting guest tokens failed', (done) => {
+    const magentoResponse = {
+      success: [
+        {
+          'expires_in': 3600,
+          'access_token': 'a1',
+          'refresh_token': 'r1'
+        }
+      ]
+    }
+
+    request.post = (options, cb) => {
+      cb(null, {statusCode: 200}, magentoResponse)
+    }
+
+    context.storage.device.del = (key, cb) => {
+      cb(new Error('error'))
+    }
+
+    step(context, input, (err) => {
+      assert.equal(err.message, 'error')
+      done()
+    })
   })
 })
