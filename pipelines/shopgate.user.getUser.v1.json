@@ -18,10 +18,21 @@
     ],
     "steps": [
       {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "10"}
+        ]
+      },
+      {
         "type": "extension",
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/getUser.js",
-        "input": [],
+        "input": [
+          {"key": "token", "id": "10"}
+        ],
         "output": [
           {"key": "id", "id": "1010"},
           {"key": "mail", "id": "1020"},
