@@ -15,7 +15,7 @@ module.exports = function (context, input, cb) {
 
   const isLoggedIn = !!context.meta.userId
 
-  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
+  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, context.config.validateSSLCertificate)
 
   th.getToken(isLoggedIn, (err, token) => {
     if (err) return cb(err)
