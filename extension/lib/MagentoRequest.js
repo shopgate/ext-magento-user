@@ -19,7 +19,7 @@ class MagentoRequest {
       request({
         url: url,
         json: true,
-        rejectUnauthorized: context.config.validateSSLCertificate,
+        rejectUnauthorized: !context.config.allowSelfSignedCertificate,
         auth: {
           bearer: token
         }

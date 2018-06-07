@@ -9,7 +9,7 @@ module.exports = function (context, input, cb) {
 
   const response = input.magentoTokenResponse
 
-  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, context.config.validateSSLCertificate)
+  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
   log.debug(`setting tokens ${response.tokens}`)
   th.setTokenInStorage('device', 'token', response.tokens, response.lifeSpan, (err) => {
