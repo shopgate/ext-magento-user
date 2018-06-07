@@ -13,7 +13,7 @@ module.exports = async (context, input) => {
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/me`
-  const magentoResponse = await MagentoRequest.send(endpointUrl, context, input.token, )
+  const magentoResponse = await MagentoRequest.send(endpointUrl, context, input.token, !context.config.allowSelfSignedCertificate)
   let addresses = []
 
   // will be only returned with cloudapi plugin >= 3.1.4
