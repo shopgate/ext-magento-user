@@ -14,10 +14,11 @@ class TokenHandler {
    * @param {StepContextStorageContainer} storages
    * @param {Logger} log
    * @param {?Request} request
+   * @param {?boolean} rejectUnauthorized
    *
    * @throws {InvalidCallError}
    */
-  constructor (clientCredentials, authUrl, storages, log, request) {
+  constructor (clientCredentials, authUrl, storages, log, request, rejectUnauthorized = true) {
     this.log = log
     this.storages = storages
     if (!request || !clientCredentials) {
@@ -28,7 +29,8 @@ class TokenHandler {
       auth: {
         username: clientCredentials.id,
         password: clientCredentials.secret
-      }
+      },
+      rejectUnauthorized
     })
   }
 

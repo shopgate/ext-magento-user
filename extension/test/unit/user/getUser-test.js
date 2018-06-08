@@ -1,8 +1,5 @@
 const nock = require('nock')
 const assert = require('assert')
-const describe = require('mocha').describe
-const it = require('mocha').it
-const beforeEach = require('mocha').beforeEach
 
 const getUser = require('../../../user/getUser')
 

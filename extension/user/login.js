@@ -27,7 +27,7 @@ module.exports = function (context, input, cb) {
   const strategy = input.strategy
   const userCredentials = input.parameters
 
-  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request)
+  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
   // TODO: clarify if that is correct
   if (!_isValidStrategy(strategy)) {
