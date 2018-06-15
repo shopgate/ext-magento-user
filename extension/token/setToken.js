@@ -1,17 +1,18 @@
 const TokenHandler = require('../helpers/tokenHandler')
+const util = require('util')
 
 module.exports = function (context, input, cb) {
   const clientCredentials = context.config.credentials
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest
+  const request = context.tracedRequest('magento-cart-user:setToken', {log: true})
 
   const response = input.magentoTokenResponse
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
-  log.debug(`setting tokens ${response.tokens}`)
+  log.debug(`setToken request ${util.inspect(response)}`)
   th.setTokenInStorage('device', 'token', response.tokens, response.lifeSpan, (err) => {
     if (err) return cb(err)
     return cb(null, {})

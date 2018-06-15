@@ -24,7 +24,7 @@ class TokenHandler {
     if (!request || !clientCredentials) {
       throw new InvalidCallError('request or client credentials are not defined')
     }
-    this.request = request().defaults({
+    this.request = request.defaults({
       url: authUrl,
       auth: {
         username: clientCredentials.id,
@@ -238,7 +238,8 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-    this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
+
+    this.log.debug(`tokenHandler request ${util.inspect(options)}`)
     this.request.post(options, (err, res, body) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
@@ -255,6 +256,7 @@ class TokenHandler {
         }
       }
 
+      this.log.debug(`tokenHandler response ${util.inspect(body)}`)
       cb(null, tokenData)
     })
   }
