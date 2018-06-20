@@ -239,19 +239,24 @@ class TokenHandler {
    */
   _getTokensFromMagento (options, cb) {
     this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
-    this.request.post(options, (err, res, body) => {
+    this.request.post(options, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
-        this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(body)}`)
+        this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
+        return cb(new MagentoError())
+      }
+
+      if (!res.body) {
+        this.log.error(`Got an empty body from magento on token request with options: ${util.inspect(options, false, 3)}`)
         return cb(new MagentoError())
       }
 
       const tokenData = {
-        lifeSpan: body.expires_in,
+        lifeSpan: res.body.expires_in,
         tokens: {
-          accessToken: body.access_token,
+          accessToken: res.body.access_token,
           // this is null in case of an guest token req
-          refreshToken: body.refresh_token
+          refreshToken: res.body.refresh_token
         }
       }
 
