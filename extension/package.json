@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "1.0.0",
+  "version": "1.1.6-beta.7",
   "description": "prototype",
   "scripts": {
     "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mocha-jenkins-reporter",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-cart.git"
+    "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-user.git"
   },
   "license": "UNLICENSED",
   "dependencies": {
