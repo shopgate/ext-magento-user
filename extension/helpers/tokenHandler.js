@@ -239,14 +239,8 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-<<<<<<< HEAD
-
     this.log.debug(`tokenHandler request ${util.inspect(options)}`)
     this.request.post(options, (err, res, body) => {
-=======
-    this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
-    this.request.post(options, (err, res) => {
->>>>>>> 8a4b5540e829835245921ff19065a0f2f9e5c07c
       if (err) return cb(err)
       if (res.statusCode !== 200) {
         this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
