@@ -42,8 +42,7 @@ class MagentoRequest {
             reject(new MagentoEndpointNotAllowedError())
           } else if (body.messages && body.messages.error) {
             reject(new MagentoEndpointError())
-          }
-          else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
+          } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
             context.log.debug(`Magento response ${util.inspect(body)}`)
             resolve(body)
           }

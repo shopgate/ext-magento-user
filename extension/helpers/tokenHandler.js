@@ -239,8 +239,11 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
+    console.log('########################')
+    console.log(util.inspect(options))
+    console.log('########################')
     this.log.debug(`tokenHandler request ${util.inspect(options)}`)
-    this.request.post(options, (err, res, body) => {
+    this.request.post(options, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
         this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
@@ -261,7 +264,7 @@ class TokenHandler {
         }
       }
 
-      this.log.debug(`tokenHandler response ${util.inspect(body)}`)
+      this.log.debug(`tokenHandler response ${util.inspect(res.body)}`)
       cb(null, tokenData)
     })
   }

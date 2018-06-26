@@ -18,7 +18,6 @@ const InvalidCredentialsError = require('../models/Errors/InvalidCredentialsErro
  * @param {{userId: string}} cb.result
  */
 module.exports = function (context, input, cb) {
-
   const clientCredentials = context.config.credentials
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
