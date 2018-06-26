@@ -24,6 +24,7 @@ class TokenHandler {
     if (!request || !clientCredentials) {
       throw new InvalidCallError('request or client credentials are not defined')
     }
+
     this.request = request.defaults({
       url: authUrl,
       auth: {

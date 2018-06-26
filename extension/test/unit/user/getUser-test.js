@@ -1,27 +1,32 @@
 const nock = require('nock')
 const assert = require('assert')
-
+const request = require('request')
 const getUser = require('../../../user/getUser')
 
-const context = {
-  meta: {
-    userId: 123
-  },
-  config: {
-    magentoUrl: 'http://magento.shopgate.com/shopgate/v2'
-  },
-  log: {
-    error: (message) => {
-      console.log(message)
+describe('getUser', () => {
+
+  const context = {
+    meta: {
+      userId: 123
+    },
+    tracedRequest: () => {
+      return request
+    },
+    config: {
+      magentoUrl: 'http://magento.shopgate.com/shopgate/v2'
+    },
+    log: {
+      error: (message) => {
+      },
+      debug: (message) => {
+      }
     }
   }
-}
 
-const input = {
-  token: 'test-token'
-}
+  const input = {
+    token: 'test-token'
+  }
 
-describe('getUser', () => {
   const magentoResponse = {
     'customer_id': 123,
     'email': 'john.doe@shopgate.com',
