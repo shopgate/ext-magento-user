@@ -1,13 +1,13 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "1.0.0",
+  "version": "1.1.6-beta.7",
   "description": "prototype",
   "scripts": {
     "lint": "eslint --ignore-path ../.gitignore --ext .js --ext .jsx ."
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-cart.git"
+    "url": "ssh://git@stash.localdev.cc:7999/sgx/magento-user.git"
   },
   "license": "Apache-2.0",
   "dependencies": {},

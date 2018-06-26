@@ -239,21 +239,31 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
+<<<<<<< HEAD
 
     this.log.debug(`tokenHandler request ${util.inspect(options)}`)
     this.request.post(options, (err, res, body) => {
+=======
+    this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
+    this.request.post(options, (err, res) => {
+>>>>>>> 8a4b5540e829835245921ff19065a0f2f9e5c07c
       if (err) return cb(err)
       if (res.statusCode !== 200) {
-        this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(body)}`)
+        this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
+        return cb(new MagentoError())
+      }
+
+      if (!res.body) {
+        this.log.error(`Got an empty body from magento on token request with options: ${util.inspect(options, false, 3)}`)
         return cb(new MagentoError())
       }
 
       const tokenData = {
-        lifeSpan: body.expires_in,
+        lifeSpan: res.body.expires_in,
         tokens: {
-          accessToken: body.access_token,
+          accessToken: res.body.access_token,
           // this is null in case of an guest token req
-          refreshToken: body.refresh_token
+          refreshToken: res.body.refresh_token
         }
       }
 
