@@ -2,7 +2,6 @@ const util = require('util')
 const MagentoError = require('../models/Errors/MagentoEndpointError')
 const InvalidCallError = require('../models/Errors/InvalidCallError')
 const TOKEN_KEY = 'token'
-
 /**
  * @class
  * @classdesc Handles all token related operations
@@ -239,10 +238,13 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-    console.log('########################')
-    console.log(util.inspect(options))
-    console.log('########################')
-    this.log.debug(`tokenHandler request ${util.inspect(options)}`)
+
+    // A short cleanup to not log plaintext user login data to kibana
+    const objToLog = Object.assign({}, options.json)
+    objToLog.password = 'xxxxxx'
+    objToLog.username = 'xxxxxx'
+    this.log.debug(`tokenHandler request ${util.inspect(objToLog)}`)
+
     this.request.post(options, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
