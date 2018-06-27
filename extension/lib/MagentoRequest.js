@@ -34,7 +34,7 @@ class MagentoRequest {
         options,
         (error, response) => {
           if (error) {
-            this.log(context, startResponse, `Magento response: ${util.inspect(response.body)}`, response.statusCode)
+            this.log(context, startResponse, `Magento response: ${util.inspect(error)}`, null)
             reject(new Error(error))
           } else if (response.statusCode === 401 || response.statusCode === 403) {
             this.log(context, startResponse, `UnauthorizedError: ${util.inspect(response.body)}`, response.statusCode)

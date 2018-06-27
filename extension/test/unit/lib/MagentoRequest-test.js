@@ -90,7 +90,7 @@ describe('MagentoRequest', () => {
 
   it('should return a valid response', async () => {
     const debugLogSpy = sinon.spy(context.log, 'debug')
-    const debugLogMessage = 'Made a magento request { url: \'http://magento.shopgate.com/shopgate/v2/customers/me\',\n' +
+    const debugLogMessage = 'Magento request: { url: \'http://magento.shopgate.com/shopgate/v2/customers/me\',\n' +
       '  json: true,\n' +
       '  rejectUnauthorized: false,\n' +
       '  auth: { bearer: \'testToken\' } }'
