@@ -15,7 +15,6 @@ let input = null
 let context = null
 
 describe('MagentoRequest', () => {
-
   beforeEach(() => {
     input = {
       token: 'testToken'
@@ -72,7 +71,6 @@ describe('MagentoRequest', () => {
   })
 
   it('should return error because of error in response', async () => {
-
     nock(magentoApiUrl)
       .get(meEndpoint)
       .replyWithError({

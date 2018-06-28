@@ -4,7 +4,6 @@ const request = require('request')
 const getUser = require('../../../user/getUser')
 
 describe('getUser', () => {
-
   const context = {
     meta: {
       userId: 123

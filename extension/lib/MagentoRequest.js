@@ -15,7 +15,6 @@ class MagentoRequest {
    * @returns {Object}
    */
   static async send (url, context, token) {
-
     const options = {
       url: url,
       json: true,

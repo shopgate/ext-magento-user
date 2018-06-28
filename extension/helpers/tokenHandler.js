@@ -238,7 +238,6 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-
     // A short cleanup to not log plaintext user login data to kibana
     const objToLog = Object.assign({}, options.json)
     objToLog.password = 'xxxxxx'

@@ -42,8 +42,7 @@ describe('Tokenhandler', () => {
   })
 
   tracedRequest.defaults = () => {
-    return post = () => {
-      }
+    return post = () => {}
   }
 
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
