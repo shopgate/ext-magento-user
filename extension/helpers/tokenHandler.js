@@ -2,7 +2,6 @@ const util = require('util')
 const MagentoError = require('../models/Errors/MagentoEndpointError')
 const InvalidCallError = require('../models/Errors/InvalidCallError')
 const TOKEN_KEY = 'token'
-
 /**
  * @class
  * @classdesc Handles all token related operations
@@ -24,7 +23,8 @@ class TokenHandler {
     if (!request || !clientCredentials) {
       throw new InvalidCallError('request or client credentials are not defined')
     }
-    this.request = request().defaults({
+
+    this.request = request.defaults({
       url: authUrl,
       auth: {
         username: clientCredentials.id,
@@ -238,7 +238,11 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-    this.log.debug(`sending: ${util.inspect(options, false, 3)} to magento auth endpoint`)
+    // A short cleanup to not log plaintext user login data to kibana
+    const objToLog = Object.assign({}, options.json)
+    objToLog.password = 'xxxxxx'
+    this.log.debug(`tokenHandler request ${util.inspect(objToLog)}`)
+
     this.request.post(options, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
@@ -260,6 +264,7 @@ class TokenHandler {
         }
       }
 
+      this.log.debug(`tokenHandler response ${util.inspect(res.body)}`)
       cb(null, tokenData)
     })
   }

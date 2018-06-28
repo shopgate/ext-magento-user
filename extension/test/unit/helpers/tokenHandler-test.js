@@ -41,6 +41,10 @@ describe('Tokenhandler', () => {
     }
   })
 
+  tracedRequest.defaults = () => {
+    return post = () => {}
+  }
+
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
   describe('logout', () => {
     it('should logout the user by deleting the tokens', (done) => {
@@ -68,8 +72,14 @@ describe('Tokenhandler', () => {
         cb(new Error('error'))
       }
 
+      const options = {
+        json: {
+
+        }
+      }
+
       // noinspection JSAccessibilityCheck
-      th._getTokensFromMagento(null, (err) => {
+      th._getTokensFromMagento(options, (err) => {
         assert.equal(err.message, 'error')
         done()
       })
@@ -79,8 +89,14 @@ describe('Tokenhandler', () => {
         cb(null, {statusCode: 500, body: {error: 'error'}})
       }
 
+      const options = {
+        json: {
+
+        }
+      }
+
       // noinspection JSAccessibilityCheck
-      th._getTokensFromMagento(null, (err) => {
+      th._getTokensFromMagento(options, (err) => {
         assert.equal(err.constructor.name, 'MagentoEndpointError')
         assert.equal(err.code, 'EINTERNAL')
         done()

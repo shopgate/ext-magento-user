@@ -11,7 +11,7 @@ module.exports = function (context, input, cb) {
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest
+  const request = context.tracedRequest('magento-user-extension:getToken', {log: true})
 
   const isLoggedIn = !!context.meta.userId
 
