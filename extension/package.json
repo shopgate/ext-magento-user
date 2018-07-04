@@ -1,9 +1,9 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "1.1.7-beta",
+  "version": "1.1.7",
   "description": "prototype",
   "scripts": {
-    "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mocha-jenkins-reporter",
+    "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mochawesome --reporter-options reportDir=coverage",
     "cover": "istanbul cover _mocha -- --recursive",
     "standard": "./node_modules/.bin/standard"
   },
@@ -21,7 +21,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mocha-chai-helper": "1.0.0",
-    "mocha-jenkins-reporter": "^0.3.12",
+    "mochawesome": "3.0.2,",
     "nock": "^9.0.13",
     "rewire": "^2.5.2",
     "sinon": "^5.0.10",

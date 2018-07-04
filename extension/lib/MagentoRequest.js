@@ -26,7 +26,7 @@ class MagentoRequest {
 
     const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
 
-    context.log.debug(`Magento request: ${util.inspect(options)}`)
+    context.log.debug({request: util.inspect(options)}, 'Magento request:')
     const startResponse = new Date()
     return await new Promise((resolve, reject) => {
       tracedRequest(
@@ -48,15 +48,15 @@ class MagentoRequest {
             this.log(context, startResponse, `MagentoEndpointError: ${util.inspect(response.body)}`, response.statusCode)
             reject(new MagentoEndpointError())
           } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
-            this.log(context, startResponse, `Magento response: ${util.inspect(response.body)}`, response.statusCode)
+            this.log(context, startResponse, util.inspect(response.body), response.statusCode)
             resolve(response.body)
           }
         })
     })
   }
 
-  static log (context, startResponse, message, statusCode) {
-    context.log.debug({duration: new Date() - startResponse, statusCode}, message)
+  static log (context, startResponse, response, statusCode) {
+    context.log.debug({duration: new Date() - startResponse, statusCode, response}, 'MagentoRequest response')
   }
 }
 
