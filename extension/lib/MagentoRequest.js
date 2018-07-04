@@ -2,6 +2,7 @@ const MagentoEndpointNotFoundError = require('./../models/Errors/MagentoEndpoint
 const MagentoEndpointNotAllowedError = require('./../models/Errors/MagentoEndpointNotAllowedError')
 const MagentoEndpointError = require('./../models/Errors/MagentoEndpointError')
 const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
+const util = require('util')
 
 /**
  * All needed methods to fire requests to magento
@@ -25,7 +26,7 @@ class MagentoRequest {
 
     const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
 
-    context.log.debug({request: options}, 'Magento request')
+    context.log.debug({request: util.inspect(options, true, null)}, 'Magento request')
     const startResponse = new Date()
     return await new Promise((resolve, reject) => {
       tracedRequest(
@@ -55,7 +56,7 @@ class MagentoRequest {
   }
 
   static log (context, startResponse, message, statusCode) {
-    context.log.debug({duration: new Date() - startResponse, statusCode, response: message}, 'Magento response')
+    context.log.debug({duration: new Date() - startResponse, statusCode, response: util.inspect(message, true, null)}, 'Magento response')
   }
 }
 

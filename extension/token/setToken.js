@@ -1,4 +1,5 @@
 const TokenHandler = require('../helpers/tokenHandler')
+const util = require('util')
 
 module.exports = function (context, input, cb) {
   const clientCredentials = context.config.credentials
@@ -11,7 +12,7 @@ module.exports = function (context, input, cb) {
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
-  log.debug({request: response}, 'setToken request')
+  log.debug({request: util.inspect(response, true, null)}, 'setToken request')
   th.setTokenInStorage('device', 'token', response.tokens, response.lifeSpan, (err) => {
     if (err) return cb(err)
     return cb(null, {})
