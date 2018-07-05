@@ -26,37 +26,44 @@ class MagentoRequest {
 
     const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
 
-    context.log.debug({request: util.inspect(options, true, null)}, 'Magento request')
-    const startResponse = new Date()
+    this.request = util.inspect(options, true, null)
+    this.startResponse = new Date()
+    this.context = context
+
     return await new Promise((resolve, reject) => {
       tracedRequest(
         options,
         (error, response) => {
+          this.response = null
+          if (response) {
+            this.response = response
+          }
+
           if (error) {
-            this.log(context, startResponse, response.body, null)
+            this.log(null)
             reject(new Error(error))
           } else if (response.statusCode === 401 || response.statusCode === 403) {
-            this.log(context, startResponse, response.body, response.statusCode)
+            this.log(response.statusCode, 'UnauthorizedError')
             reject(new UnauthorizedError())
           } else if (response.statusCode === 404) {
-            this.log(context, startResponse, response.body, response.statusCode)
+            this.log(response.statusCode, 'MagentoEndpointNotFoundError')
             reject(new MagentoEndpointNotFoundError())
           } else if (response.statusCode === 405) {
-            this.log(context, startResponse, response.body, response.statusCode)
+            this.log(response.statusCode, 'MagentoEndpointNotAllowedError')
             reject(new MagentoEndpointNotAllowedError())
           } else if (response.body.messages && response.body.messages.error) {
-            this.log(context, startResponse, response.body, response.statusCode)
+            this.log(response.statusCode, 'MagentoEndpointError')
             reject(new MagentoEndpointError())
           } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
-            this.log(context, startResponse, response.body, response.statusCode)
+            this.log(response.statusCode)
             resolve(response.body)
           }
         })
     })
   }
 
-  static log (context, startResponse, message, statusCode) {
-    context.log.debug({duration: new Date() - startResponse, statusCode, response: util.inspect(message, true, null)}, 'Magento response')
+  static log (statusCode, message = 'Magento response') {
+    this.context.log.debug({duration: new Date() - this.startResponse, statusCode, request: this.request, response: util.inspect(this.response, true, null)}, message)
   }
 }
 

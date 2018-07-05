@@ -241,7 +241,6 @@ class TokenHandler {
     // A short cleanup to not log plaintext user login data to kibana
     const objToLog = Object.assign({}, options.json)
     objToLog.password = 'xxxxxx'
-    this.log.debug({request: util.inspect(objToLog, true, null)}, 'tokenHandler request')
     const requestStart = new Date()
 
     this.request.post(options, (err, res) => {
@@ -265,7 +264,7 @@ class TokenHandler {
         }
       }
 
-      this.log.debug({duration: new Date() - requestStart, statusCode: res.statusCode, response: util.inspect(res.body, true, null)}, 'tokenHandler response')
+      this.log.debug({duration: new Date() - requestStart, statusCode: res.statusCode, request: util.inspect(objToLog, true, null), response: util.inspect(res.body, true, null)}, 'tokenHandler')
       cb(null, tokenData)
     })
   }
