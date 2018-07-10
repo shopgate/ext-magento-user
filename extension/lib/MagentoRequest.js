@@ -70,7 +70,8 @@ class MagentoRequest {
           {
             headers: this.response.headers,
             body: this.response.body
-          }
+          },
+        trace: console.trace()
       },
       message
     )
