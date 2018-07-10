@@ -264,7 +264,7 @@ class TokenHandler {
         }
       }
 
-      this.log.debug({duration: new Date() - requestStart, statusCode: res.statusCode, request: util.inspect(objToLog, true, null), response: util.inspect(res.body, true, null)}, 'tokenHandler')
+      this.log.debug({duration: new Date() - requestStart, statusCode: res.statusCode, request: util.inspect(objToLog, true, null), response: util.inspect(res.body, true, null)}, 'Request to Magento: tokenHandler')
       cb(null, tokenData)
     })
   }

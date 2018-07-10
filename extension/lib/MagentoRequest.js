@@ -12,9 +12,10 @@ class MagentoRequest {
    * @param {string} url
    * @param {Object} context
    * @param {string} token
+   * @param message
    * @returns {Object}
    */
-  static async send (url, context, token) {
+  static async send (url, context, token, message = 'Request to Magento') {
     const options = {
       url: url,
       json: true,
@@ -25,9 +26,6 @@ class MagentoRequest {
     }
 
     const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
-
-    this.request = util.inspect(options, true, null)
-    this.startResponse = new Date()
     this.context = context
 
     return await new Promise((resolve, reject) => {
@@ -40,30 +38,42 @@ class MagentoRequest {
           }
 
           if (error) {
-            this.log(null)
+            this.log(null, util.inspect(options, true, null), new Date(), message)
             reject(new Error(error))
           } else if (response.statusCode === 401 || response.statusCode === 403) {
-            this.log(response.statusCode, 'UnauthorizedError')
+            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'UnauthorizedError')
             reject(new UnauthorizedError())
           } else if (response.statusCode === 404) {
-            this.log(response.statusCode, 'MagentoEndpointNotFoundError')
+            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointNotFoundError')
             reject(new MagentoEndpointNotFoundError())
           } else if (response.statusCode === 405) {
-            this.log(response.statusCode, 'MagentoEndpointNotAllowedError')
+            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointNotAllowedError')
             reject(new MagentoEndpointNotAllowedError())
           } else if (response.body.messages && response.body.messages.error) {
-            this.log(response.statusCode, 'MagentoEndpointError')
+            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointError')
             reject(new MagentoEndpointError())
           } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
-            this.log(response.statusCode)
+            this.log(response.statusCode, util.inspect(options, true, null), new Date(), message)
             resolve(response.body)
           }
         })
     })
   }
 
-  static log (statusCode, message = 'Magento response') {
-    this.context.log.debug({duration: new Date() - this.startResponse, statusCode, request: this.request, response: util.inspect(this.response, true, null)}, message)
+  static log (statusCode, request, timerStart, message) {
+    this.context.log.debug(
+      {
+        duration: new Date() - timerStart,
+        statusCode,
+        request,
+        response:
+          {
+            headers: this.response.headers,
+            body: this.response.body
+          }
+      },
+      message
+    )
   }
 }
 

@@ -12,7 +12,7 @@ module.exports = function (context, input, cb) {
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
-  log.debug({request: util.inspect(response, true, null)}, 'setToken request')
+  log.debug({request: util.inspect(response, true, null)}, 'Request to Magento: setToken')
   th.setTokenInStorage('device', 'token', response.tokens, response.lifeSpan, (err) => {
     if (err) return cb(err)
     return cb(null, {})
