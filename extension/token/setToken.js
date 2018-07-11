@@ -14,8 +14,7 @@ module.exports = function (context, input, cb) {
 
   log.debug(
     {
-      response: util.inspect(response, true, null),
-      trace: console.trace()
+      response: util.inspect(response, true, null)
     },
     'Response from Magento: setToken'
   )

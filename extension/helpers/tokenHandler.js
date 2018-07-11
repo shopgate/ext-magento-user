@@ -269,8 +269,7 @@ class TokenHandler {
           duration: new Date() - requestStart,
           statusCode: res.statusCode,
           request: util.inspect(objToLog, true, null),
-          response: util.inspect(res.body, true, null),
-          trace: console.trace()
+          response: util.inspect(res.body, true, null)
         },
         'Request to Magento: tokenHandler'
       )
