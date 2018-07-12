@@ -38,22 +38,22 @@ class MagentoRequest {
           }
 
           if (error) {
-            this.log(null, util.inspect(options, true, null), new Date(), message)
+            this.log(null, util.inspect(options, true, 5), new Date(), message)
             reject(new Error(error))
           } else if (response.statusCode === 401 || response.statusCode === 403) {
-            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'UnauthorizedError')
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'UnauthorizedError')
             reject(new UnauthorizedError())
           } else if (response.statusCode === 404) {
-            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointNotFoundError')
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'MagentoEndpointNotFoundError')
             reject(new MagentoEndpointNotFoundError())
           } else if (response.statusCode === 405) {
-            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointNotAllowedError')
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'MagentoEndpointNotAllowedError')
             reject(new MagentoEndpointNotAllowedError())
           } else if (response.body.messages && response.body.messages.error) {
-            this.log(response.statusCode, util.inspect(options, true, null), new Date(), 'MagentoEndpointError')
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'MagentoEndpointError')
             reject(new MagentoEndpointError())
           } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
-            this.log(response.statusCode, util.inspect(options, true, null), new Date(), message)
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), message)
             resolve(response.body)
           }
         })
