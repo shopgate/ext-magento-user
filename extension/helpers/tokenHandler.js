@@ -241,11 +241,6 @@ class TokenHandler {
     // A short cleanup to not log plaintext user login data to kibana
     const objToLog = Object.assign({}, options.json)
     objToLog.password = 'xxxxxx'
-<<<<<<< HEAD
-    this.log.debug({request: util.inspect(objToLog)}, 'tokenHandler request')
-=======
-    const requestStart = new Date()
->>>>>>> 1143c600b74dd6cb0c1654bdb7fbd659deb91e8b
 
     const requestStart = new Date()
     this.request.post(options, (err, res) => {
@@ -269,9 +264,6 @@ class TokenHandler {
         }
       }
 
-<<<<<<< HEAD
-      this.log.debug({duration: new Date() - requestStart, statusCode: res.statusCode, response: util.inspect(res.body)}, 'tokenHandler response')
-=======
       this.log.debug(
         {
           duration: new Date() - requestStart,
@@ -282,7 +274,6 @@ class TokenHandler {
         'Request to Magento: tokenHandler'
       )
 
->>>>>>> 1143c600b74dd6cb0c1654bdb7fbd659deb91e8b
       cb(null, tokenData)
     })
   }
