@@ -1,5 +1,5 @@
 {
-  "version": "1.1.7-beta",
+  "version": "1.1.8",
   "id": "@shopgate/magento-user",
   "trusted": true,
   "configuration": {
