@@ -39,8 +39,8 @@ module.exports = async function (context, input) {
   }
 
   /**
-   * @param {string | null} data
-   * @return {string| boolean | numbers | undefined}
+   * @param {string | boolean | numbers | null} data
+   * @return {string | undefined}
    * @private
    */
   function getValue (data) {
