@@ -2,7 +2,7 @@ const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 module.exports = async function (context, input) {
-  if (!context.meta || !context.meta.userId) {
+  if (!context.meta || !context.meta.userId || !input.userId) {
     throw new UnauthorizedError()
   }
 
@@ -12,15 +12,15 @@ module.exports = async function (context, input) {
   return {
     addresses: magentoAddressResponse.map(address => ({
       id: address.entity_id,
-      firstName: _getValue(address.firstname),
-      lastName: _getValue(address.lastname),
-      street1: _getStreet(address.street, 'street1'),
-      street2: _getStreet(address.street, 'street2'),
-      zipCode: _getValue(address.postcode),
-      city: _getValue(address.city),
-      province: _getValue(address.region_id),
-      country: _getValue(address.country_id),
-      tags: _getTags(address),
+      firstName: getValue(address.firstname),
+      lastName: getValue(address.lastname),
+      street1: getStreet(address.street, 'street1'),
+      street2: getStreet(address.street, 'street2'),
+      zipCode: getValue(address.postcode),
+      city: getValue(address.city),
+      province: getValue(address.region_id),
+      country: getValue(address.country_id),
+      tags: getTags(address),
       customAttributes: _getCustomAttributes(address)
     }))
   }
@@ -31,12 +31,12 @@ module.exports = async function (context, input) {
    * @return {string | null}
    * @private
    */
-  function _getStreet (steetData, type) {
+  function getStreet (steetData, type) {
     switch (type) {
       case 'street1':
-        return _getValue(steetData.hasOwnProperty(0) ? steetData[0] : null)
+        return getValue(steetData.hasOwnProperty(0) ? steetData[0] : null)
       case 'street2':
-        return _getValue(steetData.hasOwnProperty(1) ? steetData[1] : null)
+        return getValue(steetData.hasOwnProperty(1) ? steetData[1] : null)
       default:
         return null
     }
@@ -44,10 +44,10 @@ module.exports = async function (context, input) {
 
   /**
    * @param {string | null} data
-   * @return {string | undefined}
+   * @return {string| boolean | numbers | undefined}
    * @private
    */
-  function _getValue (data) {
+  function getValue (data) {
     return data !== null ? data : undefined
   }
 
@@ -56,7 +56,7 @@ module.exports = async function (context, input) {
    * @return {Array | null}
    * @private
    */
-  function _getTags (address) {
+  function getTags (address) {
     let tags = []
     if (address.is_default_shipping) {
       tags.push('default_shipping')
@@ -75,15 +75,15 @@ module.exports = async function (context, input) {
    */
   function _getCustomAttributes (address) {
     let customAttributes = {}
-    customAttributes.middleName = _getValue(address.middlename)
-    customAttributes.prefix = _getValue(address.prefix)
-    customAttributes.suffix = _getValue(address.suffix)
-    customAttributes.phone = _getValue(address.telephone)
-    customAttributes.fax = _getValue(address.fax)
-    customAttributes.company = _getValue(address.company)
-    customAttributes.vatId = _getValue(address.vat_id)
+    customAttributes.middleName = getValue(address.middlename)
+    customAttributes.prefix = getValue(address.prefix)
+    customAttributes.suffix = getValue(address.suffix)
+    customAttributes.phone = getValue(address.telephone)
+    customAttributes.fax = getValue(address.fax)
+    customAttributes.company = getValue(address.company)
+    customAttributes.vatId = getValue(address.vat_id)
     Object.keys(address.customAttributes).map((key) => {
-      customAttributes[key] = _getValue(address.customAttributes[key])
+      customAttributes[key] = getValue(address.customAttributes[key])
     })
     return customAttributes
   }
