@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "4b4e769b-1dc5-4134-aa2d-6c876a3ff6f8",
+		"name": "Magento Connect User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAddresses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6127aab-26ba-4eb0-b961-567dd7f7ded2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+							"    pm.response.to.be.ok,",
+							"    pm.response.to.be.with.body,",
+							"    pm.response.to.be.json",
+							"})",
+							"",
+							"pm.test(\"Make sure all required address data was properly set\", function() {",
+							"    const response = pm.response.json();",
+							"    const address = response.addresses.pop();",
+							"    pm.expect(address.id).to.be.a('string', 'Not a string provided!')",
+							"})",
+							"",
+							"pm.test(\"Make sure all optional address data was properly set in the right format\", function() {",
+							"    const response = pm.response.json();",
+							"    const address = response.addresses.pop();",
+							"    const generalKeys = [",
+							"        'firstName',",
+							"        'lastName',",
+							"        'street1',",
+							"        'street2',",
+							"        'zipCode',",
+							"        'city',",
+							"        'province',",
+							"        'country'",
+							"        ]",
+							"    generalKeys.map(function(item) {",
+							"        if (address[item]) {",
+							"            pm.expect(address[item]).to.be.a('string', item + ' - Not a string provided!')",
+							"        }",
+							"    })",
+							"})",
+							"",
+							"pm.test(\"Make sure that if tags set, tags ar an array\", function() {",
+							"    const response = pm.response.json();",
+							"    const address = response.addresses.pop();",
+							"    if (address.tags) {",
+							"        pm.expect(address.tags).to.be.a('array', 'Not a array provided!')",
+							"    }",
+							"})",
+							"",
+							"pm.test(\"Make sure that if customAttributes set, customAttributes ar an object\", function() {",
+							"    const response = pm.response.json();",
+							"    const address = response.addresses.pop();",
+							"    if (address.customAttributes) {",
+							"        pm.expect(address.customAttributes).to.be.a('object', 'Not a object provided!')",
+							"    }",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": "{{domain}}{{endpoint_address_get}}"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "36efba06-8522-4c8e-b836-f2fdaf926d00",
+			"key": "domain",
+			"value": "http://localhost:{{port}}",
+			"type": "string"
+		},
+		{
+			"id": "88208dcb-0881-43ef-87c5-d12953157ea7",
+			"key": "port",
+			"value": "8090",
+			"type": "string"
+		},
+		{
+			"id": "cc91d146-528d-449a-9753-5eb0864cb427",
+			"key": "endpoint_address_get",
+			"value": "/trustedPipelines/shopgate.user.getAddresses.v1",
+			"type": "string"
+		}
+	]
+}
