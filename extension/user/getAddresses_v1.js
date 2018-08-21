@@ -14,8 +14,7 @@ module.exports = async function (context, input) {
       id: address.entity_id,
       firstName: getValue(address.firstname),
       lastName: getValue(address.lastname),
-      street1: getStreet(address.street, 'street1'),
-      street2: getStreet(address.street, 'street2'),
+      ...getStreet(address.street),
       zipCode: getValue(address.postcode),
       city: getValue(address.city),
       province: getValue(address.region_id),
@@ -31,15 +30,12 @@ module.exports = async function (context, input) {
    * @return {string | null}
    * @private
    */
-  function getStreet (steetData, type) {
-    switch (type) {
-      case 'street1':
-        return getValue(steetData.hasOwnProperty(0) ? steetData[0] : null)
-      case 'street2':
-        return getValue(steetData.hasOwnProperty(1) ? steetData[1] : null)
-      default:
-        return null
+  function getStreet (street) {
+    const map = street && {
+      ...(street.length === 2 && {street2: street.pop()}),
+      ...(street.length === 1 && {street1: street.pop()})
     }
+    return map || {}
   }
 
   /**
