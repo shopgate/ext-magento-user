@@ -55,20 +55,20 @@
  * @property {string} [lastname]
  * @property {string} [company]
  * @property {string} [city]
- * @property {string} [country_id]
- * @property {string} [region]
+ * @property {string} [country_id] - short name of country, e.g. US (ISO2)
+ * @property {string} [region] - full region name, e.g. Arizona
  * @property {string} [postcode]
  * @property {string} [telephone]
  * @property {string} [fax]
  * @property {string} [prefix]
  * @property {string} [suffix]
  * @property {string} [vat_id]
- * @property {string} [region_id]
+ * @property {string} [region_id] - database id of region
  * @property {Array} [street]
  * @property {Array} [customer_id]
  * @property {Object} [customAttributes]
- * @property {Boolean} [is_default_billing]
- * @property {Boolean} [s_default_shipping]
+ * @property {boolean} [is_default_billing]
+ * @property {boolean} [s_default_shipping]
  */
 /**
  * @typedef {Object} ShopgateAddress
@@ -80,8 +80,8 @@
  * @property {string} [street2]
  * @property {string} [city]
  * @property {string} [zipCode] - zip code of country
- * @property {string} country - short name of country, e.g. US
- * @property {string} [province] - short name of province/region/state, e.g. AZ
+ * @property {string} country - short name of country, e.g. US (ISO2)
+ * @property {string} [province] - short name of province/region/state, e.g. AZ (ISO2)
  * @property {string[]} [tags] - list of cart specific tags, e.g. 'default', 'billing', etc.
  * @property {ShopgateAddressCustomAttributes} [customAttributes]
  */
