@@ -40,7 +40,7 @@ module.exports = async function (context, input) {
   }
 
   /**
-   * @param {string | boolean | numbers | null} data
+   * @param {string | boolean | number | null} data
    * @return {string | undefined}
    * @private
    */
