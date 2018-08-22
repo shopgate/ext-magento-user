@@ -42,7 +42,7 @@
 /**
  * @typedef {Object} MagentoAddress
  * @property {Object} address
- * @property {string} [id]
+ * @property {string} id
  * @property {string} [entity_type_id]
  * @property {string} [attribute_set_id]
  * @property {string} [increment_id]

@@ -27,7 +27,6 @@ module.exports = async function (context, input) {
 
   /**
    * @param {Array} street
-   * @param {string} type
    * @return {Object}
    * @private
    */
@@ -36,6 +35,7 @@ module.exports = async function (context, input) {
       ...(street.length === 2 && {street2: street.pop()}),
       ...(street.length === 1 && {street1: street.pop()})
     }
+
     return map || {}
   }
 
@@ -66,7 +66,7 @@ module.exports = async function (context, input) {
   }
 
   /**
-   * @param {Object} address
+   * @param {MagentoAddress} address
    * @return {ShopgateAddressCustomAttributes}
    * @private
    */
@@ -82,6 +82,7 @@ module.exports = async function (context, input) {
     Object.keys(address.customAttributes).map((key) => {
       customAttributes[key] = getValue(address.customAttributes[key])
     })
+
     return customAttributes
   }
 }
