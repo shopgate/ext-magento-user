@@ -2,11 +2,12 @@ const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 module.exports = async function (context, input) {
-  if (!context.meta || !context.meta.userId || !input.userId) {
+  if (!context.meta || !context.meta.userId) {
     throw new UnauthorizedError()
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses`
+  /** @type {MagentoAddress[]} */
   const magentoAddressResponse = await MagentoRequest.send(endpointUrl, context, input.token, 'Request to Magento: getAddresses')
 
   return {
@@ -20,7 +21,7 @@ module.exports = async function (context, input) {
       province: getValue(address.region_id),
       country: getValue(address.country_id),
       tags: getTags(address),
-      customAttributes: _getCustomAttributes(address)
+      customAttributes: getCustomAttributes(address)
     }))
   }
 
@@ -66,10 +67,10 @@ module.exports = async function (context, input) {
 
   /**
    * @param {Object} address
-   * @return {Object}
+   * @return {ShopgateAddressCustomAttributes}
    * @private
    */
-  function _getCustomAttributes (address) {
+  function getCustomAttributes (address) {
     let customAttributes = {}
     customAttributes.middleName = getValue(address.middlename)
     customAttributes.prefix = getValue(address.prefix)

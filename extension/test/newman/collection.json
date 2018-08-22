@@ -90,13 +90,13 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ec93df1-7dce-42b6-ac3c-20108b5f8c72",
+								"id": "f517c681-4999-4615-b31e-ba77bf9e31e5",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"})",
-									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+									"pm.test(\"Test if response is okay, with body and json\", function () {",
 									"    pm.response.to.be.ok,",
 									"    pm.response.to.be.with.body,",
 									"    pm.response.to.be.json",
@@ -168,19 +168,19 @@
 	],
 	"variable": [
 		{
-			"id": "f2437a11-80aa-4ded-9f42-b14f9d6f5533",
+			"id": "3b8f01b4-be49-4591-b182-5ffaf6b8c279",
 			"key": "domain",
 			"value": "http://localhost:{{port}}",
 			"type": "string"
 		},
 		{
-			"id": "17e41f53-7727-4222-a0d5-7f80c9e3d4bc",
+			"id": "69a93387-ba0d-47c0-a3de-f12ee0370e90",
 			"key": "port",
 			"value": "8090",
 			"type": "string"
 		},
 		{
-			"id": "e8cf42d1-e409-4142-b89e-27aecc505150",
+			"id": "7aa123ad-34be-4a28-8cf0-7a9080af2aa3",
 			"key": "endpoint_address_get",
 			"value": "/trustedPipelines/shopgate.user.getAddresses.v1",
 			"type": "string"
