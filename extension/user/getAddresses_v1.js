@@ -26,9 +26,9 @@ module.exports = async function (context, input) {
   }
 
   /**
-   * @param {Array} steetData
+   * @param {Array} street
    * @param {string} type
-   * @return {string | null}
+   * @return {Object}
    * @private
    */
   function getStreet (street) {
