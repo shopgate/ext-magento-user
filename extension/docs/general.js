@@ -65,15 +65,15 @@
  * @property {string} [vat_id]
  * @property {string} [region_id] - database id of region
  * @property {Array} [street]
- * @property {Array} [customer_id]
+ * @property {string} [customer_id]
  * @property {Object} [customAttributes]
  * @property {boolean} [is_default_billing]
- * @property {boolean} [s_default_shipping]
+ * @property {boolean} [is_default_shipping]
  */
 /**
  * @typedef {Object} ShopgateAddress
  * @property {Object} address
- * @property {string} [id]
+ * @property {string} id
  * @property {string} [firstName]
  * @property {string} [lastName]
  * @property {string} [street1]
