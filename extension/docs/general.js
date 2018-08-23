@@ -67,8 +67,8 @@
  * @property {Array} [street]
  * @property {string} [customer_id]
  * @property {Object} [customAttributes]
- * @property {boolean} [is_default_billing]
- * @property {boolean} [is_default_shipping]
+ * @property {number} [is_default_billing]
+ * @property {number} [is_default_shipping]
  */
 /**
  * @typedef {Object} ShopgateAddress
