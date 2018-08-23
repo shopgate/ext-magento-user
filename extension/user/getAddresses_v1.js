@@ -50,7 +50,7 @@ module.exports = async function (context, input) {
 
   /**
    * @param {Object} address
-   * @return {Array | null}
+   * @return {Array | undefined}
    * @private
    */
   function getTags (address) {
@@ -62,7 +62,7 @@ module.exports = async function (context, input) {
       tags.push('default_billing')
     }
 
-    return tags.length > 0 ? tags : null
+    return tags.length > 0 ? tags : undefined
   }
 
   /**
