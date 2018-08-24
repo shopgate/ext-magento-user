@@ -94,9 +94,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "aa20e5f1-77dd-479e-9dab-a0b99a08a12c",
+										"id": "1c6c0028-f9fd-4052-bc16-fabe0357a5cf",
 										"type": "text/javascript",
 										"exec": [
+											"const response = pm.response.json();",
+											"const address = response.addresses.pop();",
+											"",
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
 											"})",
@@ -107,15 +110,11 @@
 											"})",
 											"",
 											"pm.test(\"Make sure all required address data was properly set\", function() {",
-											"    const response = pm.response.json();",
-											"    const address = response.addresses.pop();",
 											"    pm.expect(address.id).to.not.be.empty",
 											"    pm.expect(address.id).to.be.a('string', 'Not a string provided!')",
 											"})",
 											"",
 											"pm.test(\"Make sure all optional address data was properly set in the right format\", function() {",
-											"    const response = pm.response.json();",
-											"    const address = response.addresses.pop();",
 											"    const generalKeys = [",
 											"        'firstName',",
 											"        'lastName',",
@@ -133,17 +132,11 @@
 											"    })",
 											"})",
 											"",
-											"pm.test(\"Make sure that if tags set, tags are an array\", function() {",
-											"    const response = pm.response.json();",
-											"    const address = response.addresses.pop();",
-											"    if (address.tags) {",
-											"        pm.expect(address.tags).to.be.a('array', 'Not a array provided!')",
-											"    }",
+											"pm.test(\"Make sure that tags are an array\", function() {",
+											"    pm.expect(address.tags).to.be.a('array', 'Not a array provided!')",
 											"})",
 											"",
 											"pm.test(\"Make sure that if customAttributes set, customAttributes are an object\", function() {",
-											"    const response = pm.response.json();",
-											"    const address = response.addresses.pop();",
 											"    if (address.customAttributes) {",
 											"        pm.expect(address.customAttributes).to.be.a('object', 'Not a object provided!')",
 											"    }",
@@ -176,19 +169,19 @@
 	],
 	"variable": [
 		{
-			"id": "1007455f-2982-4d46-990e-71f74d0563e8",
+			"id": "e9937db9-0f6a-4f8b-9d79-1ace462d7e66",
 			"key": "domain",
 			"value": "http://localhost:{{port}}",
 			"type": "string"
 		},
 		{
-			"id": "93f3aa6a-372a-4ed8-8b4d-ea7cee0dbf3d",
+			"id": "3bcd5266-d033-4ae1-9836-325646660851",
 			"key": "port",
 			"value": "8090",
 			"type": "string"
 		},
 		{
-			"id": "4d14629a-b5b0-468b-a06d-509050e94ab0",
+			"id": "9578240c-58ad-40b4-9588-35cf8ad6cdf3",
 			"key": "endpoint_address_get",
 			"value": "/trustedPipelines/shopgate.user.getAddresses.v1",
 			"type": "string"
