@@ -13,13 +13,13 @@ module.exports = async function (context, input) {
   return {
     addresses: magentoAddressResponse.map(address => ({
       id: address.entity_id,
-      firstName: getValue(address.firstname),
-      lastName: getValue(address.lastname),
+      firstName: address.firstname,
+      lastName: address.lastname,
       ...getStreet(address.street),
-      zipCode: getValue(address.postcode),
-      city: getValue(address.city),
-      province: getValue(address.region_id),
-      country: getValue(address.country_id),
+      zipCode: address.postcode,
+      city: address.city,
+      province: address.region_code,
+      country: address.country_id,
       tags: getTags(address),
       customAttributes: getCustomAttributes(address)
     }))
@@ -40,17 +40,8 @@ module.exports = async function (context, input) {
   }
 
   /**
-   * @param {string | boolean | number | null} data
-   * @return {string | undefined}
-   * @private
-   */
-  function getValue (data) {
-    return data !== null ? data : undefined
-  }
-
-  /**
    * @param {Object} address
-   * @return {Array | undefined}
+   * @return {Array}
    * @private
    */
   function getTags (address) {
@@ -62,7 +53,7 @@ module.exports = async function (context, input) {
       tags.push('default_billing')
     }
 
-    return tags.length > 0 ? tags : undefined
+    return tags
   }
 
   /**
@@ -72,15 +63,15 @@ module.exports = async function (context, input) {
    */
   function getCustomAttributes (address) {
     let customAttributes = {}
-    customAttributes.middleName = getValue(address.middlename)
-    customAttributes.prefix = getValue(address.prefix)
-    customAttributes.suffix = getValue(address.suffix)
-    customAttributes.phone = getValue(address.telephone)
-    customAttributes.fax = getValue(address.fax)
-    customAttributes.company = getValue(address.company)
-    customAttributes.vatId = getValue(address.vat_id)
+    customAttributes.middleName = address.middlename
+    customAttributes.prefix = address.prefix
+    customAttributes.suffix = address.suffix
+    customAttributes.phone = address.telephone
+    customAttributes.fax = address.fax
+    customAttributes.company = address.company
+    customAttributes.vatId = address.vat_id
     Object.keys(address.customAttributes).map((key) => {
-      customAttributes[key] = getValue(address.customAttributes[key])
+      customAttributes[key] = address.customAttributes[key]
     })
 
     return customAttributes
