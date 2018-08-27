@@ -39,3 +39,59 @@
  * @param {?Error} error - an error that can be passed to the callback
  * @param {?Object} result - a valid json key/value to return to the pipeline
  */
+/**
+ * @typedef {Object} MagentoAddress
+ * @property {Object} address
+ * @property {string} id
+ * @property {string} [entity_type_id]
+ * @property {string} [attribute_set_id]
+ * @property {string} [increment_id]
+ * @property {string} [parent_id]
+ * @property {string} [created_at]
+ * @property {string} [updated_at]
+ * @property {string} [is_active]
+ * @property {string} [firstname]
+ * @property {string} [middlename]
+ * @property {string} [lastname]
+ * @property {string} [company]
+ * @property {string} [city]
+ * @property {string} [country_id] - short name of country, e.g. US (ISO2)
+ * @property {string} [region] - full region name, e.g. Arizona
+ * @property {string} [postcode]
+ * @property {string} [telephone]
+ * @property {string} [fax]
+ * @property {string} [prefix]
+ * @property {string} [suffix]
+ * @property {string} [vat_id]
+ * @property {string} [region_id] - database id of region
+ * @property {Array} [street]
+ * @property {string} [customer_id]
+ * @property {Object} [customAttributes]
+ * @property {number} [is_default_billing]
+ * @property {number} [is_default_shipping]
+ */
+/**
+ * @typedef {Object} ShopgateAddress
+ * @property {Object} address
+ * @property {string} id
+ * @property {string} [firstName]
+ * @property {string} [lastName]
+ * @property {string} [street1]
+ * @property {string} [street2]
+ * @property {string} [city]
+ * @property {string} [zipCode] - zip code of country
+ * @property {string} country - short name of country, e.g. US (ISO2)
+ * @property {string} [province] - short name of province/region/state, e.g. AZ (ISO2)
+ * @property {string[]} [tags] - list of cart specific tags, e.g. 'default', 'billing', etc.
+ * @property {ShopgateAddressCustomAttributes} [customAttributes]
+ */
+/**
+ * @typedef {Object} ShopgateAddressCustomAttributes
+ * @property {string} [middleName]
+ * @property {string} [prefix]
+ * @property {string} [suffix]
+ * @property {string} [phone]
+ * @property {string} [fax]
+ * @property {string} [company]
+ * @property {string} [vatId]
+ */

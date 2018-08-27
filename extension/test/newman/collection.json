@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "4b4e769b-1dc5-4134-aa2d-6c876a3ff6f8",
+		"name": "Magento Connect User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAddresses",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": "{{domain}}{{endpoint_customer_logout}}",
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "getAddresses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a413685b-7d1f-428c-b1af-6e17c1330912",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot retrieve data\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": "{{domain}}{{endpoint_address_get}}"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "customerLogin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+								},
+								"url": "{{domain}}{{endpoint_customer_login}}",
+								"description": "customerLogin"
+							},
+							"response": []
+						},
+						{
+							"name": "getAddresses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1c6c0028-f9fd-4052-bc16-fabe0357a5cf",
+										"type": "text/javascript",
+										"exec": [
+											"const response = pm.response.json();",
+											"const address = response.addresses.pop();",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"pm.test(\"Test if response is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok,",
+											"    pm.response.to.be.with.body,",
+											"    pm.response.to.be.json",
+											"})",
+											"",
+											"pm.test(\"Make sure all required address data was properly set\", function() {",
+											"    pm.expect(address.id).to.not.be.empty",
+											"    pm.expect(address.id).to.be.a('string', 'Not a string provided!')",
+											"})",
+											"",
+											"pm.test(\"Make sure all optional address data was properly set in the right format\", function() {",
+											"    const generalKeys = [",
+											"        'firstName',",
+											"        'lastName',",
+											"        'street1',",
+											"        'street2',",
+											"        'zipCode',",
+											"        'city',",
+											"        'province',",
+											"        'country'",
+											"        ]",
+											"    generalKeys.map(function(item) {",
+											"        if (address[item]) {",
+											"            pm.expect(address[item]).to.be.a('string', item + ' - Not a string provided!')",
+											"        }",
+											"    })",
+											"})",
+											"",
+											"pm.test(\"Make sure that tags are an array\", function() {",
+											"    pm.expect(address.tags).to.be.a('array', 'Not a array provided!')",
+											"})",
+											"",
+											"pm.test(\"Make sure that if customAttributes set, customAttributes are an object\", function() {",
+											"    if (address.customAttributes) {",
+											"        pm.expect(address.customAttributes).to.be.a('object', 'Not a object provided!')",
+											"    }",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": "{{domain}}{{endpoint_address_get}}"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "e9937db9-0f6a-4f8b-9d79-1ace462d7e66",
+			"key": "domain",
+			"value": "http://localhost:{{port}}",
+			"type": "string"
+		},
+		{
+			"id": "3bcd5266-d033-4ae1-9836-325646660851",
+			"key": "port",
+			"value": "8090",
+			"type": "string"
+		},
+		{
+			"id": "9578240c-58ad-40b4-9588-35cf8ad6cdf3",
+			"key": "endpoint_address_get",
+			"value": "/trustedPipelines/shopgate.user.getAddresses.v1",
+			"type": "string"
+		}
+	]
+}
