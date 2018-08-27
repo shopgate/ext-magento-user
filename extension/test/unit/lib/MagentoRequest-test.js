@@ -4,6 +4,7 @@ const sinon = require('sinon')
 const describe = require('mocha').describe
 const it = require('mocha').it
 const request = require('request')
+const util = require('util')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
 
@@ -28,7 +29,7 @@ describe('MagentoRequest', () => {
         return request
       },
       log: {
-        debug: (message) => {
+        debug: (object, message) => {
         }
       }
     }
@@ -73,10 +74,11 @@ describe('MagentoRequest', () => {
   it('should return error because of error in response', async () => {
     nock(magentoApiUrl)
       .get(meEndpoint)
-      .replyWithError({
+      .reply(401, {
         messages: {
           error: 'fancy error message'
-        }
+        },
+        headers: {}
       })
 
     try {
@@ -88,17 +90,29 @@ describe('MagentoRequest', () => {
 
   it('should return a valid response', async () => {
     const debugLogSpy = sinon.spy(context.log, 'debug')
-    const debugLogMessage = 'Magento request: { url: \'http://magento.shopgate.com/shopgate/v2/customers/me\',\n' +
-      '  json: true,\n' +
-      '  rejectUnauthorized: false,\n' +
-      '  auth: { bearer: \'testToken\' } }'
-
     nock(magentoApiUrl)
       .get(meEndpoint)
       .reply(200, 'ok')
 
     const result = await MagentoRequest.send(completeEndpointUrl, context, input.token)
+
     assert.equal(result, 'ok')
-    sinon.assert.calledWith(debugLogSpy, debugLogMessage)
+    sinon.assert.calledWith(debugLogSpy, {
+      duration: 0,
+      statusCode: 200,
+      request: util.inspect({
+        url: completeEndpointUrl,
+        method: 'GET',
+        json: true,
+        rejectUnauthorized: false,
+        auth: {
+          bearer: input.token
+        }
+      }, true, 5),
+      response: {
+        body: 'ok',
+        headers: {}
+      }
+    }, 'Request to Magento')
   })
 })
