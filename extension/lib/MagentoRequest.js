@@ -2,23 +2,49 @@ const MagentoEndpointNotFoundError = require('./../models/Errors/MagentoEndpoint
 const MagentoEndpointNotAllowedError = require('./../models/Errors/MagentoEndpointNotAllowedError')
 const MagentoEndpointError = require('./../models/Errors/MagentoEndpointError')
 const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
+const FieldValidationError = require('./../models/Errors/FieldValidationError')
 const util = require('util')
 
 /**
  * All needed methods to fire requests to magento
  */
 class MagentoRequest {
+
+  /**
+   * Wrapper function to send POST requests to Magento
+   *
+   * @param {string} url
+   * @param {Object} context
+   * @param {string} token
+   * @param {Object} data
+   * @param {string} message
+   * @returns {string}
+   */
+  static async post (url, context, token, data, message = 'Request to Magento') {
+    const response = this.send(url, context, token, message, 'POST', data)
+
+    return response.then(function () {
+      return {success: true}
+    }).catch(function (e) {
+      console.log(JSON.stringify(e))
+      return response
+    })
+  }
+
   /**
    * @param {string} url
    * @param {Object} context
    * @param {string} token
-   * @param message
+   * @param {string} message
+   * @param {string} method
+   * @param {Object | boolean} data
    * @returns {Object}
    */
-  static async send (url, context, token, message = 'Request to Magento') {
+  static async send (url, context, token, message = 'Request to Magento', method = 'GET', data = true) {
     const options = {
       url: url,
-      json: true,
+      method: method,
+      json: data,
       rejectUnauthorized: !context.config.allowSelfSignedCertificate,
       auth: {
         bearer: token
@@ -40,6 +66,11 @@ class MagentoRequest {
           if (error) {
             this.log(null, util.inspect(options, true, 5), new Date(), message)
             reject(new Error(error))
+          } else if (response.statusCode === 400) {
+            const validationError = new FieldValidationError()
+            const magentoError = response.body.messages.error.pop()
+            validationError.addValidationMessage(magentoError.path, magentoError.messages.join())
+            reject(validationError)
           } else if (response.statusCode === 401 || response.statusCode === 403) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'UnauthorizedError')
             reject(new UnauthorizedError())

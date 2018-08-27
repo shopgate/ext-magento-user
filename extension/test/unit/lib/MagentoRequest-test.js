@@ -9,8 +9,8 @@ const util = require('util')
 const MagentoRequest = require('../../../lib/MagentoRequest')
 
 const magentoApiUrl = 'http://magento.shopgate.com/shopgate/v2'
-const meEndpoint = '/customers/me'
-const completeEndpointUrl = `${magentoApiUrl}${meEndpoint}`
+const testEndpoint = '/test/endpoint'
+const completeEndpointUrl = `${magentoApiUrl}${testEndpoint}`
 
 let input = null
 let context = null
@@ -37,7 +37,7 @@ describe('MagentoRequest', () => {
 
   it('should return unauthorized error because of error code 401', async () => {
     nock(magentoApiUrl)
-      .get(meEndpoint)
+      .get(testEndpoint)
       .reply(401, {})
 
     try {
@@ -49,7 +49,7 @@ describe('MagentoRequest', () => {
 
   it('should return magento endpoint not found error because of error code 404', async () => {
     nock(magentoApiUrl)
-      .get(meEndpoint)
+      .get(testEndpoint)
       .reply(404, {})
 
     try {
@@ -61,7 +61,7 @@ describe('MagentoRequest', () => {
 
   it('should return magento endpoint not allowed error because of error code 405', async () => {
     nock(magentoApiUrl)
-      .get(meEndpoint)
+      .get(testEndpoint)
       .reply(405, {})
 
     try {
@@ -73,7 +73,7 @@ describe('MagentoRequest', () => {
 
   it('should return error because of error in response', async () => {
     nock(magentoApiUrl)
-      .get(meEndpoint)
+      .get(testEndpoint)
       .reply(401, {
         messages: {
           error: 'fancy error message'
@@ -91,7 +91,7 @@ describe('MagentoRequest', () => {
   it('should return a valid response', async () => {
     const debugLogSpy = sinon.spy(context.log, 'debug')
     nock(magentoApiUrl)
-      .get(meEndpoint)
+      .get(testEndpoint)
       .reply(200, 'ok')
 
     const result = await MagentoRequest.send(completeEndpointUrl, context, input.token)
@@ -114,5 +114,19 @@ describe('MagentoRequest', () => {
         headers: {}
       }
     }, 'Request to Magento')
+  })
+
+  it('should trigger a POST request to magento', async () => {
+    nock(magentoApiUrl)
+      .post(testEndpoint)
+      .reply(200, 'ok')
+
+    const postData = {
+      post: true
+    }
+    const requestStub = sinon.spy(MagentoRequest, 'send')
+
+    await MagentoRequest.post(completeEndpointUrl, context, input.token, postData)
+    sinon.assert.calledWith(requestStub, completeEndpointUrl, context, input.token, 'Request to Magento', 'POST', postData)
   })
 })
