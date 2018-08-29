@@ -1,6 +1,6 @@
 const mapper = require('../../lib/mapper')
 
-module.exports = (context, input, cb) => {
+module.exports = async (context, input) => {
 
   const address = Object.assign(input.address)
   /** @var {MagentoAddress} magentoAddress */
@@ -18,7 +18,7 @@ module.exports = (context, input, cb) => {
     ...addCustomAttributes(address.customAttributes)
   }
 
-  return cb(null, {magentoAddress})
+  return {magentoAddress}
 
   /**
    * @param {ShopgateAddressCustomAttributes} customAttributes
