@@ -33,11 +33,34 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/buildMagentoAddress.js",
+        "input": [
+          {"key": "address", "id": "1"}
+        ],
+        "output": [
+          {"key": "magentoAddress", "id": "100"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/addTags.js",
+        "input": [
+          {"key": "address", "id": "1"},
+          {"key": "magentoAddress", "id": "100"}
+        ],
+        "output": [
+          {"key": "magentoAddress", "id": "100"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/addAddress_v1.js",
         "input": [
           {"key": "token", "id": "10"},
           {"key": "userId", "id": "20"},
-          {"key": "address", "id": "1"}
+          {"key": "magentoAddress", "id": "100"}
         ],
         "output": [
           {"key": "success", "id": "2",  "optional": true}
