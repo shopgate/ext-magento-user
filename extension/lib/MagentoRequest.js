@@ -9,7 +9,6 @@ const util = require('util')
  * All needed methods to fire requests to magento
  */
 class MagentoRequest {
-
   /**
    * Wrapper function to send POST requests to Magento
    *
@@ -18,15 +17,14 @@ class MagentoRequest {
    * @param {string} token
    * @param {Object} data
    * @param {string} message
-   * @returns {string}
+   * @returns {Object}
    */
   static async post (url, context, token, data, message = 'Request to Magento') {
     const response = this.send(url, context, token, message, 'POST', data)
 
     return response.then(function () {
       return {success: true}
-    }).catch(function (e) {
-      console.log(JSON.stringify(e))
+    }).catch(function () {
       return response
     })
   }

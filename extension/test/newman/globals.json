@@ -27,12 +27,6 @@
       "enabled": true
     },
     {
-      "key": "endpoint_address_get",
-      "value": "/trustedPipelines/shopgate.user.getAddresses.v1",
-      "description": "",
-      "enabled": true
-    },
-    {
       "key": "endpoint_customer_logout",
       "value": "/trustedPipelines/shopgate.user.logoutUser.v1",
       "description": "",
@@ -42,6 +36,17 @@
       "key": "endpoint_customer_login",
       "value": "/trustedPipelines/shopgate.user.loginUser.v1",
       "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_address_get",
+      "value": "/trustedPipelines/shopgate.user.getAddresses.v1",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_address_add",
+      "value": "/trustedPipelines/shopgate.user.addAddress.v1",
       "enabled": true
     }
   ],
