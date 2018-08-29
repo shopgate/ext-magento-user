@@ -44,7 +44,7 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/address/addTags.js",
+        "path": "@shopgate/magento-user/user/address/utilizeTags.js",
         "input": [
           {"key": "address", "id": "1"},
           {"key": "magentoAddress", "id": "100"}
