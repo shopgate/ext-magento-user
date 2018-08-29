@@ -35,9 +35,11 @@ class FieldValidationError extends Error {
     const translations = {
       firstname: 'firstName',
       lastname: 'lastName',
+      middlename: 'middleName',
       region: 'province',
       postcode: 'zipCode',
-      country_id: 'country'
+      country_id: 'country',
+      vat_id: 'vatId'
     }
     return translations[path] || path
   }
