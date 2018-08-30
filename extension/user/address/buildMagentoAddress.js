@@ -29,7 +29,7 @@ module.exports = async (context, input) => {
     let map = {}
 
     Object.keys(customAttributes).forEach(key => {
-      const customAttributeCode = mapper.mapShopgatAttributeToMagentoAttribute(key)
+      const customAttributeCode = mapper.mapShopgateAttributeToMagentoAttribute(key)
       if (!map.hasOwnProperty(customAttributeCode)) {
         map[customAttributeCode] = customAttributes[key]
       }

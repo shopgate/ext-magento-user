@@ -16,6 +16,6 @@ const attributeMap = {
  * @param {string} [attributeCode] - attribute code used by Shopgate
  * @returns {string} - attribute code used by Magento
  */
-module.exports.mapShopgatAttributeToMagentoAttribute = function (attributeCode) {
+module.exports.mapShopgateAttributeToMagentoAttribute = function (attributeCode) {
   return attributeMap.hasOwnProperty(attributeCode) ? attributeMap[attributeCode] : attributeCode
 }
