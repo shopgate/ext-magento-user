@@ -498,7 +498,7 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "0579c2fc-999e-4d2c-80cb-07b394625a9a",
+												"id": "7f419251-54bf-4327-97e5-0e1ae87881b6",
 												"type": "text/javascript",
 												"exec": [
 													"pm.test(\"Status code is 200\", function () {",
@@ -538,9 +538,7 @@
 													"    pm.expect(address.customAttributes.phone).to.be.eq(pm.environment.get(\"seed\") + '-phone');",
 													"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
 													"    pm.expect(address.customAttributes.vatId).to.be.eq(pm.environment.get(\"seed\") + '-vatId');",
-													"    pm.expect(address.customAttributes.suffix).to.be.eq(pm.environment.get(\"seed\") + '-suffix');",
-													"    pm.expect(address.customAttributes.prefix).to.be.eq(pm.environment.get(\"seed\") + '-prefix');",
-													"    pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middleName');",
+													"    pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middlename');",
 													"});"
 												]
 											}
