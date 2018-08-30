@@ -20,15 +20,8 @@ class MagentoRequest {
    * @returns {Object}
    */
   static async post (url, context, token, data, message = 'Request to Magento') {
-    /*const response = this.send(url, context, token, message, 'POST', data)
+    await this.send(url, context, token, message, 'POST', data)
 
-    return response.then(function () {
-      return {success: true}
-    }).catch(function () {
-      return response
-    })*/
-
-    await this.send(url, context, token, message, 'POST', data) // in case of rejection, an error is thrown here
     return {success: true}
   }
 
