@@ -8,5 +8,5 @@ module.exports = async function (context, input) {
 
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses`
 
-  return await MagentoRequest.post(endpointUrl, context, input.token, input.magentoAddress, 'Request to Magento: addAddress')
+  return MagentoRequest.post(endpointUrl, context, input.token, input.magentoAddress, 'Request to Magento: addAddress')
 }
