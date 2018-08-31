@@ -62,8 +62,9 @@ class MagentoRequest {
             reject(new Error(error))
           } else if (response.statusCode === 400) {
             const validationError = new FieldValidationError()
-            const magentoError = response.body.messages.error.pop()
-            validationError.addValidationMessage(magentoError.path, magentoError.messages.join())
+            response.body.messages.error.forEach(message => {
+              validationError.addValidationMessage(message.path, message.messages.join())
+            })
             reject(validationError)
           } else if (response.statusCode === 401 || response.statusCode === 403) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'UnauthorizedError')
