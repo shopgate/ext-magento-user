@@ -3,12 +3,12 @@ const mapper = require ('../../../lib/mapper')
 
 describe('Attribute Mapper', () => {
   it('should map Shopgate attributes to the code used by Magento', () => {
-    assert.equal(mapper.mapShopgatAttributeToMagentoAttribute('middleName'), 'middlename')
-    assert.equal(mapper.mapShopgatAttributeToMagentoAttribute('phone'), 'telephone')
-    assert.equal(mapper.mapShopgatAttributeToMagentoAttribute('vatId'), 'vat_id')
+    assert.equal(mapper.mapShopgateAttributeToMagentoAttribute('middleName'), 'middlename')
+    assert.equal(mapper.mapShopgateAttributeToMagentoAttribute('phone'), 'telephone')
+    assert.equal(mapper.mapShopgateAttributeToMagentoAttribute('vatId'), 'vat_id')
   })
 
   it('should return attribute code as they are, when no mapping is present', () => {
-    assert.equal(mapper.mapShopgatAttributeToMagentoAttribute('custom_attribute'), 'custom_attribute')
+    assert.equal(mapper.mapShopgateAttributeToMagentoAttribute('custom_attribute'), 'custom_attribute')
   })
 })
