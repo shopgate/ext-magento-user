@@ -328,6 +328,7 @@
 										{
 											"listen": "test",
 											"script": {
+												"id": "030eb4ac-544f-43a8-9441-d2f10454dbca",
 												"type": "text/javascript",
 												"exec": [
 													"pm.test(\"Status code is 200\", function () {",
@@ -346,7 +347,6 @@
 													"    pm.expect(response.firstName).to.not.be.empty;",
 													"    pm.expect(response.lastName).to.not.be.empty;",
 													"    pm.expect(response.mail).to.not.be.empty;",
-													"    pm.response.to.not.have.jsonBody(\"addresses\");",
 													"})",
 													""
 												]
@@ -860,8 +860,771 @@
 			]
 		},
 		{
-			"name": "Cleanup",
-			"item": []
+			"name": "deleteAddresses",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_customer_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "deleteAddress",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc38f512-4152-4e41-8265-1247bc71ab14",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot create address\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5dd4dec7-788a-4a91-aa70-86c077c80f47",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"ids\": {\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_addresses_delete}}",
+									"host": [
+										"{{domain}}{{endpoint_addresses_delete}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "Preparation",
+							"item": [
+								{
+									"name": "customerLogout",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_logout}}"
+											]
+										},
+										"description": "customerLogout"
+									},
+									"response": []
+								},
+								{
+									"name": "customerLogin",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_login}}"
+											]
+										},
+										"description": "customerLogin"
+									},
+									"response": []
+								},
+								{
+									"name": "getUser",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "27bbb375-7695-4d35-98c2-3ee3a639abc4",
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+													"    pm.response.to.be.ok;",
+													"    pm.response.to.be.with.body;",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"pm.test(\"Response have minimum return values\", function() {",
+													"    var response = pm.response.json()",
+													"    pm.expect(response.id).to.not.be.empty;",
+													"    pm.expect(response.firstName).to.not.be.empty;",
+													"    pm.expect(response.lastName).to.not.be.empty;",
+													"    pm.expect(response.mail).to.not.be.empty;",
+													"})",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_get}}",
+											"host": [
+												"{{domain}}{{endpoint_user_get}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create default shipping",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bc5fc2e8-4abd-4b29-b092-4579cf8425bd",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d63a3d6a-e982-4bec-ba51-057d472f1a1b",
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check default address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "df2147f6-47c8-4d87-b9e9-9c3001472804",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"const defaultAddress = response.addresses.filter(address => address.tags.includes(\"default_shipping\")).pop();",
+													"pm.environment.set(\"defaultAddressId\", defaultAddress.id);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create 1st address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bc5fc2e8-4abd-4b29-b092-4579cf8425bd",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d63a3d6a-e982-4bec-ba51-057d472f1a1b",
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "5e97c9d8-cb59-4a5c-8f79-5a935015ab81",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"const address = response.addresses.pop();",
+													"pm.environment.set(\"firstAddressId\", address.id);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create 2nd address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bc5fc2e8-4abd-4b29-b092-4579cf8425bd",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d63a3d6a-e982-4bec-ba51-057d472f1a1b",
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "32a71652-fb4a-42f3-b36d-d6cbe50121e0",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"const address = response.addresses.pop();",
+													"pm.environment.set(\"secondAddressId\", address.id);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "Delete default address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fb4f0a42-a78e-4212-bb58-a5c07bd0eecf",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test('Code is EMAGENTOENDPOINTNOTALLOWED (405) because the address is default', function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EMAGENTOENDPOINTNOTALLOWED');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}}\n\t]\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"host": [
+												"{{domain}}{{endpoint_addresses_delete}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "No address ids given",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "36a7b895-7a66-44f5-81d3-ecc913e99f8d",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EINVALIDCALL because no address ids were given\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"ids\": [\n\t]\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"host": [
+												"{{domain}}{{endpoint_addresses_delete}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Single with empty address id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b98ded50-bbd1-44c3-99c4-2fec94302266",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EINVALIDCALL because an empty address id string was passed\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"ids\": [\"\"]\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"host": [
+												"{{domain}}{{endpoint_addresses_delete}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Multiple with empty address id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "e1c2f1f8-4259-4e35-beec-44daea50a3a2",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EINVALIDCALL because no an empty address was passed, beside valid ones\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}},\n\t\t\"\"\n\t]\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"host": [
+												"{{domain}}{{endpoint_addresses_delete}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Multiple with default address id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "13c6da0e-a730-4831-bdba-078d4be01883",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EMAGENTOENDPOINTNOTALLOWED (405) because no an empty address was passed, beside valid ones\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EMAGENTOENDPOINTNOTALLOWED');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}},\n\t\t{{firstAddressId}}\n\t]\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"host": [
+												"{{domain}}{{endpoint_addresses_delete}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c5744c4f-b70f-4252-9e77-b6c032ddd1c2",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "e4efa29d-1418-43e6-a7f5-04fb3fd6fb2e",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Delete multiple addresses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Addresses deleted and return is success true\", function () {",
+											"    pm.expect(jsonData.success).to.be.eq(true);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"ids\": [\n\t\t{{firstAddressId}},\n\t\t{{secondAddressId}}\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_addresses_delete}}",
+									"host": [
+										"{{domain}}{{endpoint_addresses_delete}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check deletion + Cleanup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e4bc7744-50cc-460e-aa4e-606c87307f67",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Check if addresses were deleted\", function() {",
+											"    var addresses = pm.response.json().addresses;",
+											"",
+											"    const filteredAddresses = addresses.filter(address => address.id === pm.environment.get(\"firstAddressId\") || address.id === pm.environment.get(\"secondAddressId\"));",
+											"    pm.expect(filteredAddresses).to.be.empty;",
+											"})",
+											"",
+											"pm.environment.unset(\"firstAddressId\");",
+											"pm.environment.unset(\"secondAddressId\");",
+											"pm.environment.unset(\"defaultAddressId\");",
+											"pm.environment.unset(\"seed\");"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_addresses_get}}",
+									"host": [
+										"{{domain}}{{endpoint_addresses_get}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
 		}
 	],
 	"variable": [

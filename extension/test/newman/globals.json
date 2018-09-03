@@ -48,6 +48,11 @@
       "key": "endpoint_address_add",
       "value": "/trustedPipelines/shopgate.user.addAddress.v1",
       "enabled": true
+    },
+    {
+      "key": "endpoint_addresses_delete",
+      "value": "/trustedPipelines/shopgate.user.deleteAddresses.v1",
+      "enabled": true
     }
   ],
   "_postman_variable_scope": "environment",

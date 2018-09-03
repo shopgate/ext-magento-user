@@ -7,6 +7,7 @@ const request = require('request')
 const util = require('util')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
+const requestStub = sinon.spy(MagentoRequest, 'send')
 
 const magentoApiUrl = 'http://magento.shopgate.com/shopgate/v2'
 const testEndpoint = '/test/endpoint'
@@ -16,6 +17,7 @@ let input = null
 let context = null
 
 describe('MagentoRequest', () => {
+
   beforeEach(() => {
     input = {
       token: 'testToken'
@@ -124,9 +126,21 @@ describe('MagentoRequest', () => {
     const postData = {
       post: true
     }
-    const requestStub = sinon.spy(MagentoRequest, 'send')
 
     await MagentoRequest.post(completeEndpointUrl, context, input.token, postData)
     sinon.assert.calledWith(requestStub, completeEndpointUrl, context, input.token, 'Request to Magento', 'POST', postData)
+  })
+
+  it('should trigger a DELETE request to magento', async () => {
+    nock(magentoApiUrl)
+      .delete(testEndpoint)
+      .reply(200, 'ok')
+
+    const postData = {
+      post: true
+    }
+
+    await MagentoRequest.delete(completeEndpointUrl, context, input.token, postData)
+    sinon.assert.calledWith(requestStub, completeEndpointUrl, context, input.token, 'Request to Magento', 'DELETE', postData)
   })
 })

@@ -26,6 +26,22 @@ class MagentoRequest {
   }
 
   /**
+   * Wrapper function to send DELETE requests to Magento
+   *
+   * @param {string} url
+   * @param {Object} context
+   * @param {string} token
+   * @param {Object} data
+   * @param {string} message
+   * @returns {Object}
+   */
+  static async delete (url, context, token, data, message = 'Request to Magento') {
+    await this.send(url, context, token, message, 'DELETE', data)
+
+    return {success: true}
+  }
+
+  /**
    * @param {string} url
    * @param {Object} context
    * @param {string} token
@@ -65,6 +81,7 @@ class MagentoRequest {
             response.body.messages.error.forEach(message => {
               validationError.addValidationMessage(message.path, message.messages.join())
             })
+            this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'FieldValidationError')
             reject(validationError)
           } else if (response.statusCode === 401 || response.statusCode === 403) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'UnauthorizedError')
