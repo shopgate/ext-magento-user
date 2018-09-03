@@ -64,7 +64,7 @@ class MagentoRequest {
     const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
     this.context = context
 
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       tracedRequest(
         options,
         (error, response) => {
