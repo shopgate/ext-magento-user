@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "4b4e769b-1dc5-4134-aa2d-6c876a3ff6f8",
+		"_postman_id": "e61d63a2-6fd8-459b-a5da-3516700ee046",
 		"name": "Magento Connect User",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -25,7 +25,12 @@
 									"mode": "raw",
 									"raw": "{}"
 								},
-								"url": "{{domain}}{{endpoint_customer_logout}}",
+								"url": {
+									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_customer_logout}}"
+									]
+								},
 								"description": "customerLogout"
 							},
 							"response": []
@@ -59,7 +64,12 @@
 									"mode": "raw",
 									"raw": "{}"
 								},
-								"url": "{{domain}}{{endpoint_address_get}}"
+								"url": {
+									"raw": "{{domain}}{{endpoint_address_get}}",
+									"host": [
+										"{{domain}}{{endpoint_address_get}}"
+									]
+								}
 							},
 							"response": []
 						}
@@ -83,7 +93,12 @@
 									"mode": "raw",
 									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 								},
-								"url": "{{domain}}{{endpoint_customer_login}}",
+								"url": {
+									"raw": "{{domain}}{{endpoint_customer_login}}",
+									"host": [
+										"{{domain}}{{endpoint_customer_login}}"
+									]
+								},
 								"description": "customerLogin"
 							},
 							"response": []
@@ -157,7 +172,12 @@
 									"mode": "raw",
 									"raw": "{}"
 								},
-								"url": "{{domain}}{{endpoint_address_get}}"
+								"url": {
+									"raw": "{{domain}}{{endpoint_address_get}}",
+									"host": [
+										"{{domain}}{{endpoint_address_get}}"
+									]
+								}
 							},
 							"response": []
 						}
@@ -165,6 +185,683 @@
 					"_postman_isSubFolder": true
 				}
 			]
+		},
+		{
+			"name": "addAddresses",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_customer_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "createAddress",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc38f512-4152-4e41-8265-1247bc71ab14",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot create address\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5dd4dec7-788a-4a91-aa70-86c077c80f47",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_address_add}}",
+									"host": [
+										"{{domain}}{{endpoint_address_add}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "Preparation",
+							"item": [
+								{
+									"name": "customerLogout",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_logout}}"
+											]
+										},
+										"description": "customerLogout"
+									},
+									"response": []
+								},
+								{
+									"name": "customerLogin",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_login}}"
+											]
+										},
+										"description": "customerLogin"
+									},
+									"response": []
+								},
+								{
+									"name": "getUser",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+													"    pm.response.to.be.ok;",
+													"    pm.response.to.be.with.body;",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"pm.test(\"Response have minimum return values\", function() {",
+													"    var response = pm.response.json()",
+													"    pm.expect(response.id).to.not.be.empty;",
+													"    pm.expect(response.firstName).to.not.be.empty;",
+													"    pm.expect(response.lastName).to.not.be.empty;",
+													"    pm.expect(response.mail).to.not.be.empty;",
+													"    pm.response.to.not.have.jsonBody(\"addresses\");",
+													"})",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_get}}",
+											"host": [
+												"{{domain}}{{endpoint_user_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "Required fields not set",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ec6835ae-15f7-4e3d-884a-33282b663b8b",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Required data not set, should return EVALIDATION error\", function () {",
+													"    pm.expect(jsonData.error.code).to.be.eq('EVALIDATION');",
+													"})"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"t1.firstname\",\n        \"lastName\": \"t1.lastname\",\n        \"street1\": \"Olvenstedter Straße\",\n        \"street2\": \"11a\",\n        \"city\": \"Magdeburg\",\n        \"zipCode\": \"t1.zip\",\n        \"country\": \"DE\",\n        \"province0\":\"\",\n        \"customAttributes\": {\n        \t\"company\": \"\",\n        \t\"phone\": \"t1.phone\",\n        \t\"fax\": \"\",\n        \t\"vatId\": \"\",\n        \t\"suffix\": \"\",\n        \t\"prefix\": \"\",\n        \t\"middleName\": \"\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d5574bf6-ff64-40af-9f45-cdff9e56b000",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "90123661-725d-42d7-b44c-7113ef93e4d6",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Simple",
+							"item": [
+								{
+									"name": "create Address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getAddress and compare",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7f419251-54bf-4327-97e5-0e1ae87881b6",
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"pm.test(\"Make sure that if tags set, tags are an array\", function() {",
+													"    const response = pm.response.json();",
+													"    const address = response.addresses.pop();",
+													"    if (address.tags) {",
+													"        pm.expect(address.tags).to.be.a('array', 'Not a array provided!')",
+													"    }",
+													"})",
+													"",
+													"pm.test(\"Make sure that if customAttributes set, customAttributes are an object\", function() {",
+													"    const response = pm.response.json();",
+													"    const address = response.addresses.pop();",
+													"    if (address.customAttributes) {",
+													"        pm.expect(address.customAttributes).to.be.a('object', 'Not a object provided!')",
+													"    }",
+													"})",
+													"",
+													"pm.test(\"Make sure all address data was properly set\", function() {",
+													"    const response = pm.response.json();",
+													"    const address = response.addresses.pop();",
+													"    pm.expect(address.firstName).to.be.eq(pm.environment.get(\"seed\") + '-firstname');",
+													"    pm.expect(address.lastName).to.be.eq(pm.environment.get(\"seed\") + '-lastname');",
+													"    pm.expect(address.street1).to.be.eq(pm.environment.get(\"seed\") + '-street1');",
+													"    pm.expect(address.street2).to.be.eq(pm.environment.get(\"seed\") + '-street2');",
+													"    pm.expect(address.city).to.be.eq(pm.environment.get(\"seed\") + '-city');",
+													"    pm.expect(address.zipCode).to.be.eq(pm.environment.get(\"seed\") + '-zipCode');",
+													"    pm.expect(address.country).to.be.eq('US');",
+													"    pm.expect(address.province).to.be.eq('AZ');",
+													"    pm.expect(address.tags).to.be.a('array').to.be.empty;",
+													"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
+													"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
+													"    pm.expect(address.customAttributes.phone).to.be.eq(pm.environment.get(\"seed\") + '-phone');",
+													"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
+													"    pm.expect(address.customAttributes.vatId).to.be.eq(pm.environment.get(\"seed\") + '-vatId');",
+													"    pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middlename');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Default",
+							"item": [
+								{
+									"name": "create default billing",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check for default billing",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "612eb3db-148a-4b20-a73f-1b93a8d9f78b",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"const address = response.addresses.pop();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"pm.test(\"Make sure that default billing tag is set\", function() {",
+													"    ",
+													"    if (address.tags) {",
+													"        pm.expect(address.tags).to.include('default_billing')",
+													"    }",
+													"})"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create default shipping",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check default shipping",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f87fc0c9-a214-4a4a-81b9-9377c96fd58b",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"const address = response.addresses.pop();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"pm.test(\"Make sure that default billing tag is set\", function() {",
+													"    ",
+													"    if (address.tags) {",
+													"        pm.expect(address.tags).to.include('default_shipping')",
+													"    }",
+													"})"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create default shipping+billing",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\",\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_add}}",
+											"host": [
+												"{{domain}}{{endpoint_address_add}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check default address",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8cc9b29c-ca14-4bbd-a226-45151b3f4a3c",
+												"type": "text/javascript",
+												"exec": [
+													"const response = pm.response.json();",
+													"const address = response.addresses.pop();",
+													"",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"})",
+													"",
+													"pm.test(\"Make sure that default billing tag is set\", function() {",
+													"    ",
+													"    if (address.tags) {",
+													"        pm.expect(address.tags).to.include('default_shipping')",
+													"        pm.expect(address.tags).to.include('default_billing')",
+													"    }",
+													"})"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_address_get}}",
+											"host": [
+												"{{domain}}{{endpoint_address_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Cleanup",
+			"item": []
 		}
 	],
 	"variable": [

@@ -2,6 +2,7 @@ const MagentoEndpointNotFoundError = require('./../models/Errors/MagentoEndpoint
 const MagentoEndpointNotAllowedError = require('./../models/Errors/MagentoEndpointNotAllowedError')
 const MagentoEndpointError = require('./../models/Errors/MagentoEndpointError')
 const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
+const FieldValidationError = require('./../models/Errors/FieldValidationError')
 const util = require('util')
 
 /**
@@ -9,16 +10,35 @@ const util = require('util')
  */
 class MagentoRequest {
   /**
+   * Wrapper function to send POST requests to Magento
+   *
    * @param {string} url
    * @param {Object} context
    * @param {string} token
-   * @param message
+   * @param {Object} data
+   * @param {string} message
    * @returns {Object}
    */
-  static async send (url, context, token, message = 'Request to Magento') {
+  static async post (url, context, token, data, message = 'Request to Magento') {
+    await this.send(url, context, token, message, 'POST', data)
+
+    return {success: true}
+  }
+
+  /**
+   * @param {string} url
+   * @param {Object} context
+   * @param {string} token
+   * @param {string} message
+   * @param {string} method
+   * @param {Object | boolean} data
+   * @returns {Object}
+   */
+  static async send (url, context, token, message = 'Request to Magento', method = 'GET', data = true) {
     const options = {
       url: url,
-      json: true,
+      method: method,
+      json: data,
       rejectUnauthorized: !context.config.allowSelfSignedCertificate,
       auth: {
         bearer: token
@@ -40,6 +60,12 @@ class MagentoRequest {
           if (error) {
             this.log(null, util.inspect(options, true, 5), new Date(), message)
             reject(new Error(error))
+          } else if (response.statusCode === 400) {
+            const validationError = new FieldValidationError()
+            response.body.messages.error.forEach(message => {
+              validationError.addValidationMessage(message.path, message.messages.join())
+            })
+            reject(validationError)
           } else if (response.statusCode === 401 || response.statusCode === 403) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'UnauthorizedError')
             reject(new UnauthorizedError())
