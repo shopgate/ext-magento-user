@@ -42,7 +42,7 @@
 /**
  * @typedef {Object} MagentoAddress
  * @property {Object} address
- * @property {string} id
+ * @property {string} entity_id
  * @property {string} [entity_type_id]
  * @property {string} [attribute_set_id]
  * @property {string} [increment_id]
@@ -64,6 +64,7 @@
  * @property {string} [suffix]
  * @property {string} [vat_id]
  * @property {string} [region_id] - database id of region
+ * @property {string} [region_code] - database code of the region, ISO2 for USA
  * @property {Array} [street]
  * @property {string} [customer_id]
  * @property {Object} [customAttributes]
