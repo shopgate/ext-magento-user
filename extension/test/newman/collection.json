@@ -6,6 +6,111 @@
 	},
 	"item": [
 		{
+			"name": "getUser",
+			"item": [
+				{
+					"name": "customerLogout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customer_logout}}",
+							"host": [
+								"{{domain}}{{endpoint_customer_logout}}"
+							]
+						},
+						"description": "customerLogout"
+					},
+					"response": []
+				},
+				{
+					"name": "customerLogin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customer_login}}",
+							"host": [
+								"{{domain}}{{endpoint_customer_login}}"
+							]
+						},
+						"description": "customerLogin"
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "030eb4ac-544f-43a8-9441-d2f10454dbca",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.with.body;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Response have minimum return values\", function() {",
+									"    var response = pm.response.json()",
+									"    pm.expect(response.id).to.not.be.empty;",
+									"    pm.expect(response.firstName).to.not.be.empty;",
+									"    pm.expect(response.lastName).to.not.be.empty;",
+									"    pm.expect(response.mail).to.not.be.empty;",
+									"})",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_get}}",
+							"host": [
+								"{{domain}}{{endpoint_user_get}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "getAddresses",
 			"item": [
 				{
@@ -319,58 +424,6 @@
 											]
 										},
 										"description": "customerLogin"
-									},
-									"response": []
-								},
-								{
-									"name": "getUser",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "030eb4ac-544f-43a8-9441-d2f10454dbca",
-												"type": "text/javascript",
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});",
-													"",
-													"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
-													"    pm.response.to.be.ok;",
-													"    pm.response.to.be.with.body;",
-													"    pm.response.to.be.json;",
-													"});",
-													"",
-													"pm.test(\"Response have minimum return values\", function() {",
-													"    var response = pm.response.json()",
-													"    pm.expect(response.id).to.not.be.empty;",
-													"    pm.expect(response.firstName).to.not.be.empty;",
-													"    pm.expect(response.lastName).to.not.be.empty;",
-													"    pm.expect(response.mail).to.not.be.empty;",
-													"})",
-													""
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n}"
-										},
-										"url": {
-											"raw": "{{domain}}{{endpoint_user_get}}",
-											"host": [
-												"{{domain}}{{endpoint_user_get}}"
-											]
-										}
 									},
 									"response": []
 								}
@@ -996,58 +1049,6 @@
 									"response": []
 								},
 								{
-									"name": "getUser",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "27bbb375-7695-4d35-98c2-3ee3a639abc4",
-												"type": "text/javascript",
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});",
-													"",
-													"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
-													"    pm.response.to.be.ok;",
-													"    pm.response.to.be.with.body;",
-													"    pm.response.to.be.json;",
-													"});",
-													"",
-													"pm.test(\"Response have minimum return values\", function() {",
-													"    var response = pm.response.json()",
-													"    pm.expect(response.id).to.not.be.empty;",
-													"    pm.expect(response.firstName).to.not.be.empty;",
-													"    pm.expect(response.lastName).to.not.be.empty;",
-													"    pm.expect(response.mail).to.not.be.empty;",
-													"})",
-													""
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n}"
-										},
-										"url": {
-											"raw": "{{domain}}{{endpoint_user_get}}",
-											"host": [
-												"{{domain}}{{endpoint_user_get}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
 									"name": "create default shipping",
 									"event": [
 										{
@@ -1094,7 +1095,7 @@
 									"response": []
 								},
 								{
-									"name": "check default address",
+									"name": "fetch default address Id",
 									"event": [
 										{
 											"listen": "test",
@@ -1183,7 +1184,7 @@
 									"response": []
 								},
 								{
-									"name": "check address",
+									"name": "fetch address Id",
 									"event": [
 										{
 											"listen": "test",
@@ -1272,7 +1273,7 @@
 									"response": []
 								},
 								{
-									"name": "check address",
+									"name": "fetch address id",
 									"event": [
 										{
 											"listen": "test",
@@ -1440,11 +1441,11 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "e1c2f1f8-4259-4e35-beec-44daea50a3a2",
+												"id": "ed2a491f-e24a-459c-aed9-5bbc07195f82",
 												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
-													"pm.test(\"Code is EINVALIDCALL because no an empty address was passed, beside valid ones\", function () {",
+													"pm.test(\"Code is EINVALIDCALL because not an empty address was passed, beside valid ones\", function () {",
 													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
 													"});"
 												]

@@ -17,7 +17,6 @@ let input = null
 let context = null
 
 describe('MagentoRequest', () => {
-
   beforeEach(() => {
     input = {
       token: 'testToken'
