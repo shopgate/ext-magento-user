@@ -1,5 +1,5 @@
 const assert = require('assert')
-const mapper = require ('../../../lib/mapper')
+const mapper = require('../../../lib/mapper')
 
 describe('Attribute Mapper', () => {
   it('should map Shopgate attributes to the code used by Magento', () => {
