@@ -50,6 +50,11 @@
       "enabled": true
     },
     {
+      "key": "endpoint_address_update",
+      "value": "/trustedPipelines/shopgate.user.updateAddress.v1",
+      "enabled": true
+    },
+    {
       "key": "endpoint_addresses_delete",
       "value": "/trustedPipelines/shopgate.user.deleteAddresses.v1",
       "enabled": true
