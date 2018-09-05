@@ -7,6 +7,6 @@ module.exports = async (context, input) => {
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses/${input.id}`
-  delete input.id
-  return MagentoRequest.post(endpointUrl, context, input.token, 'Request to Magento: updateAddresses')
+
+  return MagentoRequest.post(endpointUrl, context, input.token, input.magentoAddress, 'Request to Magento: updateAddresses')
 }

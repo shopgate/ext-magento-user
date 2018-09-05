@@ -92,7 +92,7 @@ class MagentoRequest {
           } else if (response.statusCode === 405) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'MagentoEndpointNotAllowedError')
             reject(new MagentoEndpointNotAllowedError())
-          } else if (response.body.messages && response.body.messages.error) {
+          } else if (response.body && response.body.messages && response.body.messages.error) {
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'MagentoEndpointError')
             reject(new MagentoEndpointError())
           } else { // This else is currently important, cause there is a bug within the tracedRequest which will crash the app otherwise
