@@ -1322,9 +1322,9 @@
 									"raw": "{\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_addresses_get}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 									"host": [
-										"{{domain}}{{endpoint_addresses_get}}"
+										"{{domain}}{{endpoint_user_addresses_get}}"
 									]
 								}
 							},
@@ -1424,9 +1424,9 @@
 									"raw": "{\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_addresses_get}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 									"host": [
-										"{{domain}}{{endpoint_addresses_get}}"
+										"{{domain}}{{endpoint_user_addresses_get}}"
 									]
 								}
 							},
@@ -2139,9 +2139,9 @@
 									"raw": "{\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_addresses_get}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 									"host": [
-										"{{domain}}{{endpoint_addresses_get}}"
+										"{{domain}}{{endpoint_user_addresses_get}}"
 									]
 								}
 							},
