@@ -1275,7 +1275,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4f74946b-ea4e-4919-8a02-d21f2bde887f",
+										"id": "4f78e519-a47d-47d6-93c6-e8a1eb8671bc",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Make sure all address data was properly changed\", function() {",
@@ -1293,9 +1293,17 @@
 											"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
 											"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
 											"    pm.expect(address.customAttributes.phone).to.be.eq(pm.environment.get(\"seed\") + '-phone');",
-											"    pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middleName');",
 											"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
 											"    pm.expect(address.customAttributes.vatId).to.be.eq(pm.environment.get(\"seed\") + '-vatId');",
+											"    if (address.customAttributes.hasOwnProperty(\"middleName\")) {",
+											"        pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middleName');",
+											"    }",
+											"    if (address.customAttributes.hasOwnProperty(\"prefix\")) {",
+											"        pm.expect(address.customAttributes.prefix).to.be.eq(pm.environment.get(\"seed\") + '-prefix');",
+											"    }",
+											"    if (address.customAttributes.hasOwnProperty(\"suffix\")) {",
+											"        pm.expect(address.customAttributes.suffix).to.be.eq(pm.environment.get(\"seed\") + '-suffix');",
+											"    }",
 											"});"
 										]
 									}
