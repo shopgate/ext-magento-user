@@ -23,9 +23,9 @@
 							"raw": "{}"
 						},
 						"url": {
-							"raw": "{{domain}}{{endpoint_customer_logout}}",
+							"raw": "{{domain}}{{endpoint_user_logout}}",
 							"host": [
-								"{{domain}}{{endpoint_customer_logout}}"
+								"{{domain}}{{endpoint_user_logout}}"
 							]
 						},
 						"description": "customerLogout"
@@ -47,9 +47,9 @@
 							"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 						},
 						"url": {
-							"raw": "{{domain}}{{endpoint_customer_login}}",
+							"raw": "{{domain}}{{endpoint_user_login}}",
 							"host": [
-								"{{domain}}{{endpoint_customer_login}}"
+								"{{domain}}{{endpoint_user_login}}"
 							]
 						},
 						"description": "customerLogin"
@@ -131,9 +131,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"raw": "{{domain}}{{endpoint_user_logout}}",
 									"host": [
-										"{{domain}}{{endpoint_customer_logout}}"
+										"{{domain}}{{endpoint_user_logout}}"
 									]
 								},
 								"description": "customerLogout"
@@ -170,9 +170,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_get}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 									"host": [
-										"{{domain}}{{endpoint_address_get}}"
+										"{{domain}}{{endpoint_user_addresses_get}}"
 									]
 								}
 							},
@@ -199,9 +199,9 @@
 									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_customer_login}}",
+									"raw": "{{domain}}{{endpoint_user_login}}",
 									"host": [
-										"{{domain}}{{endpoint_customer_login}}"
+										"{{domain}}{{endpoint_user_login}}"
 									]
 								},
 								"description": "customerLogin"
@@ -278,9 +278,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_get}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 									"host": [
-										"{{domain}}{{endpoint_address_get}}"
+										"{{domain}}{{endpoint_user_addresses_get}}"
 									]
 								}
 							},
@@ -312,9 +312,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"raw": "{{domain}}{{endpoint_user_logout}}",
 									"host": [
-										"{{domain}}{{endpoint_customer_logout}}"
+										"{{domain}}{{endpoint_user_logout}}"
 									]
 								},
 								"description": "customerLogout"
@@ -362,9 +362,9 @@
 									"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_add}}",
+									"raw": "{{domain}}{{endpoint_user_address_add}}",
 									"host": [
-										"{{domain}}{{endpoint_address_add}}"
+										"{{domain}}{{endpoint_user_address_add}}"
 									]
 								}
 							},
@@ -394,9 +394,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"raw": "{{domain}}{{endpoint_user_logout}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_logout}}"
+												"{{domain}}{{endpoint_user_logout}}"
 											]
 										},
 										"description": "customerLogout"
@@ -418,9 +418,9 @@
 											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"raw": "{{domain}}{{endpoint_user_login}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_login}}"
+												"{{domain}}{{endpoint_user_login}}"
 											]
 										},
 										"description": "customerLogin"
@@ -463,9 +463,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"t1.firstname\",\n        \"lastName\": \"t1.lastname\",\n        \"street1\": \"Olvenstedter Straße\",\n        \"street2\": \"11a\",\n        \"city\": \"Magdeburg\",\n        \"zipCode\": \"t1.zip\",\n        \"country\": \"DE\",\n        \"province\":\"\",\n        \"customAttributes\": {\n        \t\"company\": \"\",\n        \t\"phone\": \"t1.phone\",\n        \t\"fax\": \"\",\n        \t\"vatId\": \"\",\n        \t\"suffix\": \"\",\n        \t\"prefix\": \"\",\n        \t\"middleName\": \"\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -537,9 +537,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -618,9 +618,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -670,9 +670,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -717,9 +717,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -763,9 +763,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -810,9 +810,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -856,9 +856,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\",\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -904,9 +904,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -941,9 +941,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"raw": "{{domain}}{{endpoint_user_logout}}",
 									"host": [
-										"{{domain}}{{endpoint_customer_logout}}"
+										"{{domain}}{{endpoint_user_logout}}"
 									]
 								},
 								"description": "customerLogout"
@@ -991,9 +991,9 @@
 									"raw": "{\n\t\"id\": \"1\",\n    \"firstName\": \"firstname\",\n    \"lastName\": \"lastname\",\n    \"street1\": \"street1\",\n    \"street2\": \"street2\",\n    \"city\": \"city\",\n    \"zipCode\": \"zipCode\",\n    \"country\": \"EE\",\n    \"province\":\"province\",\n    \"customAttributes\": {\n        \"company\": \"company\",\n        \"phone\": \"phone\"\n    }\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_update}}",
+									"raw": "{{domain}}{{endpoint_user_address_update}}",
 									"host": [
-										"{{domain}}{{endpoint_address_update}}"
+										"{{domain}}{{endpoint_user_address_update}}"
 									]
 								}
 							},
@@ -1023,9 +1023,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"raw": "{{domain}}{{endpoint_user_logout}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_logout}}"
+												"{{domain}}{{endpoint_user_logout}}"
 											]
 										},
 										"description": "customerLogout"
@@ -1047,9 +1047,9 @@
 											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"raw": "{{domain}}{{endpoint_user_login}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_login}}"
+												"{{domain}}{{endpoint_user_login}}"
 											]
 										},
 										"description": "customerLogin"
@@ -1094,9 +1094,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -1137,9 +1137,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -1205,9 +1205,9 @@
 											"raw": "{\n\t\"id\": \"{{updateAddressId}}\",\n    \"country\": \"TESTER\"\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_update}}",
+											"raw": "{{domain}}{{endpoint_user_address_update}}",
 											"host": [
-												"{{domain}}{{endpoint_address_update}}"
+												"{{domain}}{{endpoint_user_address_update}}"
 											]
 										}
 									},
@@ -1261,9 +1261,9 @@
 									"raw": "{\n\t\"id\": \"{{updateAddressId}}\",\n    \"firstName\": \"{{seed}}-firstname\",\n    \"lastName\": \"{{seed}}-lastname\",\n    \"street1\": \"{{seed}}-street1\",\n    \"street2\": \"{{seed}}-street2\",\n    \"city\": \"{{seed}}-city\",\n    \"zipCode\": \"{{seed}}-zipCode\",\n    \"country\": \"US\",\n    \"province\":\"TX\",\n    \"customAttributes\": {\n        \"company\": \"{{seed}}-company\",\n        \"phone\": \"{{seed}}-phone\",\n        \"middleName\": \"{{seed}}-middleName\",\n        \"fax\": \"{{seed}}-fax\",\n        \"vatId\": \"{{seed}}-vatId\"\n    }\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_update}}",
+									"raw": "{{domain}}{{endpoint_user_address_update}}",
 									"host": [
-										"{{domain}}{{endpoint_address_update}}"
+										"{{domain}}{{endpoint_user_address_update}}"
 									]
 								}
 							},
@@ -1375,9 +1375,9 @@
 									"raw": "{\n\t\"id\": \"{{updateAddressId}}\",\n\t\"country\": \"US\",\n\t\"province\": \"AZ\",\n    \"tags\": [\n        \"default_billing\"\n    ]\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_address_update}}",
+									"raw": "{{domain}}{{endpoint_user_address_update}}",
 									"host": [
-										"{{domain}}{{endpoint_address_update}}"
+										"{{domain}}{{endpoint_user_address_update}}"
 									]
 								}
 							},
@@ -1458,9 +1458,9 @@
 									"raw": "{}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"raw": "{{domain}}{{endpoint_user_logout}}",
 									"host": [
-										"{{domain}}{{endpoint_customer_logout}}"
+										"{{domain}}{{endpoint_user_logout}}"
 									]
 								},
 								"description": "customerLogout"
@@ -1508,9 +1508,9 @@
 									"raw": "{\n\t\"ids\": {\n\t}\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_addresses_delete}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 									"host": [
-										"{{domain}}{{endpoint_addresses_delete}}"
+										"{{domain}}{{endpoint_user_addresses_delete}}"
 									]
 								}
 							},
@@ -1540,9 +1540,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"raw": "{{domain}}{{endpoint_user_logout}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_logout}}"
+												"{{domain}}{{endpoint_user_logout}}"
 											]
 										},
 										"description": "customerLogout"
@@ -1564,9 +1564,9 @@
 											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"raw": "{{domain}}{{endpoint_user_login}}",
 											"host": [
-												"{{domain}}{{endpoint_customer_login}}"
+												"{{domain}}{{endpoint_user_login}}"
 											]
 										},
 										"description": "customerLogin"
@@ -1611,9 +1611,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -1654,9 +1654,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -1700,9 +1700,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -1743,9 +1743,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -1789,9 +1789,9 @@
 											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_add}}",
+											"raw": "{{domain}}{{endpoint_user_address_add}}",
 											"host": [
-												"{{domain}}{{endpoint_address_add}}"
+												"{{domain}}{{endpoint_user_address_add}}"
 											]
 										}
 									},
@@ -1832,9 +1832,9 @@
 											"raw": "{}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_address_get}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_get}}",
 											"host": [
-												"{{domain}}{{endpoint_address_get}}"
+												"{{domain}}{{endpoint_user_addresses_get}}"
 											]
 										}
 									},
@@ -1876,9 +1876,9 @@
 											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}}\n\t]\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 											"host": [
-												"{{domain}}{{endpoint_addresses_delete}}"
+												"{{domain}}{{endpoint_user_addresses_delete}}"
 											]
 										}
 									},
@@ -1914,9 +1914,9 @@
 											"raw": "{\n\t\"ids\": [\n\t]\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 											"host": [
-												"{{domain}}{{endpoint_addresses_delete}}"
+												"{{domain}}{{endpoint_user_addresses_delete}}"
 											]
 										}
 									},
@@ -1952,9 +1952,9 @@
 											"raw": "{\n\t\"ids\": [\"\"]\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 											"host": [
-												"{{domain}}{{endpoint_addresses_delete}}"
+												"{{domain}}{{endpoint_user_addresses_delete}}"
 											]
 										}
 									},
@@ -1990,9 +1990,9 @@
 											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}},\n\t\t\"\"\n\t]\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 											"host": [
-												"{{domain}}{{endpoint_addresses_delete}}"
+												"{{domain}}{{endpoint_user_addresses_delete}}"
 											]
 										}
 									},
@@ -2028,9 +2028,9 @@
 											"raw": "{\n\t\"ids\": [\n\t\t{{defaultAddressId}},\n\t\t{{firstAddressId}}\n\t]\n}"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_addresses_delete}}",
+											"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 											"host": [
-												"{{domain}}{{endpoint_addresses_delete}}"
+												"{{domain}}{{endpoint_user_addresses_delete}}"
 											]
 										}
 									},
@@ -2094,9 +2094,9 @@
 									"raw": "{\n\t\"ids\": [\n\t\t{{firstAddressId}},\n\t\t{{secondAddressId}}\n\t]\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_addresses_delete}}",
+									"raw": "{{domain}}{{endpoint_user_addresses_delete}}",
 									"host": [
-										"{{domain}}{{endpoint_addresses_delete}}"
+										"{{domain}}{{endpoint_user_addresses_delete}}"
 									]
 								}
 							},
@@ -2168,7 +2168,7 @@
 		},
 		{
 			"id": "9578240c-58ad-40b4-9588-35cf8ad6cdf3",
-			"key": "endpoint_address_get",
+			"key": "endpoint_user_addresses_get",
 			"value": "/trustedPipelines/shopgate.user.getAddresses.v1",
 			"type": "string"
 		}
