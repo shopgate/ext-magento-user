@@ -1,10 +1,12 @@
 const _ = require('lodash')
 
 module.exports = async function (context, input) {
-  input.magentoAddress.street = _.compact(input.magentoAddress.street)
+  const magentoAddress = input.magentoAddress
+  magentoAddress.street = _.compact(magentoAddress.street)
 
-  if (input.magentoAddress.street.length === 0) {
-    delete input.magentoAddress.street
+  if (magentoAddress.street.length === 0) {
+    delete magentoAddress.street
   }
-  return { magentoAddress: _.omitBy(input.magentoAddress, _.isNil) }
+
+  return { magentoAddress: _.omitBy(magentoAddress, _.isNil) }
 }
