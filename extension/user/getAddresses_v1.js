@@ -45,7 +45,7 @@ module.exports = async function (context, input) {
    * @private
    */
   function getTags (address) {
-    let tags = []
+    const tags = []
     if (address.is_default_shipping) {
       tags.push('default_shipping')
     }
@@ -62,8 +62,8 @@ module.exports = async function (context, input) {
    * @private
    */
   function getCustomAttributes (address) {
-    let customAttributes = {}
-    customAttributes.middleName = address.middlename
+    const customAttributes = {}
+    customAttributes.middlename = address.middlename
     customAttributes.prefix = address.prefix
     customAttributes.suffix = address.suffix
     customAttributes.telephone = address.telephone
