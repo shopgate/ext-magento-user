@@ -66,10 +66,10 @@ module.exports = async function (context, input) {
     customAttributes.middleName = address.middlename
     customAttributes.prefix = address.prefix
     customAttributes.suffix = address.suffix
-    customAttributes.phone = address.telephone
+    customAttributes.telephone = address.telephone
     customAttributes.fax = address.fax
     customAttributes.company = address.company
-    customAttributes.vatId = address.vat_id
+    customAttributes.vat_id = address.vat_id
     Object.keys(address.customAttributes).map((key) => {
       customAttributes[key] = address.customAttributes[key]
     })

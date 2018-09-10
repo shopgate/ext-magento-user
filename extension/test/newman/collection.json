@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e61d63a2-6fd8-459b-a5da-3516700ee046",
+      "_postman_id": "11345569-9f02-40ce-84d1-3046c236425b",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -359,7 +359,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                  "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -439,12 +439,14 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "ec6835ae-15f7-4e3d-884a-33282b663b8b",
+                                              "id": "656c101a-71c9-43dd-82d6-a3272474c25f",
 												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
-													"pm.test(\"Required data not set, should return EVALIDATION error\", function () {",
+                                                  "pm.test('Required data not set, should return EVALIDATION error', function () {",
 													"    pm.expect(jsonData.error.code).to.be.eq('EVALIDATION');",
+                                                  "    pm.expect(jsonData.error.validationErrors).to.be.a('array').to.not.be.empty;",
+                                                  "    pm.expect(jsonData.error.validationErrors.length).to.be.eq(7);",
 													"})"
 												]
 											}
@@ -460,7 +462,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"t1.firstname\",\n        \"lastName\": \"t1.lastname\",\n        \"street1\": \"Olvenstedter Straße\",\n        \"street2\": \"11a\",\n        \"city\": \"Magdeburg\",\n        \"zipCode\": \"t1.zip\",\n        \"country\": \"DE\",\n        \"province\":\"\",\n        \"customAttributes\": {\n        \t\"company\": \"\",\n        \t\"phone\": \"t1.phone\",\n        \t\"fax\": \"\",\n        \t\"vatId\": \"\",\n        \t\"suffix\": \"\",\n        \t\"prefix\": \"\",\n        \t\"middleName\": \"\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"\",\n        \"lastName\": \"\",\n        \"street1\": \"\",\n        \"street2\": \"\",\n        \"city\": \"\",\n        \"zipCode\": \"\",\n        \"country\": \"\",\n        \"province\":\"\",\n        \"customAttributes\": {\n        \t\"company\": \"\",\n        \t\"telephone\": \"\",\n        \t\"fax\": \"\",\n        \t\"vat_id\": \"\",\n        \t\"suffix\": \"\",\n        \t\"prefix\": \"\",\n        \t\"middleName\": \"\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -534,7 +536,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -588,9 +590,9 @@
 													"    pm.expect(address.tags).to.be.a('array').to.be.empty;",
 													"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
 													"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
-													"    pm.expect(address.customAttributes.phone).to.be.eq(pm.environment.get(\"seed\") + '-phone');",
+                                                  "    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
 													"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
-													"    pm.expect(address.customAttributes.vatId).to.be.eq(pm.environment.get(\"seed\") + '-vatId');",
+                                                  "    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
 													"    if (address.customAttributes.hasOwnProperty(\"middleName\")) {",
 													"        pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middlename');",
 													"    }",
@@ -667,7 +669,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -760,7 +762,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -853,7 +855,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\",\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\",\n        \t\"default_billing\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -988,7 +990,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"id\": \"1\",\n    \"firstName\": \"firstname\",\n    \"lastName\": \"lastname\",\n    \"street1\": \"street1\",\n    \"street2\": \"street2\",\n    \"city\": \"city\",\n    \"zipCode\": \"zipCode\",\n    \"country\": \"EE\",\n    \"province\":\"province\",\n    \"customAttributes\": {\n        \"company\": \"company\",\n        \"phone\": \"phone\"\n    }\n}"
+                                  "raw": "{\n\t\"id\": \"1\",\n    \"firstName\": \"firstname\",\n    \"lastName\": \"lastname\",\n    \"street1\": \"street1\",\n    \"street2\": \"street2\",\n    \"city\": \"city\",\n    \"zipCode\": \"zipCode\",\n    \"country\": \"EE\",\n    \"province\":\"province\",\n    \"customAttributes\": {\n        \"company\": \"company\",\n        \"telephone\": \"telephone\"\n    }\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_address_update}}",
@@ -1091,7 +1093,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -1108,14 +1110,14 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "38901a5b-756e-4017-b063-2fab7f540134",
+                                              "id": "ba0deede-6e55-40d8-8a50-65c736977780",
 												"type": "text/javascript",
 												"exec": [
 													"const response = pm.response.json();",
 													"",
 													"pm.test(\"Status code is 200\", function () {",
 													"    pm.response.to.have.status(200);",
-													"})",
+                                                  "});",
 													"",
 													"const address = response.addresses.pop();",
 													"pm.environment.set(\"updateAddressId\", address.id);",
@@ -1157,7 +1159,7 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "4702677c-3bd0-47ae-9696-93444f43c02f",
+                                              "id": "38cf687e-9a7d-4066-8c05-b981098cd3ef",
 												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
@@ -1170,12 +1172,11 @@
 													"    jsonData.error.validationErrors.forEach((error) => {",
 													"        pm.expect(error.path).to.not.be.empty;",
 													"        pm.expect(error.message).to.not.be.empty;",
-													"    })",
+                                                  "    });",
 													"});",
 													"",
 													"pm.test(\"Correct country error is shown\", function () {",
 													"    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('country');",
-													"    pm.expect(jsonData.error.validationErrors[0].message).to.be.eq('\"Country\" Invalid value \"TESTER\" for country_id');",
 													"});"
 												]
 											}
@@ -1222,12 +1223,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e8dd06eb-2165-4f11-8efd-453643322bae",
+                                      "id": "bff324a6-6224-4a29-b826-09c0fc8aa1a4",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"})",
+                                          "});",
 											"",
 											"pm.test(\"Address successfully updated\", function () {",
 											"    var jsonData = pm.response.json();",
@@ -1258,7 +1259,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"id\": \"{{updateAddressId}}\",\n    \"firstName\": \"{{seed}}-firstname\",\n    \"lastName\": \"{{seed}}-lastname\",\n    \"street1\": \"{{seed}}-street1\",\n    \"street2\": \"{{seed}}-street2\",\n    \"city\": \"{{seed}}-city\",\n    \"zipCode\": \"{{seed}}-zipCode\",\n    \"country\": \"US\",\n    \"province\":\"TX\",\n    \"customAttributes\": {\n        \"company\": \"{{seed}}-company\",\n        \"phone\": \"{{seed}}-phone\",\n        \"middleName\": \"{{seed}}-middleName\",\n        \"fax\": \"{{seed}}-fax\",\n        \"vatId\": \"{{seed}}-vatId\"\n    }\n}"
+                                  "raw": "{\n\t\"id\": \"{{updateAddressId}}\",\n    \"firstName\": \"{{seed}}-firstname\",\n    \"lastName\": \"{{seed}}-lastname\",\n    \"street1\": \"{{seed}}-street1\",\n    \"street2\": \"{{seed}}-street2\",\n    \"city\": \"{{seed}}-city\",\n    \"zipCode\": \"{{seed}}-zipCode\",\n    \"country\": \"US\",\n    \"province\":\"TX\",\n    \"customAttributes\": {\n        \"company\": \"{{seed}}-company\",\n        \"telephone\": \"{{seed}}-telephone\",\n        \"middleName\": \"{{seed}}-middleName\",\n        \"fax\": \"{{seed}}-fax\",\n        \"vat_id\": \"{{seed}}-vat_id\"\n    }\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_address_update}}",
@@ -1292,9 +1293,9 @@
 											"    pm.expect(address.tags).to.be.a('array').to.be.empty;",
 											"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
 											"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
-											"    pm.expect(address.customAttributes.phone).to.be.eq(pm.environment.get(\"seed\") + '-phone');",
+                                          "    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
 											"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
-											"    pm.expect(address.customAttributes.vatId).to.be.eq(pm.environment.get(\"seed\") + '-vatId');",
+                                          "    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
 											"    if (address.customAttributes.hasOwnProperty(\"middleName\")) {",
 											"        pm.expect(address.customAttributes.middleName).to.be.eq(pm.environment.get(\"seed\") + '-middleName');",
 											"    }",
@@ -1336,12 +1337,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e8dd06eb-2165-4f11-8efd-453643322bae",
+                                      "id": "0f5696e0-eed6-4a74-997c-43f6425af1b8",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"})",
+                                          "});",
 											"",
 											"pm.test(\"Address successfully updated\", function () {",
 											"    var jsonData = pm.response.json();",
@@ -1389,24 +1390,19 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "80bed93e-09e1-4696-a944-5710b2324235",
+                                      "id": "2a251f37-3e9b-4aa5-8dda-b08622cd61ff",
 										"type": "text/javascript",
 										"exec": [
 											"const response = pm.response.json();",
 											"const defaultAddress = response.addresses.filter(address => address.tags.includes(\"default_billing\")).pop();",
 											"",
-											"",
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"})",
+                                          "});",
 											"",
 											"pm.test(\"Make sure that default billing was updated\", function() {",
-											"    ",
 											"    pm.expect(defaultAddress.id).to.eql(pm.environment.get(\"updateAddressId\"));",
-											"})",
-											"",
-											"",
-											""
+                                          "});"
 										]
 									}
 								}
@@ -1608,7 +1604,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [\n        \t\"default_shipping\"\n        ],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -1697,7 +1693,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
@@ -1786,7 +1782,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"phone\": \"{{seed}}-phone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vatId\": \"{{seed}}-vatId\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
+                                          "raw": "{\n\t\"address\": {\n\t\t\"firstName\": \"{{seed}}-firstname\",\n        \"lastName\": \"{{seed}}-lastname\",\n        \"street1\": \"{{seed}}-street1\",\n        \"street2\": \"{{seed}}-street2\",\n        \"city\": \"{{seed}}-city\",\n        \"zipCode\": \"{{seed}}-zipCode\",\n        \"country\": \"US\",\n        \"province\":\"AZ\",\n        \"tags\": [],\n        \"customAttributes\": {\n        \t\"company\": \"{{seed}}-company\",\n        \t\"telephone\": \"{{seed}}-telephone\",\n        \t\"fax\": \"{{seed}}-fax\",\n        \t\"vat_id\": \"{{seed}}-vat_id\",\n        \t\"suffix\": \"{{seed}}-suffix\",\n        \t\"prefix\": \"{{seed}}-prefix\",\n        \t\"middleName\": \"{{seed}}-middlename\"\n        }\n\t}\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_address_add}}",
