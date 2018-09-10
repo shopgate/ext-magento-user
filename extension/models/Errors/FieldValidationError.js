@@ -1,12 +1,12 @@
-const EFIELDVALIDATION = 'EVALIDATION'
+const ERROR_CODE = 'EVALIDATION'
 
 /**
  * @class FieldValidationError
  */
 class FieldValidationError extends Error {
   constructor (message) {
-    super('Field validation error')
-    this.code = EFIELDVALIDATION
+    super()
+    this.code = ERROR_CODE
     this.message = message || 'There was an error with the request'
     this.validationErrors = []
   }
@@ -18,11 +18,7 @@ class FieldValidationError extends Error {
    */
   addValidationMessage (path, message, value) {
     path = this.translatePath(path)
-
-    const capitalizedPath = path.charAt(0).toUpperCase() + path.substr(1)
-    const main = value && !message.includes('required') ? value : capitalizedPath
-
-    this.validationErrors.push({path, message: `"${main}" ${message}`})
+    this.validationErrors.push({ path, message })
   }
 
   /**
@@ -36,10 +32,10 @@ class FieldValidationError extends Error {
       firstname: 'firstName',
       lastname: 'lastName',
       middlename: 'middleName',
+      street: 'street1',
       region: 'province',
       postcode: 'zipCode',
-      country_id: 'country',
-      vat_id: 'vatId'
+      country_id: 'country'
     }
     return translations[path] || path
   }
