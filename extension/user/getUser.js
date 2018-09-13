@@ -1,5 +1,3 @@
-const moment = require('moment')
-
 const UnauthorizedError = require('../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
@@ -14,36 +12,85 @@ module.exports = async (context, input) => {
 
   const endpointUrl = `${context.config.magentoUrl}/customers/me`
   const magentoResponse = await MagentoRequest.send(endpointUrl, context, input.token, 'Request to Magento: getUser')
-  let addresses = []
 
-  // will be only returned with cloudapi plugin >= 3.1.4
-  if (magentoResponse.addresses) {
-    magentoResponse.addresses.forEach((address) => {
-      addresses.push({
-        id: address.customer_address_id,
-        type: address.is_default_billing === true ? 'invoice' : 'shipping',
-        firstName: address.firstname,
-        lastName: address.lastname,
-        company: address.company,
-        street1: address.street,
-        street2: null,
-        city: address.city,
-        phone: address.telephone,
-        isDefault: 1,
-        alias: null,
-        zipcode: address.postcode,
-        country: address.country_id
-      })
-    })
+  const defaultProperties = {
+    customer_id: 'id',
+    firstname: 'firstName',
+    lastname: 'lastName',
+    email: 'mail'
   }
 
-  return {
-    id: magentoResponse.customer_id,
-    gender: magentoResponse.gender ? magentoResponse.gender === '1' ? 'm' : 'f' : '',
-    mail: magentoResponse.email,
-    firstName: magentoResponse.firstname,
-    lastName: magentoResponse.lastname,
-    birthday: magentoResponse.dob ? moment(magentoResponse.dob, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD') : '',
-    addresses: addresses
+  let userResponse = {}
+  let customAttributes = {}
+
+  let customerGroups = []
+  if (magentoResponse.customer_group instanceof Object) {
+    customerGroups.push(
+      {
+        id: magentoResponse.customer_group.customer_group_id,
+        name: magentoResponse.customer_group.customer_group_code
+      }
+    )
+  }
+
+  Object.keys(magentoResponse).forEach((key) => {
+    if (!addDefaultPropertiy(key)) {
+      addCustomPropertiy(key)
+    }
+  })
+
+  /**
+   * Add custom Attributes
+   */
+  if (!isObjectEmpty(customAttributes)) {
+    userResponse.customAttributes = customAttributes
+  }
+
+  /**
+   * Add UserGroups
+   */
+  if (customerGroups.length) {
+    userResponse.userGroups = customerGroups
+  }
+
+  return userResponse
+
+  /**
+   * @param {string} key
+   * @return {boolean}
+   * @private
+   */
+  function addDefaultPropertiy (key) {
+    if (defaultProperties.hasOwnProperty(key) && typeof defaultProperties[key] === 'string') {
+      userResponse[defaultProperties[key]] = magentoResponse[key]
+      return true
+    }
+    return false
+  }
+
+  /**
+   * @param {string} key
+   * @return {boolean}
+   * @private
+   */
+  function addCustomPropertiy (key) {
+    if (key !== 'customer_group') {
+      customAttributes[key] = magentoResponse[key]
+      return true
+    }
+    return false
+  }
+  /**
+   * @param {object} object
+   * @return {boolean}
+   * @private
+   */
+  function isObjectEmpty (object) {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        return false
+      }
+    }
+    return true
   }
 }

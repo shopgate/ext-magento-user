@@ -1,6 +1,6 @@
 {
 	"info": {
-      "_postman_id": "11345569-9f02-40ce-84d1-3046c236425b",
+		"_postman_id": "0a1f9df9-3cae-4d15-b345-51fea5d6b51e",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,104 +9,198 @@
 			"name": "getUser",
 			"item": [
 				{
-					"name": "customerLogout",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{}"
-						},
-						"url": {
-							"raw": "{{domain}}{{endpoint_user_logout}}",
-							"host": [
-								"{{domain}}{{endpoint_user_logout}}"
-							]
-						},
-						"description": "customerLogout"
-					},
-					"response": []
-				},
-				{
-					"name": "customerLogin",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
-						},
-						"url": {
-							"raw": "{{domain}}{{endpoint_user_login}}",
-							"host": [
-								"{{domain}}{{endpoint_user_login}}"
-							]
-						},
-						"description": "customerLogin"
-					},
-					"response": []
-				},
-				{
-					"name": "getUser",
-					"event": [
+					"name": "guest",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "030eb4ac-544f-43a8-9441-d2f10454dbca",
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
-									"    pm.response.to.be.ok;",
-									"    pm.response.to.be.with.body;",
-									"    pm.response.to.be.json;",
-									"});",
-									"",
-									"pm.test(\"Response have minimum return values\", function() {",
-									"    var response = pm.response.json()",
-									"    pm.expect(response.id).to.not.be.empty;",
-									"    pm.expect(response.firstName).to.not.be.empty;",
-									"    pm.expect(response.lastName).to.not.be.empty;",
-									"    pm.expect(response.mail).to.not.be.empty;",
-									"})",
-									""
-								]
-							}
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "getUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7620acbb-fe55-4c0f-9c8a-1510e5a81aab",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot retrieve data\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_user_get}}"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n}"
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "customerLogin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{domain}}{{endpoint_user_get}}",
-							"host": [
-								"{{domain}}{{endpoint_user_get}}"
-							]
+						{
+							"name": "getUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d030dc6d-ea45-46d8-8180-875a75eb20e9",
+										"type": "text/javascript",
+										"exec": [
+											"const response = pm.response.json();",
+											"const user = response;",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"pm.test(\"Test if response is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok,",
+											"    pm.response.to.be.with.body,",
+											"    pm.response.to.be.json",
+											"})",
+											"",
+											"pm.test(\"Make sure all required user data was properly set\", function() {",
+											"    pm.expect(user.id).to.not.be.empty;",
+											"    pm.expect(user.id).to.be.a('string', 'ID - not a string provided!');",
+											"    pm.expect(user.mail).to.not.be.empty;",
+											"    pm.expect(user.mail).to.be.a('string', 'Mail - not a string provided!');",
+											"});",
+											"",
+											"pm.test(\"Make sure all optional string based user data was properly set in the right format\", function() {",
+											"    const generalKeys = [",
+											"        'firstName',",
+											"        'lastName'",
+											"        ];",
+											"    generalKeys.map(function(item) {",
+											"        if (user[item]) {",
+											"            pm.expect(user[item]).to.be.a('string', item + ' - Not a string provided!');",
+											"        }",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Make sure all optional array based user data was properly set in the right format\", function() {",
+											"    const generalKeys = [",
+											"        'userGroups'",
+											"        ];",
+											"    generalKeys.map(function(item) {",
+											"        if (user[item]) {",
+											"            pm.expect(user[item]).to.be.a('array', item + ' - Not a string provided!');",
+											"        }",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Make sure all optional object based user data was properly set in the right format\", function() {",
+											"    const generalKeys = [",
+											"        'customAttributes'",
+											"        ];",
+											"    generalKeys.map(function(item) {",
+											"        if (user[item]) {",
+											"            pm.expect(user[item]).to.be.a('object', item + ' - Not a string provided!');",
+											"        }",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Make sure that user Groups is set has an property id and name with the right string based value\", function() {",
+											"    if (user.userGroups) {",
+											"        const testUserGroup = user.userGroups.pop();",
+											"        pm.expect(testUserGroup).to.have.property('id');",
+											"        pm.expect(testUserGroup).to.have.property('name');",
+											"        pm.expect(testUserGroup.id).to.be.a('string', 'ID - not a string provided!');",
+											"        pm.expect(testUserGroup.name).to.be.a('string', 'Name - not a string provided!');",
+											"    }",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_user_get}}"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
@@ -439,14 +533,14 @@
 										{
 											"listen": "test",
 											"script": {
-                                              "id": "656c101a-71c9-43dd-82d6-a3272474c25f",
+												"id": "656c101a-71c9-43dd-82d6-a3272474c25f",
 												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
-                                                  "pm.test('Required data not set, should return EVALIDATION error', function () {",
+													"pm.test('Required data not set, should return EVALIDATION error', function () {",
 													"    pm.expect(jsonData.error.code).to.be.eq('EVALIDATION');",
-                                                  "    pm.expect(jsonData.error.validationErrors).to.be.a('array').to.not.be.empty;",
-                                                  "    pm.expect(jsonData.error.validationErrors.length).to.be.eq(7);",
+													"    pm.expect(jsonData.error.validationErrors).to.be.a('array').to.not.be.empty;",
+													"    pm.expect(jsonData.error.validationErrors.length).to.be.eq(7);",
 													"})"
 												]
 											}
@@ -590,9 +684,9 @@
 													"    pm.expect(address.tags).to.be.a('array').to.be.empty;",
 													"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
 													"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
-                                                  "    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
+													"    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
 													"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
-                                                  "    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
+													"    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
 													"    if (address.customAttributes.hasOwnProperty(\"middlename\")) {",
 													"        pm.expect(address.customAttributes.middlename).to.be.eq(pm.environment.get(\"seed\") + '-middlename');",
 													"    }",
@@ -990,7 +1084,7 @@
 								],
 								"body": {
 									"mode": "raw",
-                                  "raw": "{\n\t\"id\": \"1\",\n    \"firstName\": \"firstname\",\n    \"lastName\": \"lastname\",\n    \"street1\": \"street1\",\n    \"street2\": \"street2\",\n    \"city\": \"city\",\n    \"zipCode\": \"zipCode\",\n    \"country\": \"EE\",\n    \"province\":\"province\",\n    \"customAttributes\": {\n        \"company\": \"company\",\n        \"telephone\": \"telephone\"\n    }\n}"
+									"raw": "{\n\t\"id\": \"1\",\n    \"firstName\": \"firstname\",\n    \"lastName\": \"lastname\",\n    \"street1\": \"street1\",\n    \"street2\": \"street2\",\n    \"city\": \"city\",\n    \"zipCode\": \"zipCode\",\n    \"country\": \"EE\",\n    \"province\":\"province\",\n    \"customAttributes\": {\n        \"company\": \"company\",\n        \"telephone\": \"telephone\"\n    }\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_address_update}}",
@@ -1110,14 +1204,14 @@
 										{
 											"listen": "test",
 											"script": {
-                                              "id": "ba0deede-6e55-40d8-8a50-65c736977780",
+												"id": "ba0deede-6e55-40d8-8a50-65c736977780",
 												"type": "text/javascript",
 												"exec": [
 													"const response = pm.response.json();",
 													"",
 													"pm.test(\"Status code is 200\", function () {",
 													"    pm.response.to.have.status(200);",
-                                                  "});",
+													"});",
 													"",
 													"const address = response.addresses.pop();",
 													"pm.environment.set(\"updateAddressId\", address.id);",
@@ -1159,7 +1253,7 @@
 										{
 											"listen": "test",
 											"script": {
-                                              "id": "38cf687e-9a7d-4066-8c05-b981098cd3ef",
+												"id": "38cf687e-9a7d-4066-8c05-b981098cd3ef",
 												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
@@ -1172,7 +1266,7 @@
 													"    jsonData.error.validationErrors.forEach((error) => {",
 													"        pm.expect(error.path).to.not.be.empty;",
 													"        pm.expect(error.message).to.not.be.empty;",
-                                                  "    });",
+													"    });",
 													"});",
 													"",
 													"pm.test(\"Correct country error is shown\", function () {",
@@ -1223,12 +1317,12 @@
 								{
 									"listen": "test",
 									"script": {
-                                      "id": "bff324a6-6224-4a29-b826-09c0fc8aa1a4",
+										"id": "bff324a6-6224-4a29-b826-09c0fc8aa1a4",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-                                          "});",
+											"});",
 											"",
 											"pm.test(\"Address successfully updated\", function () {",
 											"    var jsonData = pm.response.json();",
@@ -1293,9 +1387,9 @@
 											"    pm.expect(address.tags).to.be.a('array').to.be.empty;",
 											"    pm.expect(address.customAttributes).to.be.a('object').to.not.be.empty;",
 											"    pm.expect(address.customAttributes.company).to.be.eq(pm.environment.get(\"seed\") + '-company');",
-                                          "    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
+											"    pm.expect(address.customAttributes.telephone).to.be.eq(pm.environment.get(\"seed\") + '-telephone');",
 											"    pm.expect(address.customAttributes.fax).to.be.eq(pm.environment.get(\"seed\") + '-fax');",
-                                          "    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
+											"    pm.expect(address.customAttributes.vat_id).to.be.eq(pm.environment.get(\"seed\") + '-vat_id');",
 											"    if (address.customAttributes.hasOwnProperty(\"middlename\")) {",
 											"        pm.expect(address.customAttributes.middlename).to.be.eq(pm.environment.get(\"seed\") + '-middlename');",
 											"    }",
@@ -1337,12 +1431,12 @@
 								{
 									"listen": "test",
 									"script": {
-                                      "id": "0f5696e0-eed6-4a74-997c-43f6425af1b8",
+										"id": "0f5696e0-eed6-4a74-997c-43f6425af1b8",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-                                          "});",
+											"});",
 											"",
 											"pm.test(\"Address successfully updated\", function () {",
 											"    var jsonData = pm.response.json();",
@@ -1390,7 +1484,7 @@
 								{
 									"listen": "test",
 									"script": {
-                                      "id": "2a251f37-3e9b-4aa5-8dda-b08622cd61ff",
+										"id": "2a251f37-3e9b-4aa5-8dda-b08622cd61ff",
 										"type": "text/javascript",
 										"exec": [
 											"const response = pm.response.json();",
@@ -1398,11 +1492,11 @@
 											"",
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-                                          "});",
+											"});",
 											"",
 											"pm.test(\"Make sure that default billing was updated\", function() {",
 											"    pm.expect(defaultAddress.id).to.eql(pm.environment.get(\"updateAddressId\"));",
-                                          "});"
+											"});"
 										]
 									}
 								}
