@@ -1,9 +1,10 @@
+const lodash = require('lodash')
 const UnauthorizedError = require('../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 /**
- * @param {object} context
- * @param {object} input
+ * @param {Object} context
+ * @param {Object} input
  */
 module.exports = async (context, input) => {
   if (!context.meta || !context.meta.userId) {
@@ -20,77 +21,101 @@ module.exports = async (context, input) => {
     email: 'mail'
   }
 
-  let userResponse = {}
-  let customAttributes = {}
+  return {
+    ...mapDefaultAttributes(magentoResponse),
+    ...mapCustomAttributes(magentoResponse),
+    ...mapUserGroups(magentoResponse)
+  }
 
-  let customerGroups = []
-  if (magentoResponse.customer_group instanceof Object) {
-    customerGroups.push(
-      {
-        id: magentoResponse.customer_group.customer_group_id,
-        name: magentoResponse.customer_group.customer_group_code
+  /**
+   * @param {Object} magentoResponse
+   * @return {Object}
+   * @private
+   */
+  function mapDefaultAttributes (magentoResponse) {
+    const result = {}
+    Object.keys(magentoResponse).forEach((key) => {
+      if (isDefaultProperty(key, magentoResponse)) {
+        addDefaultProperty(result, key, magentoResponse)
       }
-    )
-  }
+    })
 
-  Object.keys(magentoResponse).forEach((key) => {
-    if (!addDefaultProperty(key)) {
-      addCustomProperty(key)
-    }
-  })
-
-  /**
-   * Add custom Attributes
-   */
-  if (!isObjectEmpty(customAttributes)) {
-    userResponse.customAttributes = customAttributes
+    return result
   }
 
   /**
-   * Add UserGroups
-   */
-  if (customerGroups.length) {
-    userResponse.userGroups = customerGroups
-  }
-
-  return userResponse
-
-  /**
-   * @param {string} key
-   * @return {boolean}
+   * @param {Object} magentoResponse
+   * @return {Object}
    * @private
    */
-  function addDefaultProperty (key) {
-    if (defaultProperties.hasOwnProperty(key) && typeof defaultProperties[key] === 'string') {
-      userResponse[defaultProperties[key]] = magentoResponse[key]
-      return true
-    }
-    return false
+  function mapCustomAttributes (magentoResponse) {
+    const result = {}
+    Object.keys(magentoResponse).forEach((key) => {
+      if (isCustomProperty(key, magentoResponse)) {
+        addCustomProperty(result, key, magentoResponse)
+      }
+    })
+
+    return result
   }
 
   /**
-   * @param {string} key
-   * @return {boolean}
+   * @param {String} key
+   * @return {Boolean}
    * @private
    */
-  function addCustomProperty (key) {
-    if (key !== 'customer_group') {
-      customAttributes[key] = magentoResponse[key]
-      return true
-    }
-    return false
+  function isDefaultProperty (key) {
+    return lodash.hasIn(defaultProperties, key)
   }
+
   /**
-   * @param {object} object
-   * @return {boolean}
+   * @param {String} key
+   * @return {Boolean}
    * @private
    */
-  function isObjectEmpty (object) {
-    for (var key in object) {
-      if (object.hasOwnProperty(key)) {
-        return false
+  function isCustomProperty (key) {
+    return !lodash.hasIn(defaultProperties, key) && key !== 'customer_group'
+  }
+
+  /**
+   * @param {Object} result
+   * @param {String} key
+   * @param {Object} magentoResponse
+   * @private
+   */
+  function addDefaultProperty (result, key, magentoResponse) {
+    result[defaultProperties[key]] = magentoResponse[key]
+  }
+
+  /**
+   * @param {Object} result
+   * @param {String} key
+   * @param {Object} magentoResponse
+   * @private
+   */
+  function addCustomProperty (result, key, magentoResponse) {
+    if (!lodash.hasIn(result, 'customAttributes')) {
+      result.customAttributes = {}
+    }
+    result.customAttributes[key] = magentoResponse[key]
+  }
+
+  /**
+   * @param {Object} magentoResponse
+   * @private
+   */
+  function mapUserGroups (magentoResponse) {
+    if (lodash.hasIn(magentoResponse, 'customer_group')) {
+      return {
+        ...{
+          userGroups: [
+            {
+              id: magentoResponse.customer_group.customer_group_id,
+              name: magentoResponse.customer_group.customer_group_code
+            }
+          ]
+        }
       }
     }
-    return true
   }
 }
