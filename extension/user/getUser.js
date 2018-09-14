@@ -1,4 +1,4 @@
-const lodash = require('lodash')
+const _forEach = require('lodash/forEach')
 const UnauthorizedError = require('../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
@@ -18,12 +18,12 @@ module.exports = async (context, input) => {
     customer_id: 'id',
     firstname: 'firstName',
     lastname: 'lastName',
-    email: 'mail'
+    email: 'mail',
+    customer_group: []
   }
 
   return {
-    ...mapDefaultAttributes(magentoResponse),
-    ...mapCustomAttributes(magentoResponse),
+    ...mapAttributes(magentoResponse),
     ...mapUserGroups(magentoResponse)
   }
 
@@ -32,11 +32,13 @@ module.exports = async (context, input) => {
    * @return {Object}
    * @private
    */
-  function mapDefaultAttributes (magentoResponse) {
-    const result = {}
-    Object.keys(magentoResponse).forEach((key) => {
-      if (isDefaultProperty(key, magentoResponse)) {
-        addDefaultProperty(result, key, magentoResponse)
+  function mapAttributes (magentoResponse) {
+    const result = { customAttributes: {} }
+    _forEach(magentoResponse, (value, key) => {
+      if (defaultProperties.hasOwnProperty(key)) {
+        result[defaultProperties[key]] = value
+      } else {
+        result.customAttributes[key] = value
       }
     })
 
@@ -48,74 +50,16 @@ module.exports = async (context, input) => {
    * @return {Object}
    * @private
    */
-  function mapCustomAttributes (magentoResponse) {
-    const result = {}
-    Object.keys(magentoResponse).forEach((key) => {
-      if (isCustomProperty(key, magentoResponse)) {
-        addCustomProperty(result, key, magentoResponse)
-      }
-    })
-
-    return result
-  }
-
-  /**
-   * @param {String} key
-   * @return {Boolean}
-   * @private
-   */
-  function isDefaultProperty (key) {
-    return lodash.hasIn(defaultProperties, key)
-  }
-
-  /**
-   * @param {String} key
-   * @return {Boolean}
-   * @private
-   */
-  function isCustomProperty (key) {
-    return !lodash.hasIn(defaultProperties, key) && key !== 'customer_group'
-  }
-
-  /**
-   * @param {Object} result
-   * @param {String} key
-   * @param {Object} magentoResponse
-   * @private
-   */
-  function addDefaultProperty (result, key, magentoResponse) {
-    result[defaultProperties[key]] = magentoResponse[key]
-  }
-
-  /**
-   * @param {Object} result
-   * @param {String} key
-   * @param {Object} magentoResponse
-   * @private
-   */
-  function addCustomProperty (result, key, magentoResponse) {
-    if (!lodash.hasIn(result, 'customAttributes')) {
-      result.customAttributes = {}
-    }
-    result.customAttributes[key] = magentoResponse[key]
-  }
-
-  /**
-   * @param {Object} magentoResponse
-   * @private
-   */
   function mapUserGroups (magentoResponse) {
-    if (lodash.hasIn(magentoResponse, 'customer_group')) {
-      return {
-        ...{
-          userGroups: [
-            {
-              id: magentoResponse.customer_group.customer_group_id,
-              name: magentoResponse.customer_group.customer_group_code
-            }
-          ]
-        }
+    return (magentoResponse.hasOwnProperty('customer_group'))
+      ? {
+        userGroups: [
+          {
+            id: magentoResponse.customer_group.customer_group_id,
+            name: magentoResponse.customer_group.customer_group_code
+          }
+        ]
       }
-    }
+      : {}
   }
 }
