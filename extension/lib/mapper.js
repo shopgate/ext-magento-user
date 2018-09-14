@@ -19,3 +19,21 @@ const attributeMap = {
 module.exports.mapShopgateAttributeToMagentoAttribute = function (attributeCode) {
   return attributeMap.hasOwnProperty(attributeCode) ? attributeMap[attributeCode] : attributeCode
 }
+
+/**
+ * @param {ShopgateUserCustomAttributes} customAttributes
+ * @return {Object}
+ * @private
+ */
+module.exports.mapCustomUserAttributes = function (customAttributes) {
+  let map = {}
+
+  Object.keys(customAttributes).forEach(key => {
+    const customAttributeCode = this.mapShopgateAttributeToMagentoAttribute(key)
+    if (!map.hasOwnProperty(customAttributeCode)) {
+      map[customAttributeCode] = customAttributes[key]
+    }
+  })
+
+  return map
+}

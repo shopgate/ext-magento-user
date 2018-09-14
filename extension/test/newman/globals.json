@@ -58,6 +58,11 @@
       "key": "endpoint_user_addresses_delete",
       "value": "/trustedPipelines/shopgate.user.deleteAddresses.v1",
       "enabled": true
+    },
+    {
+      "key": "endpoint_user_update",
+      "value": "/trustedPipelines/shopgate.user.updateUser.v1",
+      "enabled": true
     }
   ],
   "_postman_variable_scope": "globals",

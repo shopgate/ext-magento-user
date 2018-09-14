@@ -1,0 +1,50 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.updateUser.v1",
+    "public": true,
+    "input": [
+      {"key": "firstName", "id": "110", "optional": true},
+      {"key": "lastName", "id": "120", "optional": true},
+      {"key": "customAttributes", "id": "130", "optional": true}
+    ],
+    "output": [
+    ],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getUser.js",
+        "input": [
+          {"key": "token", "id": "10"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/updateUser_v1.js",
+        "input": [
+          {"key": "token", "id": "10"},
+          {"key": "userId", "id": "20"},
+          {"key": "firstName", "id": "110", "optional": true},
+          {"key": "lastName", "id": "120", "optional": true},
+          {"key": "customAttributes", "id": "130", "optional": true}
+        ],
+        "output": [
+        ]
+      }
+    ]
+  }
+}

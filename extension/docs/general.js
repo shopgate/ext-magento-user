@@ -96,3 +96,7 @@
  * @property {string} [company]
  * @property {string} [vatId]
  */
+/**
+ * @typedef {Object} ShopgateUserCustomAttributes
+ * @property {string} [middleName]
+ */
