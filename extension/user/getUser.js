@@ -28,7 +28,7 @@ module.exports = async (context, input) => {
   }
 
   /**
-   * @param {Object} magentoResponse
+   * @param {MagentoResponseUser} magentoResponse
    * @return {Object}
    * @private
    */
@@ -46,7 +46,7 @@ module.exports = async (context, input) => {
   }
 
   /**
-   * @param {Object} magentoResponse
+   * @param {MagentoResponseUser} magentoResponse
    * @return {Object}
    * @private
    */
