@@ -65,9 +65,9 @@
 									"raw": "{\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_user_user_get}}",
+									"raw": "{{domain}}{{endpoint_user_get}}",
 									"host": [
-										"{{domain}}{{endpoint_user_user_get}}"
+										"{{domain}}{{endpoint_user_get}}"
 									]
 								}
 							},
@@ -191,9 +191,9 @@
 									"raw": "{\n}"
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_user_user_get}}",
+									"raw": "{{domain}}{{endpoint_user_get}}",
 									"host": [
-										"{{domain}}{{endpoint_user_user_get}}"
+										"{{domain}}{{endpoint_user_get}}"
 									]
 								}
 							},

@@ -72,7 +72,7 @@ describe('getUser', () => {
     assert.equal(magentoResponse.middlename, customAttributes.middlename)
   })
 
-  it('should return valid user data, even if not userGroups are exported', async () => {
+  it('should return valid user data, even if no userGroups are exported', async () => {
     let customResponse = { ...magentoResponse }
     delete customResponse.customer_group
 
@@ -86,7 +86,7 @@ describe('getUser', () => {
     assert.deepEqual(userData.userGroups, undefined)
   })
 
-  it('should return valid user data, even if not customAttributes are exported', async () => {
+  it('should return valid user data, even if no customAttributes are exported', async () => {
     let customResponse = { ...magentoResponse }
     delete customResponse.dob
     delete customResponse.gender

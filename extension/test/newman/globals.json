@@ -60,7 +60,7 @@
       "enabled": true
     },
     {
-      "key": "endpoint_user_user_get",
+      "key": "endpoint_user_get",
       "value": "/trustedPipelines/shopgate.user.getUser.v1",
       "enabled": true
     }

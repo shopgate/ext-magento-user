@@ -34,8 +34,8 @@ module.exports = async (context, input) => {
   }
 
   Object.keys(magentoResponse).forEach((key) => {
-    if (!addDefaultPropertiy(key)) {
-      addCustomPropertiy(key)
+    if (!addDefaultProperty(key)) {
+      addCustomProperty(key)
     }
   })
 
@@ -60,7 +60,7 @@ module.exports = async (context, input) => {
    * @return {boolean}
    * @private
    */
-  function addDefaultPropertiy (key) {
+  function addDefaultProperty (key) {
     if (defaultProperties.hasOwnProperty(key) && typeof defaultProperties[key] === 'string') {
       userResponse[defaultProperties[key]] = magentoResponse[key]
       return true
@@ -73,7 +73,7 @@ module.exports = async (context, input) => {
    * @return {boolean}
    * @private
    */
-  function addCustomPropertiy (key) {
+  function addCustomProperty (key) {
     if (key !== 'customer_group') {
       customAttributes[key] = magentoResponse[key]
       return true
