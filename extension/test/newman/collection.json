@@ -109,7 +109,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "380b8c30-e95f-4cae-9a22-4d45b27c6b84",
+										"id": "6e2ea238-404f-442b-b058-33222df18e6e",
 										"type": "text/javascript",
 										"exec": [
 											"const response = pm.response.json();",
@@ -172,8 +172,6 @@
 											"        'group_id',",
 											"        'middlename',",
 											"        'prefix',",
-											"        'reward_update_notification',",
-											"        'reward_warning_notification',",
 											"        'rp_token',",
 											"        'rp_token_created_at',",
 											"        'suffix',",
