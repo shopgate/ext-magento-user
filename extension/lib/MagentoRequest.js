@@ -4,6 +4,7 @@ const MagentoEndpointError = require('./../models/Errors/MagentoEndpointError')
 const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
 const FieldValidationError = require('./../models/Errors/FieldValidationError')
 const util = require('util')
+const _trimEnd = require('lodash/trimEnd')
 
 /**
  * All needed methods to fire requests to magento
@@ -22,7 +23,7 @@ class MagentoRequest {
   static async post (url, context, token, data, message = 'Request to Magento') {
     await this.send(url, context, token, message, 'POST', data)
 
-    return {success: true}
+    return { success: true }
   }
 
   /**
@@ -38,7 +39,7 @@ class MagentoRequest {
   static async delete (url, context, token, data, message = 'Request to Magento') {
     await this.send(url, context, token, message, 'DELETE', data)
 
-    return {success: true}
+    return { success: true }
   }
 
   /**
@@ -61,7 +62,7 @@ class MagentoRequest {
       }
     }
 
-    const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', {log: true})
+    const tracedRequest = context.tracedRequest('magento-user-extension:MagentoRequest', { log: true })
     this.context = context
 
     return new Promise((resolve, reject) => {
@@ -79,7 +80,8 @@ class MagentoRequest {
           } else if (response.statusCode === 400) {
             const validationError = new FieldValidationError()
             response.body.messages.error.forEach(message => {
-              validationError.addValidationMessage(message.path, message.messages.join())
+              const errors = message.messages.map(item => _trimEnd(item, '.')).join('. ') + '.'
+              validationError.addValidationMessage(message.path, errors)
             })
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'FieldValidationError')
             reject(validationError)

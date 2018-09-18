@@ -63,6 +63,11 @@
       "key": "endpoint_user_get",
       "value": "/trustedPipelines/shopgate.user.getUser.v1",
       "enabled": true
+    },
+    {
+      "key": "endpoint_user_password_update",
+      "value": "/trustedPipelines/shopgate.user.updatePassword.v1",
+      "enabled": true
     }
   ],
   "_postman_variable_scope": "globals",
