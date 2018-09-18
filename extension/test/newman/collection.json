@@ -2285,10 +2285,10 @@
                   {
                     "listen": "test",
                     "script": {
-                      "id": "855254bd-8f8e-4224-90a7-0218fa5a4a93",
+                      "id": "f593ae7e-73d5-4af9-8c60-f2e7a7d6315c",
                       "type": "text/javascript",
                       "exec": [
-                        "pm.test(\"User not logged in error, cannot create address\", function () {",
+                        "pm.test(\"User not logged in error\", function () {",
                         "    const jsonData = pm.response.json();",
                         "    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
                         "})"
@@ -2356,11 +2356,11 @@
                       {
                         "listen": "test",
                         "script": {
-                          "id": "a60e3424-1129-4501-8737-9e436276b220",
+                          "id": "fe36230e-1c40-455b-8e8f-8bc6439b0c4b",
                           "type": "text/javascript",
                           "exec": [
                             "const jsonData = pm.response.json();",
-                            "pm.test('Code is EVALIDATION because the address is duplicate', function () {",
+                            "pm.test('Code is EVALIDATION', function () {",
                             "    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
                             "});",
                             "",
@@ -2481,11 +2481,11 @@
                   {
                     "listen": "test",
                     "script": {
-                      "id": "157388a6-c05e-4cb3-9282-53e95a7c46f6",
+                      "id": "4e552004-891e-49bb-a719-ab3a6eae98ad",
                       "type": "text/javascript",
                       "exec": [
                         "const jsonData = pm.response.json();",
-                        "pm.test('User not logged in error, cannot retrieve data', function() {",
+                        "pm.test('User not logged in error', function() {",
                         "    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
                         "});"
                       ]
@@ -2609,10 +2609,10 @@
                   {
                     "listen": "prerequest",
                     "script": {
-                      "id": "4e2abac4-e87f-4c28-b232-8cef60f18f2e",
+                      "id": "380aa0c2-0445-4253-b8fd-c8ae3f6a2801",
                       "type": "text/javascript",
                       "exec": [
-                        "pm.environment.set('temp-password', pm.environment.get('password') + '-12345');"
+                        ""
                       ]
                     }
                   }
