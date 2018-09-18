@@ -1,4 +1,3 @@
-const isString = require('lodash/isString')
 const ERROR_CODE = 'EINTERNAL'
 
 /**
@@ -10,10 +9,9 @@ const ERROR_CODE = 'EINTERNAL'
  */
 class MagentoEndpointError extends Error {
   constructor (message) {
-    super(message !== '' && isString(message)
-      ? message
-      : 'An internal error occurred.')
+    super()
     this.code = ERROR_CODE
+    this.message = message || 'An internal error occurred.'
   }
 }
 
