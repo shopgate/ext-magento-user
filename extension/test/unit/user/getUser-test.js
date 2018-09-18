@@ -99,7 +99,7 @@ describe('getUser', () => {
     const userData = await getUser(context, input)
     assert.equal(magentoResponse.email, userData.mail)
     assert.equal(magentoResponse.customer_id, userData.id)
-    assert.deepEqual(userData.customAttributes, undefined)
+    assert.deepEqual(userData.customAttributes, {})
   })
 
   it('should return unauthorized error because of missing context.meta', async () => {

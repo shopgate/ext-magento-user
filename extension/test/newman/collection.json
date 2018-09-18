@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0a1f9df9-3cae-4d15-b345-51fea5d6b51e",
+		"_postman_id": "47c85e21-f504-45b7-8db3-b9fb26cdf9b0",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -181,6 +181,578 @@
 											"        pm.expect(customAttributes).to.have.property(item);",
 											"    });",
 											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_get}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "updateUser",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customer_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_customer_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "updateAddresses",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7c59e0d2-9c64-4060-a5e7-c41a6a55be35",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot update data\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"firstname\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f22991b2-ca48-4839-af28-3da3c1f5a95f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c94927e0-b577-410f-a74c-2923e894a32a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "Preparation",
+							"item": [
+								{
+									"name": "customerLogout",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_logout}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_logout}}"
+											]
+										},
+										"description": "customerLogout"
+									},
+									"response": []
+								},
+								{
+									"name": "customerLogin",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_customer_login}}",
+											"host": [
+												"{{domain}}{{endpoint_customer_login}}"
+											]
+										},
+										"description": "customerLogin"
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4c9044f5-41a9-42d3-8232-74fb3df87370",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "895587b1-e321-4f65-8441-892af4bb4cba",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "empty required field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "e7f63659-d2c8-4729-8181-8cf725ec559a",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EVALIDATION because the firstname is empty\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
+													"});",
+													"",
+													"pm.test(\"Incorrect validation error structure\", function () {",
+													"    pm.expect(jsonData.error.validationErrors.length).to.be.gte(1);",
+													"    jsonData.error.validationErrors.forEach((error) => {",
+													"        pm.expect(error.path).to.not.be.empty;",
+													"        pm.expect(error.message).to.not.be.empty;",
+													"    })",
+													"});",
+													"",
+													"pm.test(\"Correct firstname error is shown\", function () {",
+													"    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('firstName');",
+													"});"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+												"type": "text/javascript",
+												"exec": [
+													"// Create a seed to have a randomized data set",
+													"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"firstName\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e19c85f2-0033-4b62-86b1-b088f4411bb4",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "064b68e5-42a4-496b-9159-f433d3daab02",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "EE",
+							"item": [
+								{
+									"name": "update customAttributes",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b9942243-a158-4f02-a860-004993f665ae",
+												"type": "text/javascript",
+												"exec": [
+													"//Testing for EE edition specifics",
+													"if (pm.variables.get(\"mage_type\") === 'EE') {",
+													"    pm.test(\"Status code is 200\", function () {",
+													"        pm.response.to.have.status(200);",
+													"    });",
+													"}"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "99f20e51-ac6e-45ef-bdd2-759f55979d6d",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"customAttributes\": {\n\t\t\"dob\": \"1902/01/01\",\n\t\t\"gender\": \"1\"\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check updated data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d9e72131-e296-4df5-ba3c-f445df31bda5",
+												"type": "text/javascript",
+												"exec": [
+													"//Testing for EE edition specifics",
+													"var jsonData = pm.response.json();",
+													"if (pm.variables.get(\"mage_type\") === 'EE') {",
+													"    pm.test(\"Status code is 200\", function () {",
+													"        pm.response.to.have.status(200);",
+													"    });",
+													"",
+													"    pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+													"        pm.response.to.be.ok;",
+													"        pm.response.to.be.with.body;",
+													"        pm.response.to.be.json;",
+													"    });",
+													"",
+													"    pm.test(\"Data was updated\", function() {",
+													"        var response = pm.response.json()",
+													"        pm.expect(response.customAttributes.gender).to.eql(\"1\");",
+													"        pm.expect(response.customAttributes.dob).to.eql(\"1902-01-01 00:00:00\");",
+													"    });",
+													"}"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_get}}",
+											"host": [
+												"{{domain}}{{endpoint_user_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "update simple data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f1dbd16-cd35-46ad-8414-547ac9c5141a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"{{seed}}-firstname\",\n    \"lastName\": \"{{seed}}-lastname\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "check updated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e146c49f-e3a6-411e-976d-67e3c0794e0f",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.with.body;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Data was updated\", function() {",
+											"    var response = pm.response.json()",
+											"    pm.expect(response.firstName).to.eql(pm.environment.get(\"seed\") + \"-firstname\");",
+											"    pm.expect(response.lastName).to.eql(pm.environment.get(\"seed\") + \"-lastname\");",
+											"})",
+											"",
+											"",
+											";"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_get}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update customAttributes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f1dbd16-cd35-46ad-8414-547ac9c5141a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"customAttributes\": {\n\t\t\"middleName\": \"{{seed}}-middlename\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "check updated customAttributes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cbd24353-4237-4125-9c3f-60e0ae7e8485",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.with.body;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Data was updated\", function() {",
+											"    var response = pm.response.json()",
+											"    pm.expect(response.customAttributes.middlename).to.eql(pm.environment.get(\"seed\") + \"-middlename\");",
+											"})",
+											""
 										]
 									}
 								}
