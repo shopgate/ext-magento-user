@@ -1,4 +1,3 @@
-const isString = require('lodash/isString')
 const ERROR_CODE = 'EMAGENTOENDPOINTNOTFOUND'
 
 /**
@@ -11,10 +10,9 @@ const ERROR_CODE = 'EMAGENTOENDPOINTNOTFOUND'
  */
 class MagentoEndpointNotFound extends Error {
   constructor (message) {
-    super(message !== '' && isString(message)
-      ? message
-      : 'Requested endpoint url could not be found or is not implemented.')
+    super()
     this.code = ERROR_CODE
+    this.message = message || 'Requested endpoint url could not be found or is not implemented.'
   }
 }
 

@@ -50,7 +50,7 @@ describe('getUser', () => {
     assert.equal(magentoResponse.customer_id, userData.id)
   })
 
-  it('should return valid user data with usergroup and custom attrinutes', async () => {
+  it('should return valid user data with user group and custom attributes', async () => {
     nock('http://magento.shopgate.com/shopgate/v2')
       .get('/customers/me')
       .reply(200, magentoResponse)
@@ -97,8 +97,8 @@ describe('getUser', () => {
       .reply(200, customResponse)
 
     const userData = await getUser(context, input)
-    assert.equal(magentoResponse.email, userData.mail)
-    assert.equal(magentoResponse.customer_id, userData.id)
+    assert.equal(userData.mail, magentoResponse.email)
+    assert.equal(userData.id, magentoResponse.customer_id)
     assert.deepEqual(userData.customAttributes, {})
   })
 
