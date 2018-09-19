@@ -65,6 +65,11 @@
       "enabled": true
     },
     {
+      "key": "endpoint_user_update",
+      "value": "/trustedPipelines/shopgate.user.updateUser.v1",
+      "enabled": true
+    },
+    {
       "key": "endpoint_user_password_update",
       "value": "/trustedPipelines/shopgate.user.updatePassword.v1",
       "enabled": true

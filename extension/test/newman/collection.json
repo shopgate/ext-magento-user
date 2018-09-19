@@ -1,6 +1,6 @@
 {
 	"info": {
-      "_postman_id": "badc3662-629a-4f7d-b120-551321f230b1",
+		"_postman_id": "a3c68b53-3be3-4495-aaf8-0aadc3cc7018",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -181,6 +181,634 @@
 											"        pm.expect(customAttributes).to.have.property(item);",
 											"    });",
 											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_get}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "updateUser",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "updateUser",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7c59e0d2-9c64-4060-a5e7-c41a6a55be35",
+										"type": "text/javascript",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"User not logged in error, cannot update data\", function () {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"firstname\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f22991b2-ca48-4839-af28-3da3c1f5a95f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c94927e0-b577-410f-a74c-2923e894a32a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "Preparation",
+							"item": [
+								{
+									"name": "customerLogout",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_logout}}",
+											"host": [
+												"{{domain}}{{endpoint_user_logout}}"
+											]
+										},
+										"description": "customerLogout"
+									},
+									"response": []
+								},
+								{
+									"name": "customerLogin",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_login}}",
+											"host": [
+												"{{domain}}{{endpoint_user_login}}"
+											]
+										},
+										"description": "customerLogin"
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4c9044f5-41a9-42d3-8232-74fb3df87370",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "895587b1-e321-4f65-8441-892af4bb4cba",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "empty required field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "e7f63659-d2c8-4729-8181-8cf725ec559a",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EVALIDATION because the firstname is empty\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
+													"});",
+													"",
+													"pm.test(\"Incorrect validation error structure\", function () {",
+													"    pm.expect(jsonData.error.validationErrors.length).to.be.gte(1);",
+													"    jsonData.error.validationErrors.forEach((error) => {",
+													"        pm.expect(error.path).to.not.be.empty;",
+													"        pm.expect(error.message).to.not.be.empty;",
+													"    })",
+													"});",
+													"",
+													"pm.test(\"Correct firstname error is shown\", function () {",
+													"    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('firstName');",
+													"});"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "742173d7-84fb-4207-85ae-a7e93e6fb17c",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"firstName\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "no input",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "49674fc5-9e17-42a8-ab66-575229270df5",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EVALIDATION because all inputs were missing\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
+													"});"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "742173d7-84fb-4207-85ae-a7e93e6fb17c",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e19c85f2-0033-4b62-86b1-b088f4411bb4",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "064b68e5-42a4-496b-9159-f433d3daab02",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "EE",
+							"item": [
+								{
+									"name": "update customAttributes",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b9942243-a158-4f02-a860-004993f665ae",
+												"type": "text/javascript",
+												"exec": [
+													"//Testing for EE edition specifics",
+													"if (pm.variables.get(\"mage_type\") === 'EE') {",
+													"    pm.test(\"Status code is 200\", function () {",
+													"        pm.response.to.have.status(200);",
+													"    });",
+													"}"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "99f20e51-ac6e-45ef-bdd2-759f55979d6d",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"customAttributes\": {\n\t\t\"dob\": \"1902/01/01\",\n\t\t\"gender\": \"1\"\n\t}\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "check updated data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d9e72131-e296-4df5-ba3c-f445df31bda5",
+												"type": "text/javascript",
+												"exec": [
+													"//Testing for EE edition specifics",
+													"var jsonData = pm.response.json();",
+													"if (pm.variables.get(\"mage_type\") === 'EE') {",
+													"    pm.test(\"Status code is 200\", function () {",
+													"        pm.response.to.have.status(200);",
+													"    });",
+													"",
+													"    pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+													"        pm.response.to.be.ok;",
+													"        pm.response.to.be.with.body;",
+													"        pm.response.to.be.json;",
+													"    });",
+													"",
+													"    pm.test(\"Data was updated\", function() {",
+													"        var response = pm.response.json()",
+													"        pm.expect(response.customAttributes.gender).to.eql(\"1\");",
+													"        pm.expect(response.customAttributes.dob).to.eql(\"1902-01-01 00:00:00\");",
+													"    });",
+													"}"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_get}}",
+											"host": [
+												"{{domain}}{{endpoint_user_get}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "update simple data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f1dbd16-cd35-46ad-8414-547ac9c5141a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"{{seed}}-firstname\",\n    \"lastName\": \"{{seed}}-lastname\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "check updated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "91eb703d-9b34-437a-ad54-f4f7e966d31b",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.with.body;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Data was updated\", function() {",
+											"    var response = pm.response.json()",
+											"    pm.expect(response.firstName).to.eql(pm.environment.get(\"seed\") + \"-firstname\");",
+											"    pm.expect(response.lastName).to.eql(pm.environment.get(\"seed\") + \"-lastname\");",
+											"    ",
+											"    pm.environment.set(\"updatedFirstName\", response.firstName);",
+											"    pm.environment.set(\"updatedLastName\", response.lastName);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_get}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update customAttributes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f1dbd16-cd35-46ad-8414-547ac9c5141a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+										"type": "text/javascript",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"customAttributes\": {\n\t\t\"middlename\": \"{{seed}}-middlename\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "check updated customAttributes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9b781b16-9077-4fc9-a54f-fa1777150d93",
+										"type": "text/javascript",
+										"exec": [
+											"var response = pm.response.json()",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.with.body;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Data was updated\", function() {",
+											"    pm.expect(response.customAttributes.middlename).to.eql(pm.environment.get(\"seed\") + \"-middlename\");",
+											"})",
+											"",
+											"pm.test(\"Firstname and lastname NOT updated\", function() {",
+											"    pm.expect(response.firstName).to.eql(pm.environment.get(\"updatedFirstName\"));",
+											"    pm.expect(response.lastName).to.eql(pm.environment.get(\"updatedLastName\"));",
+											"})",
+											"",
+											"pm.environment.unset(\"updatedFirstName\");",
+											"pm.environment.unset(\"updatedLastName\");",
+											""
 										]
 									}
 								}
@@ -2242,424 +2870,424 @@
 									]
 								}
 							},
-                          "response": []
-                        }
-                    ],
-                  "_postman_isSubFolder": true
-                }
-            ]
-        },
-      {
-        "name": "updatePassword",
-        "item": [
-          {
-            "name": "guest",
-            "item": [
-              {
-                "name": "customerLogout",
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_logout}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_logout}}"
-                    ]
-                  },
-                  "description": "customerLogout"
-                },
-                "response": []
-              },
-              {
-                "name": "attempt at updating",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "f593ae7e-73d5-4af9-8c60-f2e7a7d6315c",
-                      "type": "text/javascript",
-                      "exec": [
-                        "pm.test(\"User not logged in error\", function () {",
-                        "    const jsonData = pm.response.json();",
-                        "    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
-                        "})"
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{\n\t\"password\": \"newPass\",\n\t\"oldPassword\": \"{{password}}\"\n}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_password_update}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_password_update}}"
-                    ]
-                  }
-                },
-                "response": []
-              }
-            ],
-            "_postman_isSubFolder": true
-          },
-          {
-            "name": "customer",
-            "item": [
-              {
-                "name": "Errors",
-                "item": [
-                  {
-                    "name": "customer login",
-                    "request": {
-                      "method": "POST",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "body": {
-                        "mode": "raw",
-                        "raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
-                      },
-                      "url": {
-                        "raw": "{{domain}}{{endpoint_user_login}}",
-                        "host": [
-                          "{{domain}}{{endpoint_user_login}}"
-                        ]
-                      },
-                      "description": "customerLogin"
-                    },
-                    "response": []
-                  },
-                  {
-                    "name": "empty data",
-                    "event": [
-                      {
-                        "listen": "test",
-                        "script": {
-                          "id": "fe36230e-1c40-455b-8e8f-8bc6439b0c4b",
-                          "type": "text/javascript",
-                          "exec": [
-                            "const jsonData = pm.response.json();",
-                            "pm.test('Code is EVALIDATION', function () {",
-                            "    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
-                            "});",
-                            "",
-                            "pm.test('Incorrect validation error structure', function () {",
-                            "    pm.expect(jsonData.error.validationErrors.length).to.be.eq(2);",
-                            "    jsonData.error.validationErrors.forEach((error) => {",
-                            "        pm.expect(error.path).to.not.be.empty;",
-                            "        pm.expect(error.message).to.not.be.empty;",
-                            "    });",
-                            "});",
-                            "",
-                            "pm.test('Incorrect path errors are shown', function () {",
-                            "    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('oldPassword');",
-                            "    pm.expect(jsonData.error.validationErrors[1].path).to.be.eq('password');",
-                            "});"
-                          ]
-                        }
-                      }
-                    ],
-                    "request": {
-                      "method": "POST",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "body": {
-                        "mode": "raw",
-                        "raw": "{\n\t\"password\": \"\",\n\t\"oldPassword\": \"\"\n}"
-                      },
-                      "url": {
-                        "raw": "{{domain}}{{endpoint_user_password_update}}",
-                        "host": [
-                          "{{domain}}{{endpoint_user_password_update}}"
-                        ]
-                      }
-                    },
-                    "response": []
-                  }
-                ],
-                "_postman_isSubFolder": true
-              },
-              {
-                "name": "update password",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "ec8d5938-de45-46b3-95a8-df38c6ba1226",
-                      "type": "text/javascript",
-                      "exec": [
-                        "pm.test('Status code is 200', function() {",
-                        "    pm.response.to.have.status(200);",
-                        "});"
-                      ]
-                    }
-                  },
-                  {
-                    "listen": "prerequest",
-                    "script": {
-                      "id": "88a7a37a-3613-4b5f-90d3-7866eb682dfd",
-                      "type": "text/javascript",
-                      "exec": [
-                        "pm.environment.set('temp-password', pm.environment.get('password') + '-12345');"
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{\n\t\"password\": \"{{temp-password}}\",\n\t\"oldPassword\": \"{{password}}\"\n}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_password_update}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_password_update}}"
-                    ]
-                  }
-                },
-                "response": []
-              },
-              {
-                "name": "logout",
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_logout}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_logout}}"
-                    ]
-                  },
-                  "description": "customerLogout"
-                },
-                "response": []
-              },
-              {
-                "name": "cannot get customer",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "4e552004-891e-49bb-a719-ab3a6eae98ad",
-                      "type": "text/javascript",
-                      "exec": [
-                        "const jsonData = pm.response.json();",
-                        "pm.test('User not logged in error', function() {",
-                        "    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
-                        "});"
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_get}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_get}}"
-                    ]
-                  }
-                },
-                "response": []
-              },
-              {
-                "name": "cannot login with old",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "f0aa4f4f-2309-4e14-b5ee-fbbfa03b51e9",
-                      "type": "text/javascript",
-                      "exec": [
-                        "const jsonData = pm.response.json();",
-                        "pm.test('Bad credentials provided', function() {",
-                        "    pm.expect(jsonData.error.code).to.be.eq('EINVALIDCREDENTIALS');",
-                        "});"
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_login}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_login}}"
-                    ]
-                  },
-                  "description": "customerLogin"
-                },
-                "response": []
-              },
-              {
-                "name": "login with new",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "4f781017-7f23-4431-8e50-c1fb3cd115cb",
-                      "type": "text/javascript",
-                      "exec": [
-                        "pm.test('Status code is 200', function() {",
-                        "    pm.response.to.have.status(200);",
-                        "});"
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{temp-password}}\"\n    }\n}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_login}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_login}}"
-                    ]
-                  },
-                  "description": "customerLogin"
-                },
-                "response": []
-              },
-              {
-                "name": "reset pass + cleanup",
-                "event": [
-                  {
-                    "listen": "test",
-                    "script": {
-                      "id": "06ed9d1a-fffe-43f4-9b2e-6586267f02dd",
-                      "type": "text/javascript",
-                      "exec": [
-                        "pm.test('Status code is 200', function() {",
-                        "    pm.response.to.have.status(200);",
-                        "});",
-                        "pm.environment.unset('temp-password');"
-                      ]
-                    }
-                  },
-                  {
-                    "listen": "prerequest",
-                    "script": {
-                      "id": "380aa0c2-0445-4253-b8fd-c8ae3f6a2801",
-                      "type": "text/javascript",
-                      "exec": [
-                        ""
-                      ]
-                    }
-                  }
-                ],
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{\n\t\"password\": \"{{password}}\",\n\t\"oldPassword\": \"{{temp-password}}\"\n}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_password_update}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_password_update}}"
-                    ]
-                  }
-                },
-                "response": []
-              },
-              {
-                "name": "logout",
-                "request": {
-                  "method": "POST",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "body": {
-                    "mode": "raw",
-                    "raw": "{}"
-                  },
-                  "url": {
-                    "raw": "{{domain}}{{endpoint_user_logout}}",
-                    "host": [
-                      "{{domain}}{{endpoint_user_logout}}"
-                    ]
-                  },
-                  "description": "customerLogout"
-                },
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "updatePassword",
+			"item": [
+				{
+					"name": "guest",
+					"item": [
+						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "attempt at updating",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f593ae7e-73d5-4af9-8c60-f2e7a7d6315c",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"User not logged in error\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"})"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"newPass\",\n\t\"oldPassword\": \"{{password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_password_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_password_update}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customer",
+					"item": [
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "customer login",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_login}}",
+											"host": [
+												"{{domain}}{{endpoint_user_login}}"
+											]
+										},
+										"description": "customerLogin"
+									},
+									"response": []
+								},
+								{
+									"name": "empty data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fe36230e-1c40-455b-8e8f-8bc6439b0c4b",
+												"type": "text/javascript",
+												"exec": [
+													"const jsonData = pm.response.json();",
+													"pm.test('Code is EVALIDATION', function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
+													"});",
+													"",
+													"pm.test('Incorrect validation error structure', function () {",
+													"    pm.expect(jsonData.error.validationErrors.length).to.be.eq(2);",
+													"    jsonData.error.validationErrors.forEach((error) => {",
+													"        pm.expect(error.path).to.not.be.empty;",
+													"        pm.expect(error.message).to.not.be.empty;",
+													"    });",
+													"});",
+													"",
+													"pm.test('Incorrect path errors are shown', function () {",
+													"    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('oldPassword');",
+													"    pm.expect(jsonData.error.validationErrors[1].path).to.be.eq('password');",
+													"});"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"password\": \"\",\n\t\"oldPassword\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_password_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_password_update}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "update password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec8d5938-de45-46b3-95a8-df38c6ba1226",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 200', function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "88a7a37a-3613-4b5f-90d3-7866eb682dfd",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set('temp-password', pm.environment.get('password') + '-12345');"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"{{temp-password}}\",\n\t\"oldPassword\": \"{{password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_password_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_password_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "cannot get customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4e552004-891e-49bb-a719-ab3a6eae98ad",
+										"type": "text/javascript",
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test('User not logged in error', function() {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EACCESS');",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_get}}",
+									"host": [
+										"{{domain}}{{endpoint_user_get}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cannot login with old",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f0aa4f4f-2309-4e14-b5ee-fbbfa03b51e9",
+										"type": "text/javascript",
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test('Bad credentials provided', function() {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EINVALIDCREDENTIALS');",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						},
+						{
+							"name": "login with new",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4f781017-7f23-4431-8e50-c1fb3cd115cb",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 200', function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{username}}\",\n        \"password\": \"{{temp-password}}\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						},
+						{
+							"name": "reset pass + cleanup",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "06ed9d1a-fffe-43f4-9b2e-6586267f02dd",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 200', function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.environment.unset('temp-password');"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "380aa0c2-0445-4253-b8fd-c8ae3f6a2801",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"{{password}}\",\n\t\"oldPassword\": \"{{temp-password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_password_update}}",
+									"host": [
+										"{{domain}}{{endpoint_user_password_update}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
 							"response": []
 						}
 					],

@@ -79,9 +79,9 @@ class MagentoRequest {
             reject(new Error(error))
           } else if (response.statusCode === 400) {
             const validationError = new FieldValidationError()
-            response.body.messages.error.forEach(message => {
-              const errors = message.messages.map(item => _trimEnd(item, '.')).join('. ') + '.'
-              validationError.addValidationMessage(message.path, errors)
+            response.body.messages.error.forEach(responseError => {
+              const errors = responseError.messages && responseError.messages.map(item => _trimEnd(item, '.')).join('. ') + '.'
+              errors && validationError.addValidationMessage(responseError.path, errors)
             })
             this.log(response.statusCode, util.inspect(options, true, 5), new Date(), 'FieldValidationError')
             reject(validationError)
