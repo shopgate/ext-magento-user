@@ -34,7 +34,7 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/updateUser_v1.js",
+        "path": "@shopgate/magento-user/user/updateUser.js",
         "input": [
           {"key": "token", "id": "10"},
           {"key": "userId", "id": "20"},

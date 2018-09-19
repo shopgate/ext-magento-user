@@ -99,4 +99,8 @@
 /**
  * @typedef {Object} ShopgateUserCustomAttributes
  * @property {string} [middleName]
+ * @property {string} [prefix]
+ * @property {string} [suffix]
+ * @property {string} [dob]
+ * @property {string} [gender]
  */

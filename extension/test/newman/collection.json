@@ -417,11 +417,10 @@
 										{
 											"listen": "prerequest",
 											"script": {
-												"id": "372abd2d-4751-42fa-9d2d-fedabb295bef",
+												"id": "742173d7-84fb-4207-85ae-a7e93e6fb17c",
 												"type": "text/javascript",
 												"exec": [
-													"// Create a seed to have a randomized data set",
-													"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+													""
 												]
 											}
 										}
@@ -437,6 +436,54 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\n\t\"firstName\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{domain}}{{endpoint_user_update}}",
+											"host": [
+												"{{domain}}{{endpoint_user_update}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "no input",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "49674fc5-9e17-42a8-ab66-575229270df5",
+												"type": "text/javascript",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"pm.test(\"Code is EVALIDATION because all inputs were missing\", function () {",
+													"    pm.expect(jsonData.error.code).to.eql('EINVALIDCALL');",
+													"});"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "742173d7-84fb-4207-85ae-a7e93e6fb17c",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}"
 										},
 										"url": {
 											"raw": "{{domain}}{{endpoint_user_update}}",
@@ -718,7 +765,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"customAttributes\": {\n\t\t\"middleName\": \"{{seed}}-middlename\"\n\t}\n}"
+									"raw": "{\n\t\"customAttributes\": {\n\t\t\"middlename\": \"{{seed}}-middlename\"\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_update}}",

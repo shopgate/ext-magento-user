@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - pipeline for retrieving/deleting/updating/creating customer addresses
 - pipeline for updating a customer password
+- pipeline for updating a customer
 ### Fixed
 - pipeline for retrieving customer details
 
