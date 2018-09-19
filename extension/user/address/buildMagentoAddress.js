@@ -16,5 +16,5 @@ module.exports = async (context, input) => {
     ...address.customAttributes
   }
 
-  return {magentoAddress}
+  return { magentoAddress }
 }
