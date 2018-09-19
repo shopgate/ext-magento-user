@@ -32,8 +32,8 @@ module.exports = async function (context, input) {
    */
   function getStreet (street) {
     const map = street && {
-      ...(street.length === 2 && {street2: street.pop()}),
-      ...(street.length === 1 && {street1: street.pop()})
+      ...(street.length === 2 && { street2: street.pop() }),
+      ...(street.length === 1 && { street1: street.pop() })
     }
 
     return map || {}
