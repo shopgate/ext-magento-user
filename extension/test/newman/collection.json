@@ -242,7 +242,7 @@
 							"response": []
 						},
 						{
-							"name": "updateAddresses",
+							"name": "updateUser",
 							"event": [
 								{
 									"listen": "test",
@@ -682,7 +682,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e146c49f-e3a6-411e-976d-67e3c0794e0f",
+										"id": "91eb703d-9b34-437a-ad54-f4f7e966d31b",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
@@ -699,10 +699,10 @@
 											"    var response = pm.response.json()",
 											"    pm.expect(response.firstName).to.eql(pm.environment.get(\"seed\") + \"-firstname\");",
 											"    pm.expect(response.lastName).to.eql(pm.environment.get(\"seed\") + \"-lastname\");",
-											"})",
-											"",
-											"",
-											";"
+											"    ",
+											"    pm.environment.set(\"updatedFirstName\", response.firstName);",
+											"    pm.environment.set(\"updatedLastName\", response.lastName);",
+											"});"
 										]
 									}
 								}
@@ -782,9 +782,11 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cbd24353-4237-4125-9c3f-60e0ae7e8485",
+										"id": "9b781b16-9077-4fc9-a54f-fa1777150d93",
 										"type": "text/javascript",
 										"exec": [
+											"var response = pm.response.json()",
+											"",
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
 											"});",
@@ -796,9 +798,16 @@
 											"});",
 											"",
 											"pm.test(\"Data was updated\", function() {",
-											"    var response = pm.response.json()",
 											"    pm.expect(response.customAttributes.middlename).to.eql(pm.environment.get(\"seed\") + \"-middlename\");",
 											"})",
+											"",
+											"pm.test(\"Firstname and lastname NOT updated\", function() {",
+											"    pm.expect(response.firstName).to.eql(pm.environment.get(\"updatedFirstName\"));",
+											"    pm.expect(response.lastName).to.eql(pm.environment.get(\"updatedLastName\"));",
+											"})",
+											"",
+											"pm.environment.unset(\"updatedFirstName\");",
+											"pm.environment.unset(\"updatedLastName\");",
 											""
 										]
 									}
