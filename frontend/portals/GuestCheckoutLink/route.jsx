@@ -9,7 +9,7 @@ export const CHECKOUT_GUEST_PATH = '/checkout_guest';
 
 /**
  * @param {Object} props props
- * @return {*}
+ * @return {JSX}
  * @constructor
  */
 const GuestCheckoutLinkRoute = props => (

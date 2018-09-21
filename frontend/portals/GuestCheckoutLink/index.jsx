@@ -26,7 +26,7 @@ const GuestCheckoutLink = ({ redirect }) => {
       <I18n.Text string="checkout.or" className={styles.or} />
       <Link href={CHECKOUT_GUEST_PATH} className={styles.guestCheckout}>
         <I18n.Text string="checkout.continue_as_guest" />.
-    </Link>
+      </Link>
     </div>
   );
 };

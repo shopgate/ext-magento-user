@@ -1,4 +1,3 @@
-
 import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
 import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
 import ParsedLink from '@shopgate/pwa-common/components/Router/helpers/parsed-link';
