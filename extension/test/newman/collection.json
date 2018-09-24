@@ -3647,6 +3647,54 @@
 							"response": []
 						},
 						{
+							"name": "customerLogout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_logout}}",
+									"host": [
+										"{{domain}}{{endpoint_user_logout}}"
+									]
+								},
+								"description": "customerLogout"
+							},
+							"response": []
+						},
+						{
+							"name": "customerLogin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"basic\",\n    \"parameters\": {\n        \"login\": \"{{temp-email}}\",\n        \"password\": \"{{password}}\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						},
+						{
 							"name": "reset email + cleanup",
 							"event": [
 								{
