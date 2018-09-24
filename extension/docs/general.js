@@ -104,3 +104,9 @@
  * @property {string} [dob]
  * @property {string} [gender]
  */
+/**
+ * @typedef {Object} UpdateMailInput
+ * @property {string} mail - new email
+ * @property {string} token - current Bearer token
+ * @property {string} userId - current customer ID
+ */
