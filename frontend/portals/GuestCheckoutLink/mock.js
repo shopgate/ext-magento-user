@@ -9,7 +9,7 @@ export const mockedStateFromCartView = {
       pathname: '/checkout'
     }
   }
-}
+};
 
 /**
  * Mocked state with redirectLocation to more page.
@@ -22,7 +22,7 @@ export const mockedStateFromMyAccountView = {
       pathname: '/more'
     }
   }
-}
+};
 
 /**
  * Mocked state with redirectLocation to home page.
@@ -35,4 +35,4 @@ export const mockedStateFromAnyOtherView = {
       pathname: '/'
     }
   }
-}
+};

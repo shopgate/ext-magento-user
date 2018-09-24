@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import mockRenderOptions from '@shopgate/pwa-common/helpers/mocks/mockRenderOptions';
-import { mockedStateFromCartView, mockedStateFromMyAccountView, mockedStateFromAnyOtherView } from './mock'
+import { mockedStateFromCartView, mockedStateFromMyAccountView, mockedStateFromAnyOtherView } from './mock';
 
 const mockedStore = configureStore();
 Enzyme.configure({ adapter: new Adapter() });
