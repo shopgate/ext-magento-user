@@ -31,78 +31,75 @@ describe('getUser', () => {
     'email': 'john.doe@shopgate.com',
     'firstname': 'John',
     'lastname': 'Doe',
+    'customer_group': {
+      'customer_group_id': 8,
+      'customer_group_code': 'Default'
+    },
     'dob': '2018-06-06 00:00:00',
     'gender': '1',
-    'addresses': [{
-      'customer_address_id': '113',
-      'created_at': '2018-06-01T02:57:49-07:00',
-      'updated_at': '2018-06-01 09:57:49',
-      'increment_id': null,
-      'city': 'Magdeburg',
-      'company': 'Shopgate GmbH',
-      'country_id': 'DE',
-      'fax': null,
-      'firstname': 'André',
-      'lastname': 'Kraus',
-      'middlename': null,
-      'postcode': '39122',
-      'prefix': null,
-      'region': 'Sachsen-Anhalt',
-      'region_id': '92',
-      'street': 'Olvenstedter Straße 11a',
-      'suffix': null,
-      'telephone': '01622355954',
-      'vat_id': null,
-      'vat_is_valid': null,
-      'vat_request_date': null,
-      'vat_request_id': null,
-      'vat_request_success': null,
-      'is_default_billing': true,
-      'is_default_shipping': false
-    }]
+    'middlename': 'von'
   }
 
-  beforeEach(() => {
+  it('should return valid minimum user data', async () => {
     nock('http://magento.shopgate.com/shopgate/v2')
       .get('/customers/me')
       .reply(200, magentoResponse)
+
+    const userData = await getUser(context, input)
+    assert.equal(magentoResponse.email, userData.mail)
+    assert.equal(magentoResponse.customer_id, userData.id)
   })
 
-  it('should return valid user data', async () => {
+  it('should return valid user data with user group and custom attributes', async () => {
+    nock('http://magento.shopgate.com/shopgate/v2')
+      .get('/customers/me')
+      .reply(200, magentoResponse)
+
     const userData = await getUser(context, input)
     assert.equal(magentoResponse.email, userData.mail)
     assert.equal(magentoResponse.customer_id, userData.id)
     assert.equal(magentoResponse.firstname, userData.firstName)
     assert.equal(magentoResponse.lastname, userData.lastName)
-    assert.equal('2018-06-06', userData.birthday)
-    assert.equal('m', userData.gender)
 
-    const magentoAddress = magentoResponse.addresses.pop()
-    const userAddress = userData.addresses.pop()
+    const magentoCustomerGroup = magentoResponse.customer_group
+    const userGroup = userData.userGroups.pop()
+    assert.equal(magentoCustomerGroup.customer_group_id, userGroup.id)
+    assert.equal(magentoCustomerGroup.customer_group_code, userGroup.name)
 
-    assert.equal(magentoAddress.customer_address_id, userAddress.id)
-    assert.equal('invoice', userAddress.type)
-    assert.equal(magentoAddress.firstname, userAddress.firstName)
-    assert.equal(magentoAddress.lastname, userAddress.lastName)
-    assert.equal(magentoAddress.company, userAddress.company)
-    assert.equal(magentoAddress.street, userAddress.street1)
-    assert.equal(magentoAddress.city, userAddress.city)
-    assert.equal(magentoAddress.telephone, userAddress.phone)
-    assert.equal(1, userAddress.isDefault)
-    assert.equal(magentoAddress.postcode, userAddress.zipcode)
-    assert.equal(magentoAddress.country_id, userAddress.country)
+    const customAttributes = userData.customAttributes
+    assert.equal(magentoResponse.dob, customAttributes.dob)
+    assert.equal(magentoResponse.gender, customAttributes.gender)
+    assert.equal(magentoResponse.middlename, customAttributes.middlename)
   })
 
-  it('should return valid user data, even if now addresses are exported', async () => {
-    delete context.addresses
+  it('should return valid user data, even if no userGroups are exported', async () => {
+    let customResponse = { ...magentoResponse }
+    delete customResponse.customer_group
+
+    nock('http://magento.shopgate.com/shopgate/v2')
+      .get('/customers/me')
+      .reply(200, customResponse)
+
     const userData = await getUser(context, input)
     assert.equal(magentoResponse.email, userData.mail)
     assert.equal(magentoResponse.customer_id, userData.id)
-    assert.equal(magentoResponse.firstname, userData.firstName)
-    assert.equal(magentoResponse.lastname, userData.lastName)
-    assert.equal('2018-06-06', userData.birthday)
-    assert.equal('m', userData.gender)
-    assert.deepEqual([], userData.addresses)
+    assert.deepEqual(userData.userGroups, undefined)
+  })
+
+  it('should return valid user data, even if no customAttributes are exported', async () => {
+    let customResponse = { ...magentoResponse }
+    delete customResponse.dob
+    delete customResponse.gender
+    delete customResponse.middlename
+
+    nock('http://magento.shopgate.com/shopgate/v2')
+      .get('/customers/me')
+      .reply(200, customResponse)
+
+    const userData = await getUser(context, input)
+    assert.equal(userData.mail, magentoResponse.email)
+    assert.equal(userData.id, magentoResponse.customer_id)
+    assert.deepEqual(userData.customAttributes, {})
   })
 
   it('should return unauthorized error because of missing context.meta', async () => {

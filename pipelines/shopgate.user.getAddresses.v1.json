@@ -1,0 +1,45 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.getAddresses.v1",
+    "public": true,
+    "input": [],
+    "output": [
+      {"key": "addresses", "id": "10"}
+    ],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getUser.js",
+        "input": [
+          {"key": "token", "id": "10"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getAddresses_v1.js",
+        "input": [
+          {"key": "token", "id": "10"},
+          {"key": "userId", "id": "20"}
+        ],
+        "output": [
+          {"key": "addresses", "id": "10"}
+        ]
+      }
+    ]
+  }
+}

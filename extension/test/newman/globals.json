@@ -1,0 +1,86 @@
+{
+  "id": "0bc0e5bb-608c-4377-af65-815c11754075",
+  "name": "Magento Connect User",
+  "values": [
+    {
+      "key": "username",
+      "value": "***",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "password",
+      "value": "***",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "domain",
+      "value": "http://localhost:{{port}}",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "port",
+      "value": "8090",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_logout",
+      "value": "/trustedPipelines/shopgate.user.logoutUser.v1",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_login",
+      "value": "/trustedPipelines/shopgate.user.loginUser.v1",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_addresses_get",
+      "value": "/trustedPipelines/shopgate.user.getAddresses.v1",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_address_add",
+      "value": "/trustedPipelines/shopgate.user.addAddress.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_address_update",
+      "value": "/trustedPipelines/shopgate.user.updateAddress.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_addresses_delete",
+      "value": "/trustedPipelines/shopgate.user.deleteAddresses.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_get",
+      "value": "/trustedPipelines/shopgate.user.getUser.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_update",
+      "value": "/trustedPipelines/shopgate.user.updateUser.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_password_update",
+      "value": "/trustedPipelines/shopgate.user.updatePassword.v1",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_user_email_update",
+      "value": "/trustedPipelines/shopgate.user.updateMail.v1",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2018-08-21T11:34:17.901Z",
+  "_postman_exported_using": "Postman/6.2.4"
+}
