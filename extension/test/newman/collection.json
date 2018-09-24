@@ -3419,52 +3419,6 @@
 										"description": "customerLogin"
 									},
 									"response": []
-								},
-								{
-									"name": "fetch original email",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "548eb75d-c520-4572-a864-ae2129170baa",
-												"type": "text/javascript",
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});",
-													"",
-													"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
-													"    pm.response.to.be.ok;",
-													"    pm.response.to.be.with.body;",
-													"    pm.response.to.be.json;",
-													"});",
-													"",
-													"const response = pm.response.json();",
-													"pm.environment.set(\"old-email\", response.mail);"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n}"
-										},
-										"url": {
-											"raw": "{{domain}}{{endpoint_user_get}}",
-											"host": [
-												"{{domain}}{{endpoint_user_get}}"
-											]
-										}
-									},
-									"response": []
 								}
 							],
 							"event": [
@@ -3615,10 +3569,10 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "f92ce706-e6a1-4091-9682-2f8babe41f19",
+										"id": "15b92979-0a22-42b2-8133-f5a3e922dcc2",
 										"type": "text/javascript",
 										"exec": [
-											"pm.environment.set('temp-email', '12345-' + pm.environment.get('old-email'));"
+											"pm.environment.set('temp-email', '12345-' + pm.environment.get('username'));"
 										]
 									}
 								}
@@ -3698,13 +3652,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7e83e832-1916-45f2-82b7-41f70525427e",
+										"id": "02c16eb8-379a-4557-bfde-c45642657ee1",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test('Status code is 200', function() {",
 											"    pm.response.to.have.status(200);",
 											"});",
-											"pm.environment.unset('old-email');",
 											"pm.environment.unset('temp-email');"
 										]
 									}
@@ -3730,7 +3683,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"mail\": \"{{old-email}}\"\n}"
+									"raw": "{\n\t\"mail\": \"{{username}}\"\n}"
 								},
 								"url": {
 									"raw": "{{domain}}{{endpoint_user_email_update}}",
