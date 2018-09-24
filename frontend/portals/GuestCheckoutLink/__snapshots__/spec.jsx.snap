@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<div /> should render with one link 1`] = `
+<div
+  className="css-nil"
+>
+  <Translate
+    className="css-1fzm7bm"
+    params={Object {}}
+    string="checkout.or"
+  >
+    <span
+      className="css-1fzm7bm"
+    >
+      checkout.or
+    </span>
+  </Translate>
+  <Link
+    className="css-13v1itq"
+    disabled={false}
+    href="/checkout_guest"
+  >
+    <div
+      aria-hidden={true}
+      className="css-c6ki83 css-13v1itq"
+      data-test-id="link: /checkout_guest"
+      onClick={[Function]}
+      role="link"
+    >
+      <Translate
+        className=""
+        params={Object {}}
+        string="checkout.continue_as_guest"
+      >
+        <span
+          className=""
+        >
+          checkout.continue_as_guest
+        </span>
+      </Translate>
+      .
+    </div>
+  </Link>
+</div>
+`;
