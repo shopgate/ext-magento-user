@@ -6,9 +6,9 @@ export const mockedStateFromCartView = {
   history: {
     pathname: '/',
     redirectLocation: {
-      pathname: '/checkout'
-    }
-  }
+      pathname: '/checkout',
+    },
+  },
 };
 
 /**
@@ -19,9 +19,9 @@ export const mockedStateFromMyAccountView = {
   history: {
     pathname: '/',
     redirectLocation: {
-      pathname: '/more'
-    }
-  }
+      pathname: '/more',
+    },
+  },
 };
 
 /**
@@ -32,7 +32,7 @@ export const mockedStateFromAnyOtherView = {
   history: {
     pathname: '/',
     redirectLocation: {
-      pathname: '/'
-    }
-  }
+      pathname: '/',
+    },
+  },
 };

@@ -3,9 +3,9 @@ import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
 import ParsedLink from '@shopgate/pwa-common/components/Router/helpers/parsed-link';
 import trackingCore from '@shopgate/tracking-core/core/Core';
 import { FETCH_CHECKOUT_URL_TIMEOUT } from '@shopgate/pwa-common-commerce/checkout/constants';
-import { CHECKOUT_GUEST_PATH } from './route';
 import { routeDidEnter } from '@shopgate/pwa-common/streams/history';
 import fetchCheckoutUrl from '@shopgate/pwa-common-commerce/checkout/actions/fetchCheckoutUrl';
+import { CHECKOUT_GUEST_PATH } from './route';
 
 /**
  * Checkout subscriptions.
@@ -36,7 +36,7 @@ export default function checkout(subscribe) {
          * Add some tracking params for cross domain tracking.
          */
         let checkoutUrl = trackingCore.crossDomainTracking(url);
-        checkoutUrl = checkoutUrl + 'is_guest_checkout/1';
+        checkoutUrl = `${checkoutUrl}is_guest_checkout/1`;
 
         // Open the checkout.
         const link = new ParsedLink(checkoutUrl);

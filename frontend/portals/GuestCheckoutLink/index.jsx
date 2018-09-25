@@ -14,6 +14,9 @@ import config from '../../config';
  */
 const disableGuestCheckout = () => !config.getUserAccountSettings || config.getUserAccountSettings === 'required';
 
+/**
+ * @returns {ReactWrapper}
+ */
 const GuestCheckoutLink = ({ redirect }) => {
   const isCheckoutLogin = redirect === '/checkout';
 
