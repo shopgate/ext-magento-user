@@ -9,7 +9,7 @@ import { mockedStateFromCartView, mockedStateFromMyAccountView, mockedStateFromA
 const mockedStore = configureStore();
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock('../../config', () => ({
+jest.mock('./config', () => ({
   "getUserAccountSettings": "optional"
 }));
 
