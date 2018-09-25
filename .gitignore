@@ -4,5 +4,4 @@ build
 npm-debug.log
 extension/coverage
 extension/node_modules
-extension/config.json
 extension/package-lock.json
