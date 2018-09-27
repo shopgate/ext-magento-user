@@ -12,7 +12,7 @@ class MagentoEndpointNotFound extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
-    this.message = message || 'Requested endpoint url was now allowed to be called.'
+    this.message = message || 'Requested endpoint url was not allowed to be called.'
   }
 }
 

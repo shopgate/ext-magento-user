@@ -43,7 +43,7 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/address/transformInputToShopgateAddress.js",
+        "path": "@shopgate/magento-user/user/address/buildMagentoAddress.js",
         "input": [
           {"key": "id", "id": "100"},
           {"key": "firstName", "id": "101", "optional": true},
@@ -54,19 +54,7 @@
           {"key": "city", "id": "106", "optional": true},
           {"key": "province", "id": "107", "optional": true},
           {"key": "country", "id": "108", "optional": true},
-          {"key": "tags", "id": "109", "optional": true},
           {"key": "customAttributes", "id": "110", "optional": true}
-        ],
-        "output": [
-          {"key": "shopgateAddress", "id": "2"}
-        ]
-      },
-      {
-        "type": "extension",
-        "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/address/buildMagentoAddress.js",
-        "input": [
-          {"key": "address", "id": "2"}
         ],
         "output": [
           {"key": "magentoAddress", "id": "200"}
@@ -77,7 +65,7 @@
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/address/utilizeTags.js",
         "input": [
-          {"key": "address", "id": "2"},
+          {"key": "tags", "id": "109", "optional": true},
           {"key": "magentoAddress", "id": "200"}
         ],
         "output": [

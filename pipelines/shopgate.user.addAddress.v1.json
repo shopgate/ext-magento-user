@@ -4,7 +4,16 @@
     "id": "shopgate.user.addAddress.v1",
     "public": true,
     "input": [
-      {"key": "address", "id": "1"}
+      {"key": "firstName", "id": "102", "optional": true},
+      {"key": "lastName", "id": "104", "optional": true},
+      {"key": "street1", "id": "108"},
+      {"key": "street2", "id": "109", "optional": true},
+      {"key": "zipCode", "id": "110", "optional": true},
+      {"key": "city", "id": "111", "optional": true},
+      {"key": "province", "id": "112", "optional": true},
+      {"key": "country", "id": "113"},
+      {"key": "tags", "id": "114", "optional": true},
+      {"key": "customAttributes", "id": "115", "optional": true}
     ],
     "output": [
       {"key": "success", "id": "2", "optional": true}
@@ -35,7 +44,16 @@
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/address/buildMagentoAddress.js",
         "input": [
-          {"key": "address", "id": "1"}
+          {"key": "firstName", "id": "102", "optional": true},
+          {"key": "lastName", "id": "104", "optional": true},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110", "optional": true},
+          {"key": "city", "id": "111", "optional": true},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
         ],
         "output": [
           {"key": "magentoAddress", "id": "100"}
@@ -46,7 +64,7 @@
         "id": "@shopgate/magento-user",
         "path": "@shopgate/magento-user/user/address/utilizeTags.js",
         "input": [
-          {"key": "address", "id": "1"},
+          {"key": "tags", "id": "114", "optional": true},
           {"key": "magentoAddress", "id": "100"}
         ],
         "output": [
