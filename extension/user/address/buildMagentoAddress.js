@@ -1,19 +1,18 @@
 module.exports = async (context, input) => {
 
-  const address = Object.assign(input.address)
   /** @var {MagentoAddress} magentoAddress */
   const magentoAddress = {
-    firstname: address.firstName,
-    lastname: address.lastName,
-    postcode: address.zipCode,
-    city: address.city,
-    region: address.province,
-    country_id: address.country,
+    firstname: input.firstName,
+    lastname: input.lastName,
+    postcode: input.zipCode,
+    city: input.city,
+    region: input.province,
+    country_id: input.country,
     street: [
-      address.street1,
-      address.street2
+      input.street1,
+      input.street2
     ],
-    ...address.customAttributes
+    ...input.customAttributes
   }
 
   return { magentoAddress }
