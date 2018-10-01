@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.3.0] - 2018-10-01
 ### Added
 - pipeline for retrieving/deleting/updating/creating customer addresses
 - pipeline for updating a customer password
@@ -18,5 +20,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - checkout button to not be clickable multiple times
 
-[Unreleased]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?targetBranch=refs%2Fheads%2Fmaster&sourceBranch=refs%2Ftags%2Fv1.2.0
+[Unreleased]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?targetBranch=refs%2Fheads%2Fmaster&sourceBranch=refs%2Ftags%2Fv1.3.0
+[1.3.0]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?targetBranch=refs%2Ftags%2Fv1.2.0&sourceBranch=refs%2Ftags%2Fv1.3.0
 [1.2.0]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?until=refs%2Ftags%2Fv1.2.0
