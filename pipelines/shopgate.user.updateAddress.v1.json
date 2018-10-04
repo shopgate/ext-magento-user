@@ -86,7 +86,7 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/updateAddress_v1.js",
+        "path": "@shopgate/magento-user/user/address/updateAddress.js",
         "input": [
           {"key": "token", "id": "10"},
           {"key": "userId", "id": "20"},

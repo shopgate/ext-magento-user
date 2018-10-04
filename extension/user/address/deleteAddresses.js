@@ -1,6 +1,6 @@
-const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
-const InvalidCallError = require('./../models/Errors/InvalidCallError')
-const MagentoRequest = require('../lib/MagentoRequest')
+const UnauthorizedError = require('../../models/Errors/UnauthorizedError')
+const InvalidCallError = require('../../models/Errors/InvalidCallError')
+const MagentoRequest = require('../../lib/MagentoRequest')
 
 module.exports = async function (context, input) {
   if (!context.meta || !context.meta.userId) {

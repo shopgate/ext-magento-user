@@ -33,7 +33,7 @@
       {
         "type": "extension",
         "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/deleteAddresses_v1.js",
+        "path": "@shopgate/magento-user/user/address/deleteAddresses.js",
         "input": [
           {"key": "token", "id": "20"},
           {"key": "userId", "id": "30"},
