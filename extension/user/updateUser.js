@@ -1,5 +1,7 @@
-const _isNil = require('lodash/isNil')
-const _omitBy = require('lodash/omitBy')
+const _ = {
+  isNil: require('lodash/isNil'),
+  omitBy: require('lodash/omitBy')
+}
 const UnauthorizedError = require('../models/Errors/UnauthorizedError')
 const InvalidCallError = require('../models/Errors/InvalidCallError')
 const MagentoRequest = require('../lib/MagentoRequest')
@@ -9,10 +11,11 @@ module.exports = async (context, input) => {
     throw new UnauthorizedError()
   }
 
-  if (_isNil(input.firstName) && _isNil(input.lastName) && _isNil(input.customAttributes)) {
+  if (_.isNil(input.firstName) && _.isNil(input.lastName) && _.isNil(input.customAttributes)) {
     throw new InvalidCallError()
   }
 
+  const request = new MagentoRequest(context, input.token)
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}`
   const magentoUser = {
     firstname: input.firstName,
@@ -20,5 +23,5 @@ module.exports = async (context, input) => {
     ...input.customAttributes
   }
 
-  return MagentoRequest.post(endpointUrl, context, input.token, _omitBy(magentoUser, _isNil), 'Request to Magento: updateUser')
+  return request.post(endpointUrl, _.omitBy(magentoUser, _.isNil), 'Request to Magento: updateUser')
 }

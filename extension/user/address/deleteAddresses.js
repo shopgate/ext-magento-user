@@ -19,7 +19,8 @@ module.exports = async (context, input) => {
     throw new InvalidCallError('Empty string address id passed.')
   }
 
+  const request = new MagentoRequest(context, input.token)
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses?ids=${input.ids.join(',')}`
 
-  return MagentoRequest.delete(endpointUrl, context, input.token, input.magentoAddress, 'Request to Magento: deleteAddress')
+  return request.delete(endpointUrl, input.magentoAddress, 'Request to Magento: deleteAddress')
 }

@@ -19,6 +19,7 @@ module.exports = async (context, input) => {
 
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/password`
   const options = { password: input.password, oldPassword: input.oldPassword }
+  const request = new MagentoRequest(context, input.token)
 
-  return MagentoRequest.post(endpointUrl, context, input.token, options, 'Request to Magento: updatePassword')
+  return request.post(endpointUrl, options, 'Request to Magento: updatePassword')
 }

@@ -6,9 +6,10 @@ module.exports = async (context, input) => {
     throw new UnauthorizedError()
   }
 
+  const request = new MagentoRequest(context, input.token)
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses`
   /** @type {MagentoAddress[]} */
-  const magentoAddressResponse = await MagentoRequest.send(endpointUrl, context, input.token, 'Request to Magento: getAddresses')
+  const magentoAddressResponse = await request.send(endpointUrl, 'Request to Magento: getAddresses')
 
   return {
     addresses: magentoAddressResponse.map(address => ({

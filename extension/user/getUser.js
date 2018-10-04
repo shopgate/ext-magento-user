@@ -12,7 +12,8 @@ module.exports = async (context, input) => {
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/me`
-  const magentoResponse = await MagentoRequest.send(endpointUrl, context, input.token, 'Request to Magento: getUser')
+  const request = new MagentoRequest(context, input.token)
+  const magentoResponse = await request.send(endpointUrl, 'Request to Magento: getUser')
 
   const defaultProperties = {
     customer_id: 'id',

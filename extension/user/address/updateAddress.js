@@ -6,7 +6,8 @@ module.exports = async (context, input) => {
     throw new UnauthorizedError()
   }
 
+  const request = new MagentoRequest(context, input.token)
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses/${input.id}`
 
-  return MagentoRequest.post(endpointUrl, context, input.token, input.magentoAddress, 'Request to Magento: updateAddresses')
+  return request.post(endpointUrl, input.magentoAddress, 'Request to Magento: updateAddresses')
 }

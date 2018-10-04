@@ -11,6 +11,7 @@ module.exports = async (context, input) => {
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/email`
+  const request = new MagentoRequest(context, input.token)
 
-  return MagentoRequest.post(endpointUrl, context, input.token, { email: input.mail }, 'Request to Magento: updateMail')
+  return request.post(endpointUrl, { email: input.mail }, 'Request to Magento: updateMail')
 }
