@@ -2,7 +2,7 @@ const UnauthorizedError = require('../../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../../lib/MagentoRequest')
 
 module.exports = async (context, input) => {
-  if (!context.meta || !context.meta.userId) {
+  if (!context.meta.userId) {
     throw new UnauthorizedError()
   }
 

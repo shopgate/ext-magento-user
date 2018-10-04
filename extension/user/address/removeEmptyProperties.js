@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-module.exports = async function (context, input) {
+module.exports = async (context, input) => {
   const magentoAddress = input.magentoAddress
   magentoAddress.street = _.compact(magentoAddress.street)
 
