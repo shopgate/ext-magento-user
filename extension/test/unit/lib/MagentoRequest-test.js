@@ -7,7 +7,10 @@ const request = require('request')
 const util = require('util')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
-const requestStub = sinon.spy(MagentoRequest, 'send')
+const UnauthorizedError = require('../../../models/Errors/UnauthorizedError')
+const MagentoEndpointNotFoundError = require('../../../models/Errors/MagentoEndpointNotFoundError')
+const MagentoEndpointNotAllowedError = require('../../../models/Errors/MagentoEndpointNotAllowedError')
+const MagentoEndpointError = require('../../../models/Errors/MagentoEndpointError')
 
 const magentoApiUrl = 'http://magento.shopgate.com/shopgate/v2'
 const testEndpoint = '/test/endpoint'
@@ -15,6 +18,8 @@ const completeEndpointUrl = `${magentoApiUrl}${testEndpoint}`
 
 let input = null
 let context = null
+let mageRequest = null
+let requestStub = null
 
 describe('MagentoRequest', () => {
   beforeEach(() => {
@@ -34,6 +39,8 @@ describe('MagentoRequest', () => {
         }
       }
     }
+    mageRequest = new MagentoRequest(context, input.token)
+    requestStub = sinon.spy(mageRequest, 'send')
   })
 
   it('should return unauthorized error because of error code 401', async () => {
@@ -41,11 +48,7 @@ describe('MagentoRequest', () => {
       .get(testEndpoint)
       .reply(401, {})
 
-    try {
-      await MagentoRequest.send(completeEndpointUrl, context, input.token)
-    } catch (e) {
-      assert.equal(e.code, 'EACCESS')
-    }
+    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, UnauthorizedError)
   })
 
   it('should return magento endpoint not found error because of error code 404', async () => {
@@ -53,11 +56,7 @@ describe('MagentoRequest', () => {
       .get(testEndpoint)
       .reply(404, {})
 
-    try {
-      await MagentoRequest.send(completeEndpointUrl, context, input.token)
-    } catch (e) {
-      assert.equal(e.code, 'EMAGENTOENDPOINTNOTFOUND')
-    }
+    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointNotFoundError)
   })
 
   it('should return magento endpoint not allowed error because of error code 405', async () => {
@@ -65,28 +64,20 @@ describe('MagentoRequest', () => {
       .get(testEndpoint)
       .reply(405, {})
 
-    try {
-      await MagentoRequest.send(completeEndpointUrl, context, input.token)
-    } catch (e) {
-      assert.equal(e.code, 'EMAGENTOENDPOINTNOTALLOWED')
-    }
+    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointNotAllowedError)
   })
 
   it('should return error because of error in response', async () => {
     nock(magentoApiUrl)
       .get(testEndpoint)
-      .reply(401, {
+      .reply(500, {
         messages: {
           error: 'fancy error message'
         },
         headers: {}
       })
 
-    try {
-      await MagentoRequest.send(completeEndpointUrl, context, input.token)
-    } catch (e) {
-      assert.equal(e.name, 'Error')
-    }
+    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointError)
   })
 
   it('should return a valid response', async () => {
@@ -95,7 +86,7 @@ describe('MagentoRequest', () => {
       .get(testEndpoint)
       .reply(200, 'ok')
 
-    const result = await MagentoRequest.send(completeEndpointUrl, context, input.token)
+    const result = await mageRequest.send(completeEndpointUrl)
 
     assert.equal(result, 'ok')
     sinon.assert.calledWith(debugLogSpy, {
@@ -126,8 +117,8 @@ describe('MagentoRequest', () => {
       post: true
     }
 
-    await MagentoRequest.post(completeEndpointUrl, context, input.token, postData)
-    sinon.assert.calledWith(requestStub, completeEndpointUrl, context, input.token, 'Request to Magento', 'POST', postData)
+    await mageRequest.post(completeEndpointUrl, postData)
+    sinon.assert.calledWith(requestStub, completeEndpointUrl, 'Request to Magento', 'POST', postData)
   })
 
   it('should trigger a DELETE request to magento', async () => {
@@ -139,7 +130,7 @@ describe('MagentoRequest', () => {
       post: true
     }
 
-    await MagentoRequest.delete(completeEndpointUrl, context, input.token, postData)
-    sinon.assert.calledWith(requestStub, completeEndpointUrl, context, input.token, 'Request to Magento', 'DELETE', postData)
+    await mageRequest.delete(completeEndpointUrl, postData)
+    sinon.assert.calledWith(requestStub, completeEndpointUrl, 'Request to Magento', 'DELETE', postData)
   })
 })
