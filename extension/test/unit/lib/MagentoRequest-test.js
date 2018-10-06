@@ -3,18 +3,18 @@ const assert = require('assert')
 const sinon = require('sinon')
 const describe = require('mocha').describe
 const it = require('mocha').it
-const request = require('request')
+const request = require('request-promise-native')
 const util = require('util')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
 const UnauthorizedError = require('../../../models/Errors/UnauthorizedError')
-const MagentoEndpointNotFoundError = require('../../../models/Errors/MagentoEndpointNotFoundError')
-const MagentoEndpointNotAllowedError = require('../../../models/Errors/MagentoEndpointNotAllowedError')
-const MagentoEndpointError = require('../../../models/Errors/MagentoEndpointError')
+const EndpointNotFound = require('../../../models/Errors/MagentoEndpointNotFoundError')
+const EndpointNotAllowed = require('../../../models/Errors/MagentoEndpointNotAllowedError')
+const FieldValidationError = require('../../../models/Errors/FieldValidationError')
+const EndpointError = require('../../../models/Errors/MagentoEndpointError')
 
-const magentoApiUrl = 'http://magento.shopgate.com/shopgate/v2'
-const testEndpoint = '/test/endpoint'
-const completeEndpointUrl = `${magentoApiUrl}${testEndpoint}`
+const magentoUrl = 'http://magento.shopgate.com/shopgate/v2'
+const path = '/test/endpoint'
 
 let input = null
 let context = null
@@ -31,9 +31,7 @@ describe('MagentoRequest', () => {
       config: {
         allowSelfSignedCertificate: true
       },
-      tracedRequest: () => {
-        return request
-      },
+      tracedRequest: () => request,
       log: {
         debug: (object, message) => {
         }
@@ -43,57 +41,87 @@ describe('MagentoRequest', () => {
     requestStub = sinon.spy(mageRequest, 'send')
   })
 
-  it('should return unauthorized error because of error code 401', async () => {
-    nock(magentoApiUrl)
-      .get(testEndpoint)
-      .reply(401, {})
-
-    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, UnauthorizedError)
-  })
-
-  it('should return magento endpoint not found error because of error code 404', async () => {
-    nock(magentoApiUrl)
-      .get(testEndpoint)
-      .reply(404, {})
-
-    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointNotFoundError)
-  })
-
-  it('should return magento endpoint not allowed error because of error code 405', async () => {
-    nock(magentoApiUrl)
-      .get(testEndpoint)
-      .reply(405, {})
-
-    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointNotAllowedError)
-  })
-
-  it('should return error because of error in response', async () => {
-    nock(magentoApiUrl)
-      .get(testEndpoint)
-      .reply(500, {
-        messages: {
-          error: 'fancy error message'
-        },
-        headers: {}
+  it('Returns proper validation error', async () => {
+    const pathName = 'city'
+    const messages = [
+      '"First Name" is a required value.',
+      '"First Name" length must be equal or greater than 1 characters.'
+    ]
+    const response = {
+      messages: {
+        error: [
+          {
+            path: pathName,
+            messages
+          }
+        ]
+      }
+    }
+    nock(magentoUrl).get(path).reply(400, response)
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch((error) => {
+        assert(error instanceof FieldValidationError, 'Improper error returned')
+        assert.equal(error.validationErrors[0].message, messages.join(' '))
+        assert.equal(error.validationErrors[0].path, pathName)
       })
-
-    assert.throws(await function () { mageRequest.send(completeEndpointUrl) }, MagentoEndpointError)
   })
 
+  it('Returns proper Unauthorized error', async () => {
+    nock(magentoUrl).get(path).reply(401, {})
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+  })
+
+  it('Returns proper Unauthorized error', async () => {
+    nock(magentoUrl).get(path).reply(403, {})
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+  })
+
+  it('Returns proper 404 error', async () => {
+    nock(magentoUrl).get(path).reply(404, {})
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch(error => assert(error instanceof EndpointNotFound, 'Improper error returned'))
+  })
+
+  it('Returns proper 405 error', async () => {
+    nock(magentoUrl).get(path).reply(405, {})
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch(error => assert(error instanceof EndpointNotAllowed, 'Improper error returned'))
+  })
+
+  it('Returns proper 500 error', async () => {
+    nock(magentoUrl).get(path).reply(500, {})
+    // noinspection JSUnusedLocalSymbols
+    await mageRequest.send(magentoUrl + path)
+      .then(result => assert(false, 'Should not be successful'))
+      .catch(error => assert(error instanceof EndpointError, 'Improper error returned'))
+  })
+
+  // todo-sg: fix
   it('should return a valid response', async () => {
     const debugLogSpy = sinon.spy(context.log, 'debug')
-    nock(magentoApiUrl)
-      .get(testEndpoint)
+    nock(magentoUrl)
+      .get(path)
       .reply(200, 'ok')
 
-    const result = await mageRequest.send(completeEndpointUrl)
+    const result = await mageRequest.send(magentoUrl + path)
 
     assert.equal(result, 'ok')
     sinon.assert.calledWith(debugLogSpy, {
-      duration: 0,
       statusCode: 200,
       request: util.inspect({
-        url: completeEndpointUrl,
+        url: magentoUrl + path,
         method: 'GET',
         json: true,
         rejectUnauthorized: false,
@@ -109,28 +137,28 @@ describe('MagentoRequest', () => {
   })
 
   it('should trigger a POST request to magento', async () => {
-    nock(magentoApiUrl)
-      .post(testEndpoint)
+    nock(magentoUrl)
+      .post(path)
       .reply(200, 'ok')
 
     const postData = {
       post: true
     }
 
-    await mageRequest.post(completeEndpointUrl, postData)
-    sinon.assert.calledWith(requestStub, completeEndpointUrl, 'Request to Magento', 'POST', postData)
+    await mageRequest.post(magentoUrl + path, postData)
+    sinon.assert.calledWith(requestStub, magentoUrl + path, 'Request to Magento', 'POST', postData)
   })
 
   it('should trigger a DELETE request to magento', async () => {
-    nock(magentoApiUrl)
-      .delete(testEndpoint)
+    nock(magentoUrl)
+      .delete(path)
       .reply(200, 'ok')
 
     const postData = {
       post: true
     }
 
-    await mageRequest.delete(completeEndpointUrl, postData)
-    sinon.assert.calledWith(requestStub, completeEndpointUrl, 'Request to Magento', 'DELETE', postData)
+    await mageRequest.delete(magentoUrl + path, postData)
+    sinon.assert.calledWith(requestStub, magentoUrl + path, 'Request to Magento', 'DELETE', postData)
   })
 })
