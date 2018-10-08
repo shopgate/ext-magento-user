@@ -108,32 +108,18 @@ describe('MagentoRequest', () => {
       .catch(error => assert(error instanceof EndpointError, 'Improper error returned'))
   })
 
-  // todo-sg: fix
   it('should return a valid response', async () => {
     const debugLogSpy = sinon.spy(context.log, 'debug')
     nock(magentoUrl)
       .get(path)
       .reply(200, 'ok')
 
-    const result = await mageRequest.send(magentoUrl + path)
+    await mageRequest.send(magentoUrl + path)
 
-    assert.equal(result, 'ok')
-    sinon.assert.calledWith(debugLogSpy, {
-      statusCode: 200,
-      request: util.inspect({
-        url: magentoUrl + path,
-        method: 'GET',
-        json: true,
-        rejectUnauthorized: false,
-        auth: {
-          bearer: input.token
-        }
-      }, true, 5),
-      response: {
-        body: 'ok',
-        headers: {}
-      }
-    }, 'Request to Magento')
+    sinon.assert.calledWith(debugLogSpy, sinon.match.has('duration'))
+    sinon.assert.calledWith(debugLogSpy, sinon.match.has('request'))
+    sinon.assert.calledWith(debugLogSpy, sinon.match.has('response'))
+    sinon.assert.calledWith(debugLogSpy, sinon.match({ statusCode: 200 }))
   })
 
   it('should trigger a POST request to magento', async () => {

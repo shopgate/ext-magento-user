@@ -1,6 +1,6 @@
 const nock = require('nock')
 const assert = require('assert')
-const request = require('request')
+const request = require('request-promise-native')
 const getUser = require('../../../user/getUser')
 
 describe('getUser', () => {
@@ -104,7 +104,7 @@ describe('getUser', () => {
 
   it('should return unauthorized error because of missing context.meta', async () => {
     try {
-      await getUser({}, input)
+      await getUser({meta: {}}, input)
     } catch (e) {
       assert.equal('EACCESS', e.code)
     }
