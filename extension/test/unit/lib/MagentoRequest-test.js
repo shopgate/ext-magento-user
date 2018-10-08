@@ -4,7 +4,6 @@ const sinon = require('sinon')
 const describe = require('mocha').describe
 const it = require('mocha').it
 const request = require('request-promise-native')
-const util = require('util')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
 const UnauthorizedError = require('../../../models/Errors/UnauthorizedError')
