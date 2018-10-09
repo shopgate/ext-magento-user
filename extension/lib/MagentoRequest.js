@@ -81,7 +81,7 @@ class MagentoRequest {
 
     try {
       const response = await this.request(options)
-      this.log(response, options, timeStart, message)
+      this.log(response, util.inspect(options, true, 5), timeStart, message)
       return response.body
     } catch (error) {
       this.handleError(error, options, timeStart)
