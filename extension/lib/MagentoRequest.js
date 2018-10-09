@@ -81,7 +81,7 @@ class MagentoRequest {
 
     try {
       const response = await this.request(options)
-      this.log(response, util.inspect(options, true, 5), timeStart, message)
+      this.log(response, options, timeStart, message)
       return response.body
     } catch (error) {
       this.handleError(error, options, timeStart)
@@ -101,32 +101,35 @@ class MagentoRequest {
    * @throws UnknownError
    */
   handleError (error, options, timeStart) {
-    const statusCode = _.get(error, 'response.statusCode')
-    if (statusCode && [400, 401, 403, 404, 405].includes(statusCode)) {
-      if (error.response.statusCode === 400) {
-        const validationError = new FieldValidationError()
-        const validationErrors = _.get(error, 'error.messages.error', false)
-        validationErrors && validationErrors.forEach(responseError => {
-          const errors = responseError.messages && responseError.messages.map(item => _.trimEnd(item, '.')).join('. ') + '.'
-          errors && validationError.addValidationMessage(responseError.path, errors)
-        })
-        this.log(error.response, util.inspect(options, true, 5), timeStart, 'FieldValidationError')
-        throw validationError
-      } else if (statusCode === 401 || statusCode === 403) {
-        this.log(error.response, util.inspect(options, true, 5), timeStart, 'UnauthorizedError')
-        throw new UnauthorizedError()
-      } else if (statusCode === 404) {
-        this.log(error.response, util.inspect(options, true, 5), timeStart, 'MagentoEndpointNotFoundError')
-        throw new MagentoEndpointNotFoundError()
-      } else if (statusCode === 405) {
-        this.log(error.response, util.inspect(options, true, 5), timeStart, 'MagentoEndpointNotAllowedError')
-        throw new MagentoEndpointNotAllowedError()
+    const statusCode = _.get(error, 'response.statusCode', 0)
+    const parsedOptions = util.inspect(options, true, 5)
+    if (statusCode && statusCode >= 400) {
+      switch (statusCode) {
+        case 400:
+          const validationError = new FieldValidationError()
+          const validationErrors = _.get(error, 'error.messages.error', false)
+          validationErrors && validationErrors.forEach(responseError => {
+            const errors = responseError.messages && responseError.messages.map(item => _.trimEnd(item, '.')).join('. ') + '.'
+            errors && validationError.addValidationMessage(responseError.path, errors)
+          })
+          this.log(error.response, parsedOptions, timeStart, 'FieldValidationError')
+          throw validationError
+        case 401:
+        case 403:
+          this.log(error.response, parsedOptions, timeStart, 'UnauthorizedError')
+          throw new UnauthorizedError()
+        case 404:
+          this.log(error.response, parsedOptions, timeStart, 'MagentoEndpointNotFoundError')
+          throw new MagentoEndpointNotFoundError()
+        case 405:
+          this.log(error.response, parsedOptions, timeStart, 'MagentoEndpointNotAllowedError')
+          throw new MagentoEndpointNotAllowedError()
+        default:
+          this.log(error.response || {}, parsedOptions, timeStart, 'MagentoEndpointError')
+          throw new MagentoEndpointError()
       }
-    } else if (error.error && error.response) {
-      this.log(error.response, util.inspect(options, true, 5), timeStart, 'MagentoEndpointError')
-      throw new MagentoEndpointError()
     }
-    this.log(_.get(error, 'response', {}), util.inspect(options, true, 5), timeStart, _.get(error, 'message', ''))
+    this.log(error.response || {}, parsedOptions, timeStart, error.message || '')
     throw new UnknownError()
   }
 
@@ -140,12 +143,12 @@ class MagentoRequest {
     this.logger.debug(
       {
         duration: new Date() - timerStart,
-        statusCode: _.get(response, 'statusCode', 0),
+        statusCode: response.statusCode || 0,
         request,
         response:
           {
-            headers: _.get(response, 'headers', {}),
-            body: _.get(response, 'body', {})
+            headers: response.headers || {},
+            body: response.body || {}
           }
       },
       message
