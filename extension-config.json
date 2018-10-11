@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "id": "@shopgate/magento-user",
   "trusted": true,
   "configuration": {
@@ -36,6 +36,17 @@
         "key": "value.backend.credentials"
       }
     },
+    "getUserAccountSettings": {
+      "type": "bigApi",
+      "destination": "frontend",
+      "default": "required",
+      "params": {
+        "method": "GET",
+        "service": "config",
+        "path": "/v1/shop/%(shopId)s/gui_sg_connect_user_account?parsed=true",
+        "key": "value"
+      }
+    },
     "allowSelfSignedCertificate" : {
       "type": "bigApi",
       "destination" : "backend",
@@ -58,6 +69,43 @@
       "id": "CheckoutSubscription",
       "path": "frontend/Checkout/subscribers.js",
       "type": "subscribers"
+    },
+    {
+      "id": "GuestCheckoutSubscription",
+      "path": "frontend/portals/GuestCheckoutLink/subscribers.js",
+      "type": "subscribers"
+    },
+    {
+      "id": "GuestCheckoutLink",
+      "path": "frontend/portals/GuestCheckoutLink/index.jsx",
+      "target": "page.login.register-link.after",
+      "type": "portals"
+    },
+    {
+      "id": "GuestCheckoutLinkRoute",
+      "path": "frontend/portals/GuestCheckoutLink/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
+      "id": "locale/en-US",
+      "type": "translations",
+      "path": "frontend/locale/en-US.json"
+    },
+    {
+      "id": "locale/de-DE",
+      "type": "translations",
+      "path": "frontend/locale/de-DE.json"
+    },
+    {
+      "id": "locale/fr-FR",
+      "type": "translations",
+      "path": "frontend/locale/fr-FR.json"
+    },
+    {
+      "id": "locale/nl-NL",
+      "type": "translations",
+      "path": "frontend/locale/nl-NL.json"
     }
   ]
 }

@@ -1,9 +1,10 @@
-const EACCESS = 'EACCESS'
+const ERROR_CODE = 'EACCESS'
 
 class UnauthorizedError extends Error {
-  constructor () {
-    super('Permission denied.')
-    this.code = EACCESS
+  constructor (message) {
+    super()
+    this.code = ERROR_CODE
+    this.message = message || 'Permission denied.'
   }
 }
 

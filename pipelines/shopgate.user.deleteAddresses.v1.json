@@ -1,0 +1,48 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.deleteAddresses.v1",
+    "public": true,
+    "input": [
+      {"key": "ids", "id": "10"}
+    ],
+    "output": [
+      {"key": "success", "id": "100", "optional": true}
+    ],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getUser.js",
+        "input": [
+          {"key": "token", "id": "20"}
+        ],
+        "output": [
+          {"key": "id", "id": "30"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/deleteAddresses.js",
+        "input": [
+          {"key": "token", "id": "20"},
+          {"key": "userId", "id": "30"},
+          {"key": "ids", "id": "10"}
+        ],
+        "output": [
+          {"key": "success", "id": "100",  "optional": true}
+        ]
+      }
+    ]
+  }
+}

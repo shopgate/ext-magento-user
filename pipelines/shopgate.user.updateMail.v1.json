@@ -1,0 +1,44 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.updateMail.v1",
+    "public": true,
+    "input": [
+      {"key": "mail", "id": "1010"}
+    ],
+    "output": [],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getUser.js",
+        "input": [
+          {"key": "token", "id": "10"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/updateMail.js",
+        "input": [
+          {"key": "token", "id": "10"},
+          {"key": "userId", "id": "20"},
+          {"key": "mail", "id": "1010"}
+        ],
+        "output": []
+      }
+    ]
+  }
+}

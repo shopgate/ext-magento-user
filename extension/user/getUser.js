@@ -1,49 +1,66 @@
-const moment = require('moment')
-
+const _forEach = require('lodash/forEach')
 const UnauthorizedError = require('../models/Errors/UnauthorizedError')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 /**
- * @param {object} context
- * @param {object} input
+ * @param {Object} context
+ * @param {Object} input
  */
 module.exports = async (context, input) => {
-  if (!context.meta || !context.meta.userId) {
+  if (!context.meta.userId) {
     throw new UnauthorizedError()
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/me`
-  const magentoResponse = await MagentoRequest.send(endpointUrl, context, input.token, 'Request to Magento: getUser')
-  let addresses = []
+  const request = new MagentoRequest(context, input.token)
+  const magentoResponse = await request.send(endpointUrl, 'Request to Magento: getUser')
 
-  // will be only returned with cloudapi plugin >= 3.1.4
-  if (magentoResponse.addresses) {
-    magentoResponse.addresses.forEach((address) => {
-      addresses.push({
-        id: address.customer_address_id,
-        type: address.is_default_billing === true ? 'invoice' : 'shipping',
-        firstName: address.firstname,
-        lastName: address.lastname,
-        company: address.company,
-        street1: address.street,
-        street2: null,
-        city: address.city,
-        phone: address.telephone,
-        isDefault: 1,
-        alias: null,
-        zipcode: address.postcode,
-        country: address.country_id
-      })
-    })
+  const defaultProperties = {
+    customer_id: 'id',
+    firstname: 'firstName',
+    lastname: 'lastName',
+    email: 'mail',
+    customer_group: []
   }
 
   return {
-    id: magentoResponse.customer_id,
-    gender: magentoResponse.gender ? magentoResponse.gender === '1' ? 'm' : 'f' : '',
-    mail: magentoResponse.email,
-    firstName: magentoResponse.firstname,
-    lastName: magentoResponse.lastname,
-    birthday: magentoResponse.dob ? moment(magentoResponse.dob, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD') : '',
-    addresses: addresses
+    ...mapAttributes(magentoResponse),
+    ...mapUserGroups(magentoResponse)
+  }
+
+  /**
+   * @param {MagentoResponseUser} magentoResponse
+   * @return {Object}
+   * @private
+   */
+  function mapAttributes (magentoResponse) {
+    const result = { customAttributes: {} }
+    _forEach(magentoResponse, (value, key) => {
+      if (defaultProperties.hasOwnProperty(key)) {
+        result[defaultProperties[key]] = value
+      } else {
+        result.customAttributes[key] = value
+      }
+    })
+
+    return result
+  }
+
+  /**
+   * @param {MagentoResponseUser} magentoResponse
+   * @return {Object}
+   * @private
+   */
+  function mapUserGroups (magentoResponse) {
+    return (magentoResponse.hasOwnProperty('customer_group'))
+      ? {
+        userGroups: [
+          {
+            id: magentoResponse.customer_group.customer_group_id,
+            name: magentoResponse.customer_group.customer_group_code
+          }
+        ]
+      }
+      : {}
   }
 }

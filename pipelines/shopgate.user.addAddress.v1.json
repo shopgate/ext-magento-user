@@ -1,0 +1,89 @@
+{
+  "version": "1",
+  "pipeline": {
+    "id": "shopgate.user.addAddress.v1",
+    "public": true,
+    "input": [
+      {"key": "firstName", "id": "102", "optional": true},
+      {"key": "lastName", "id": "104", "optional": true},
+      {"key": "street1", "id": "108"},
+      {"key": "street2", "id": "109", "optional": true},
+      {"key": "zipCode", "id": "110", "optional": true},
+      {"key": "city", "id": "111", "optional": true},
+      {"key": "province", "id": "112", "optional": true},
+      {"key": "country", "id": "113"},
+      {"key": "tags", "id": "114", "optional": true},
+      {"key": "customAttributes", "id": "115", "optional": true}
+    ],
+    "output": [
+      {"key": "success", "id": "2", "optional": true}
+    ],
+    "steps": [
+      {
+        "type": "pipeline",
+        "id": "shopgate.general.getToken.v1",
+        "trusted": true,
+        "input": [],
+        "output": [
+          {"key": "token", "id": "10"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/getUser.js",
+        "input": [
+          {"key": "token", "id": "10"}
+        ],
+        "output": [
+          {"key": "id", "id": "20"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/buildMagentoAddress.js",
+        "input": [
+          {"key": "firstName", "id": "102", "optional": true},
+          {"key": "lastName", "id": "104", "optional": true},
+          {"key": "street1", "id": "108"},
+          {"key": "street2", "id": "109", "optional": true},
+          {"key": "zipCode", "id": "110", "optional": true},
+          {"key": "city", "id": "111", "optional": true},
+          {"key": "province", "id": "112", "optional": true},
+          {"key": "country", "id": "113"},
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "customAttributes", "id": "115", "optional": true}
+        ],
+        "output": [
+          {"key": "magentoAddress", "id": "100"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/utilizeTags.js",
+        "input": [
+          {"key": "tags", "id": "114", "optional": true},
+          {"key": "magentoAddress", "id": "100"}
+        ],
+        "output": [
+          {"key": "magentoAddress", "id": "100"}
+        ]
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/address/addAddress.js",
+        "input": [
+          {"key": "token", "id": "10"},
+          {"key": "userId", "id": "20"},
+          {"key": "magentoAddress", "id": "100"}
+        ],
+        "output": [
+          {"key": "success", "id": "2",  "optional": true}
+        ]
+      }
+    ]
+  }
+}
