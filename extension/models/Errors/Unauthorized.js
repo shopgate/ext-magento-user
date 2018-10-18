@@ -1,6 +1,6 @@
 const ERROR_CODE = 'EACCESS'
 
-class UnauthorizedError extends Error {
+class Unauthorized extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -8,4 +8,4 @@ class UnauthorizedError extends Error {
   }
 }
 
-module.exports = UnauthorizedError
+module.exports = Unauthorized

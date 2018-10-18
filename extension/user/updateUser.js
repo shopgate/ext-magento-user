@@ -2,17 +2,17 @@ const _ = {
   isNil: require('lodash/isNil'),
   omitBy: require('lodash/omitBy')
 }
-const UnauthorizedError = require('../models/Errors/UnauthorizedError')
-const InvalidCallError = require('../models/Errors/InvalidCallError')
+const Unauthorized = require('../models/Errors/Unauthorized')
+const InvalidCall = require('../models/Errors/InvalidCall')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 module.exports = async (context, input) => {
   if (!context.meta.userId) {
-    throw new UnauthorizedError()
+    throw new Unauthorized()
   }
 
   if (_.isNil(input.firstName) && _.isNil(input.lastName) && _.isNil(input.customAttributes)) {
-    throw new InvalidCallError()
+    throw new InvalidCall()
   }
 
   const request = new MagentoRequest(context, input.token)

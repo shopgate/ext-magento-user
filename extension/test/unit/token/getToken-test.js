@@ -119,7 +119,7 @@ describe('getToken', () => {
       request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
 
       step(context, null, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.constructor.name, 'MagentoEndpoint')
         assert.equal(err.code, 'EINTERNAL')
         done()
       })
@@ -245,7 +245,7 @@ describe('getToken', () => {
       request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
 
       step(context, null, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.constructor.name, 'MagentoEndpoint')
         assert.equal(err.code, 'EINTERNAL')
         done()
       })
