@@ -97,7 +97,7 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.constructor.name, 'MagentoEndpoint')
         assert.equal(err.code, 'EINTERNAL')
         done()
       })

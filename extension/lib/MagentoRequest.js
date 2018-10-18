@@ -1,9 +1,9 @@
-const MagentoEndpointNotFoundError = require('./../models/Errors/MagentoEndpointNotFoundError')
-const MagentoEndpointNotAllowedError = require('./../models/Errors/MagentoEndpointNotAllowedError')
-const MagentoEndpointError = require('./../models/Errors/MagentoEndpointError')
-const UnauthorizedError = require('./../models/Errors/UnauthorizedError')
-const FieldValidationError = require('./../models/Errors/FieldValidationError')
-const UnknownError = require('./../models/Errors/UnknownError')
+const MagentoEndpointNotFoundError = require('../models/Errors/MagentoEndpointNotFound')
+const MagentoEndpointNotAllowedError = require('../models/Errors/MagentoEndpointNotAllowed')
+const MagentoEndpointError = require('../models/Errors/MagentoEndpoint')
+const UnauthorizedError = require('../models/Errors/Unauthorized')
+const FieldValidationError = require('../models/Errors/FieldValidation')
+const UnknownError = require('../models/Errors/Unknown')
 const util = require('util')
 const _ = {
   trimEnd: require('lodash/trimEnd'),

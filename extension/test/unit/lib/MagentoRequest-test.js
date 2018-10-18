@@ -6,11 +6,11 @@ const it = require('mocha').it
 const request = require('request-promise-native')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
-const UnauthorizedError = require('../../../models/Errors/UnauthorizedError')
-const EndpointNotFound = require('../../../models/Errors/MagentoEndpointNotFoundError')
-const EndpointNotAllowed = require('../../../models/Errors/MagentoEndpointNotAllowedError')
-const FieldValidationError = require('../../../models/Errors/FieldValidationError')
-const EndpointError = require('../../../models/Errors/MagentoEndpointError')
+const Unauthorized = require('../../../models/Errors/Unauthorized')
+const EndpointNotFound = require('../../../models/Errors/MagentoEndpointNotFound')
+const EndpointNotAllowed = require('../../../models/Errors/MagentoEndpointNotAllowed')
+const FieldValidation = require('../../../models/Errors/FieldValidation')
+const EndpointError = require('../../../models/Errors/MagentoEndpoint')
 
 const magentoUrl = 'http://magento.shopgate.com/shopgate/v2'
 const path = '/test/endpoint'
@@ -61,7 +61,7 @@ describe('MagentoRequest', () => {
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
       .catch((error) => {
-        assert(error instanceof FieldValidationError, 'Improper error returned')
+        assert(error instanceof FieldValidation, 'Improper error returned')
         assert.equal(error.validationErrors[0].message, messages.join(' '))
         assert.equal(error.validationErrors[0].path, pathName)
       })
@@ -72,7 +72,7 @@ describe('MagentoRequest', () => {
     // noinspection JSUnusedLocalSymbols
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
-      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+      .catch(error => assert(error instanceof Unauthorized, 'Improper error returned'))
   })
 
   it('Returns proper Unauthorized error', async () => {
@@ -80,7 +80,7 @@ describe('MagentoRequest', () => {
     // noinspection JSUnusedLocalSymbols
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
-      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+      .catch(error => assert(error instanceof Unauthorized, 'Improper error returned'))
   })
 
   it('Returns proper 404 error', async () => {

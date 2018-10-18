@@ -1,5 +1,5 @@
 const _forEach = require('lodash/forEach')
-const UnauthorizedError = require('../models/Errors/UnauthorizedError')
+const Unauthorized = require('../models/Errors/Unauthorized')
 const MagentoRequest = require('../lib/MagentoRequest')
 
 /**
@@ -8,7 +8,7 @@ const MagentoRequest = require('../lib/MagentoRequest')
  */
 module.exports = async (context, input) => {
   if (!context.meta.userId) {
-    throw new UnauthorizedError()
+    throw new Unauthorized()
   }
 
   const endpointUrl = `${context.config.magentoUrl}/customers/me`

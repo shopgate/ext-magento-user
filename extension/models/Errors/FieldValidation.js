@@ -1,9 +1,9 @@
 const ERROR_CODE = 'EVALIDATION'
 
 /**
- * @class FieldValidationError
+ * @class FieldValidation
  */
-class FieldValidationError extends Error {
+class FieldValidation extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -40,4 +40,4 @@ class FieldValidationError extends Error {
   }
 }
 
-module.exports = FieldValidationError
+module.exports = FieldValidation
