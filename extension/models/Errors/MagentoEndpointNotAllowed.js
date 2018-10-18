@@ -5,15 +5,15 @@ const ERROR_CODE = 'EMAGENTOENDPOINTNOTALLOWED'
  * Please consult the magento swagger definition for possible error outputs.
  *
  * @extends Error
- * @param {string} [message=Requested endpoint url could not be found or is not implemented.]
- * @default Requested endpoint url could not be found or is not implemented.
+ * @param {string} [message=Requested endpoint url is not allowed to be called]
+ * @default Requested endpoint url is not allowed to be called.
  */
-class MagentoEndpointNotFound extends Error {
+class MagentoEndpointNotAllowed extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
-    this.message = message || 'Requested endpoint url was not allowed to be called.'
+    this.message = message || 'Requested endpoint url is not allowed to be called'
   }
 }
 
-module.exports = MagentoEndpointNotFound
+module.exports = MagentoEndpointNotAllowed
