@@ -1,5 +1,7 @@
 const UnauthorizedError = require('../../models/Errors/UnauthorizedError')
 const InvalidCallError = require('../../models/Errors/InvalidCallError')
+const MagentoCannotDeleteDefault = require('../../models/Errors/MagentoCannotDeleteDefault')
+const MagentoEndpointNotAllowedError = require('../../models/Errors/MagentoEndpointNotAllowedError')
 const MagentoRequest = require('../../lib/MagentoRequest')
 
 module.exports = async (context, input) => {
@@ -22,5 +24,9 @@ module.exports = async (context, input) => {
   const request = new MagentoRequest(context, input.token)
   const endpointUrl = `${context.config.magentoUrl}/customers/${input.userId}/addresses?ids=${input.ids.join(',')}`
 
-  return request.delete(endpointUrl, input.magentoAddress, 'Request to Magento: deleteAddress')
+  try {
+    await request.delete(endpointUrl, input.magentoAddress, 'Request to Magento: deleteAddress')
+  } catch (error) {
+    throw (error instanceof MagentoEndpointNotAllowedError) ? new MagentoCannotDeleteDefault() : error
+  }
 }

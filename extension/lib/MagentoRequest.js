@@ -53,8 +53,6 @@ class MagentoRequest {
    */
   async delete (url, data, message = 'Request to Magento') {
     await this.send(url, message, 'DELETE', data)
-
-    return { success: true }
   }
 
   /**

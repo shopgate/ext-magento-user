@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a3c68b53-3be3-4495-aaf8-0aadc3cc7018",
+      "_postman_id": "e664a463-9ef6-47a0-98d8-fde87c4cf774",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2578,13 +2578,13 @@
 											"listen": "test",
 											"script": {
 												"id": "fb4f0a42-a78e-4212-bb58-a5c07bd0eecf",
-												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
-													"pm.test('Code is EMAGENTOENDPOINTNOTALLOWED (405) because the address is default', function () {",
-													"    pm.expect(jsonData.error.code).to.eql('EMAGENTOENDPOINTNOTALLOWED');",
+                                                  "pm.test('Code is ENOREMOVEDEFAULT (400) because the address is default', function () {",
+                                                  "    pm.expect(jsonData.error.code).to.eql('ENOREMOVEDEFAULT');",
 													"});"
-												]
+                                                ],
+                                              "type": "text/javascript"
 											}
 										}
 									],
@@ -2730,13 +2730,13 @@
 											"listen": "test",
 											"script": {
 												"id": "c28b0a68-1b66-467e-8c49-0bd2fe650b2f",
-												"type": "text/javascript",
 												"exec": [
 													"var jsonData = pm.response.json();",
-													"pm.test(\"Code is EMAGENTOENDPOINTNOTALLOWED (405) could not delete at least one address.\", function () {",
-													"    pm.expect(jsonData.error.code).to.eql('EMAGENTOENDPOINTNOTALLOWED');",
+                                                  "pm.test(\"Code is ENOREMOVEDEFAULT (400) could not delete at least one address.\", function () {",
+                                                  "    pm.expect(jsonData.error.code).to.eql('ENOREMOVEDEFAULT');",
 													"});"
-												]
+                                                ],
+                                              "type": "text/javascript"
 											}
 										}
 									],
@@ -2792,17 +2792,13 @@
 								{
 									"listen": "test",
 									"script": {
-										"type": "text/javascript",
+                                      "id": "28dc171b-45e6-429c-ac40-4ea83538b95a",
 										"exec": [
 											"pm.test(\"Status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
-											"})",
-											"",
-											"var jsonData = pm.response.json();",
-											"pm.test(\"Addresses deleted and return is success true\", function () {",
-											"    pm.expect(jsonData.success).to.be.eq(true);",
 											"});"
-										]
+                                        ],
+                                      "type": "text/javascript"
 									}
 								}
 							],
