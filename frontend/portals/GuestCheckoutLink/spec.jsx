@@ -10,7 +10,7 @@ const mockedStore = configureStore();
 Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('./config', () => ({
-  getUserAccountSettings: 'optional',
+  getUserAccountSettings: 1,
 }));
 
 beforeEach(() => {

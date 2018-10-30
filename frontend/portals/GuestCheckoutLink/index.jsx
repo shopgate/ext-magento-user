@@ -12,7 +12,7 @@ import config from './config'
  * @private
  * @returns {boolean}
  */
-const disableGuestCheckout = () => !config.getUserAccountSettings || config.getUserAccountSettings === 'required';
+const disableGuestCheckout = () => !context.config.getUserAccountSettings;
 
 /**
  * @returns {JSX}
