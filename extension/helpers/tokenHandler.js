@@ -274,7 +274,7 @@ class TokenHandler {
       this.log.debug(
         {
           duration: new Date() - requestStart,
-          statusCode: res.statusCode,
+          statusCode: res.statusCode || 0,
           request: util.inspect(objToLog, true, 5),
           response: util.inspect(res.body, true, 5)
         },

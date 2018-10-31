@@ -81,7 +81,7 @@ class MagentoRequest {
 
     try {
       const response = await this.request(options)
-      this.log(response, util.inspect(options, true, 5), timeStart, message)
+      this.log(response, options, timeStart, message)
       return response.body
     } catch (error) {
       this.handleError(error, options, timeStart)
@@ -102,7 +102,6 @@ class MagentoRequest {
    */
   handleError (error, options, timeStart) {
     const statusCode = _.get(error, 'response.statusCode', 0)
-    const parsedOptions = util.inspect(options, true, 5)
     if (statusCode && statusCode >= 400) {
       switch (statusCode) {
         case 400:
@@ -112,24 +111,24 @@ class MagentoRequest {
             const errors = responseError.messages && responseError.messages.map(item => _.trimEnd(item, '.')).join('. ') + '.'
             errors && validationError.addValidationMessage(responseError.path, errors)
           })
-          this.log(error.response, parsedOptions, timeStart, 'FieldValidationError')
+          this.log(error.response, options, timeStart, 'Request to Magento - FieldValidationError')
           throw validationError
         case 401:
         case 403:
-          this.log(error.response, parsedOptions, timeStart, 'UnauthorizedError')
+          this.log(error.response, options, timeStart, 'Request to Magento - UnauthorizedError')
           throw new UnauthorizedError()
         case 404:
-          this.log(error.response, parsedOptions, timeStart, 'MagentoEndpointNotFoundError')
+          this.log(error.response, options, timeStart, 'Request to Magento - MagentoEndpointNotFoundError')
           throw new MagentoEndpointNotFoundError()
         case 405:
-          this.log(error.response, parsedOptions, timeStart, 'MagentoEndpointNotAllowedError')
+          this.log(error.response, options, timeStart, 'Request to Magento - MagentoEndpointNotAllowedError')
           throw new MagentoEndpointNotAllowedError()
         default:
-          this.log(error.response || {}, parsedOptions, timeStart, 'MagentoEndpointError')
+          this.log(error.response || {}, options, timeStart, 'Request to Magento - MagentoEndpointError')
           throw new MagentoEndpointError()
       }
     }
-    this.log(error.response || {}, parsedOptions, timeStart, error.message || '')
+    this.log(error.response || {}, options, timeStart, `Request to Magento - ${error.message || 'Unknown Error'}`)
     throw new UnknownError()
   }
 
@@ -144,12 +143,12 @@ class MagentoRequest {
       {
         duration: new Date() - timerStart,
         statusCode: response.statusCode || 0,
-        request,
+        request: util.inspect(request, true, 5),
         response:
-          {
+          util.inspect({
             headers: response.headers || {},
             body: response.body || {}
-          }
+          }, true, 5)
       },
       message
     )
