@@ -24,14 +24,11 @@ class TokenHandler {
       throw new InvalidCallError('request or client credentials are not defined')
     }
 
-    this.request = request.defaults({
-      url: authUrl,
-      auth: {
-        username: clientCredentials.id,
-        password: clientCredentials.secret
-      },
-      rejectUnauthorized
-    })
+    this.request = request
+    this.authUrl = authUrl
+    this.username = clientCredentials.id
+    this.password = clientCredentials.secret
+    this.rejectUnauthorized = rejectUnauthorized
   }
 
   /**
@@ -238,12 +235,22 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
+    const requestOptions = {
+      url: this.authUrl,
+      auth: {
+        username: this.username,
+        password: this.password
+      },
+      rejectUnauthorized: this.rejectUnauthorized,
+      ...options
+    }
+
     // A short cleanup to not log plaintext user login data to kibana
-    const objToLog = Object.assign({}, options.json)
+    const objToLog = Object.assign({}, requestOptions.json)
     objToLog.password = 'xxxxxx'
 
     const requestStart = new Date()
-    this.request.post(options, (err, res) => {
+    this.request.post(requestOptions, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
         this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
