@@ -247,7 +247,9 @@ class TokenHandler {
 
     // A short cleanup to not log plaintext user login data to kibana
     const objToLog = Object.assign({}, requestOptions.json)
-    objToLog.password = 'xxxxxx'
+    objToLog.password = objToLog.password ? 'xxxxxx' : undefined
+    objToLog.code = objToLog.code ? 'xxxxxx' : undefined
+    objToLog.refresh_token = objToLog.refresh_token ? 'xxxxxx' : undefined
 
     const requestStart = new Date()
     this.request.post(requestOptions, (err, res) => {
