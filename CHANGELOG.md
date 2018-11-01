@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - internal debug logging of requests to Magento
 
+### Changed
+- guest checkout now depends on the config 'guest_login_mode'
+
 ## [1.3.0] - 2018-10-01
 ### Added
 - pipeline for retrieving/deleting/updating/creating customer addresses

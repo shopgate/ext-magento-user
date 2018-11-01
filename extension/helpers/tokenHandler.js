@@ -1,6 +1,6 @@
 const util = require('util')
-const MagentoError = require('../models/Errors/MagentoEndpointError')
-const InvalidCallError = require('../models/Errors/InvalidCallError')
+const MagentoError = require('../models/Errors/MagentoEndpoint')
+const InvalidCallError = require('../models/Errors/InvalidCall')
 const RequestLogger = require('./RequestLogger')
 const TOKEN_KEY = 'token'
 /**
