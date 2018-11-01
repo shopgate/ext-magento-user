@@ -19,7 +19,6 @@ class MagentoRequest {
    * @param {string} token
    */
   constructor (context, token) {
-    this.logger = context.log
     this.requestLogger = new RequestLogger(context.log)
     this.request = context.tracedRequest('magento-user-extension:MagentoRequest').defaults({
       auth: {
