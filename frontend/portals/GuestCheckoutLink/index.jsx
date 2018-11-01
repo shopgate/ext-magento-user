@@ -8,7 +8,7 @@ import styles from './style';
 import config from './config'
 
 /**
- * Check is the guest checkout disabled
+ * Check whether the guest checkout is disabled
  * @private
  * @returns {boolean}
  */
