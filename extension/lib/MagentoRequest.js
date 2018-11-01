@@ -81,7 +81,7 @@ class MagentoRequest {
 
     try {
       const response = await this.request(options)
-      this.log(response, options, timeStart, message)
+      this.log(response, options.json, timeStart, message)
       return response.body
     } catch (error) {
       this.handleError(error, options, timeStart)
@@ -111,24 +111,24 @@ class MagentoRequest {
             const errors = responseError.messages && responseError.messages.map(item => _.trimEnd(item, '.')).join('. ') + '.'
             errors && validationError.addValidationMessage(responseError.path, errors)
           })
-          this.log(error.response, options, timeStart, 'Request to Magento - FieldValidationError')
+          this.log(error.response, options.json, timeStart, 'Request to Magento - FieldValidationError')
           throw validationError
         case 401:
         case 403:
-          this.log(error.response, options, timeStart, 'Request to Magento - UnauthorizedError')
+          this.log(error.response, options.json, timeStart, 'Request to Magento - UnauthorizedError')
           throw new UnauthorizedError()
         case 404:
-          this.log(error.response, options, timeStart, 'Request to Magento - MagentoEndpointNotFoundError')
+          this.log(error.response, options.json, timeStart, 'Request to Magento - MagentoEndpointNotFoundError')
           throw new MagentoEndpointNotFoundError()
         case 405:
-          this.log(error.response, options, timeStart, 'Request to Magento - MagentoEndpointNotAllowedError')
+          this.log(error.response, options.json, timeStart, 'Request to Magento - MagentoEndpointNotAllowedError')
           throw new MagentoEndpointNotAllowedError()
         default:
-          this.log(error.response || {}, options, timeStart, 'Request to Magento - MagentoEndpointError')
+          this.log(error.response || {}, options.json, timeStart, 'Request to Magento - MagentoEndpointError')
           throw new MagentoEndpointError()
       }
     }
-    this.log(error.response || {}, options, timeStart, `Request to Magento - ${error.message || 'Unknown Error'}`)
+    this.log(error.response || {}, options.json, timeStart, `Request to Magento - ${error.message || 'Unknown Error'}`)
     throw new UnknownError()
   }
 
