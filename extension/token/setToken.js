@@ -6,7 +6,7 @@ module.exports = function (context, input, cb) {
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest('magento-user-extension:setToken', {log: true})
+  const request = context.tracedRequest('magento-user-extension:setToken')
 
   const response = input.magentoTokenResponse
 
@@ -14,7 +14,7 @@ module.exports = function (context, input, cb) {
 
   log.debug(
     {
-      response: util.inspect(response, true, 5)
+      response: util.inspect(response, {depth: 5})
     },
     'Response from Magento: setToken'
   )

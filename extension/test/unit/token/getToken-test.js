@@ -24,11 +24,7 @@ describe('getToken', () => {
       error: (msg) => {}
     },
     tracedRequest: () => {
-      return {
-        defaults: () => {
-          return request
-        }
-      }
+      return request
     },
     meta: {}
   }

@@ -3,11 +3,18 @@
  */
 /**
  * @typedef {Object} StepContext
- * @property {Logger} log - allows logging information to the backend console
+ * @property {StepContextLogger} log - allows logging information to the backend console
  * @property {StepContextConfig} config - Configuration file, reference config.json for values
  * @property {function} tracedRequest - Request class allows making external REST calls
  * @property {StepContextMeta} meta
  * @property {StepContextStorageContainer} storage - defines different types of storage's to save intermediate data to
+ */
+/**
+ * @typedef {Object} StepContextLogger
+ * @property {function} debug
+ * @property {function} info
+ * @property {function} warn
+ * @property {function} error
  */
 /**
  * @typedef {(Object|Array)} StepContextStorageContainer

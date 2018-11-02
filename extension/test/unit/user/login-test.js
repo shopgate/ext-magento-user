@@ -31,11 +31,7 @@ describe('login', () => {
       }
     },
     tracedRequest: () => {
-      return {
-        defaults: () => {
-          return request
-        }
-      }
+      return request
     }
   }
 
