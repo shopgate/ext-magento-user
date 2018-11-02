@@ -84,7 +84,7 @@ class MagentoRequest {
       this.handleError(error, options, timeStart)
     }
 
-    if (!(typeof response.body === 'object')) {
+    if (typeof response.body !== 'object') {
       this.requestLogger.log({}, options, timeStart, 'Request to Magento - MagentoEndpointError - Response not JSON')
       throw new MagentoEndpointError()
     }
