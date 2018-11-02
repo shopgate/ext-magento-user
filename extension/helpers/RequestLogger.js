@@ -6,6 +6,7 @@ module.exports = class {
    */
   constructor (logger) {
     this.logger = logger
+    this.obfuscationProperties = ['json', 'headers', 'auth', 'body']
   }
 
   /**
@@ -15,30 +16,8 @@ module.exports = class {
    * @param {string} message
    */
   log (response, request, timerStart, message) {
-    // obfuscate known auth secrets from request
-    const loggableRequest = Object.assign({}, request)
-    if (loggableRequest.json && typeof loggableRequest.json === 'object') {
-      loggableRequest.json.password = request.json.password ? 'xxxxxx' : undefined
-      loggableRequest.json.code = request.json.code ? 'xxxxxx' : undefined
-      loggableRequest.json.refresh_token = request.json.refresh_token ? 'xxxxxx' : undefined
-    }
-
-    if (loggableRequest.headers) {
-      loggableRequest.headers.authorization = request.headers.authorization ? 'xxxxxx' : undefined
-    }
-
-    if (loggableRequest.auth) {
-      loggableRequest.auth.password = request.auth.password ? 'xxxxxx' : undefined
-      loggableRequest.auth.bearer = request.auth.bearer ? 'xxxxxx' : undefined
-    }
-
-    // obfuscate known auth secrets from response
-    const loggableResponse = Object.assign({}, response)
-
-    if (loggableResponse.body) {
-      loggableResponse.body.access_token = response.body.access_token ? 'xxxxxx' : undefined
-      loggableResponse.body.refresh_token = response.body.refresh_token ? 'xxxxxx' : undefined
-    }
+    const loggableRequest = this.obfuscate(request)
+    const loggableResponse = this.obfuscate(response)
 
     this.logger.debug(
       {
@@ -52,5 +31,23 @@ module.exports = class {
       },
       message
     )
+  }
+
+  obfuscate (obj) {
+    const loggableObject = Object.assign({}, obj)
+    this.obfuscationProperties.forEach(propertyName => {
+      if (!obj[propertyName] || !(typeof obj[propertyName] === 'object')) {
+        return
+      }
+
+      Object.keys(obj[propertyName]).forEach(subPropertyName => {
+        switch (subPropertyName) {
+          case 'password': case 'code': case 'refresh_token': case 'access_token': case 'authorization': case 'bearer':
+            loggableObject[propertyName][subPropertyName] = 'xxxxxx'
+        }
+      })
+    })
+
+    return loggableObject
   }
 }
