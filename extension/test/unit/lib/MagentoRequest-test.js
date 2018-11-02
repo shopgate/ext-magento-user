@@ -145,4 +145,22 @@ describe('MagentoRequest', () => {
     await mageRequest.delete(magentoUrl + path, postData)
     sinon.assert.calledWith(requestStub, magentoUrl + path, 'Request to Magento', 'DELETE', postData)
   })
+
+  it('should throw a MagentoEndpointError when the response is not JSON', async () => {
+    nock(magentoUrl)
+      .get(path)
+      .reply(200, 'not json uno!?')
+
+    try {
+      await mageRequest.send(magentoUrl + path)
+    } catch (err) {
+      if (!(err instanceof MagentoEndpointError)) {
+        assert.fail(`Expected a MagentoEndpointError to be thrown, got ${err.constructor.name} instead; message: ${err.message}`)
+      }
+
+      return
+    }
+
+    assert.fail('Expected a MagentoEndpointError to be thrown, no error at all occured.')
+  })
 })

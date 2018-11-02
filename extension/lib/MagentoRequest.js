@@ -77,13 +77,20 @@ class MagentoRequest {
     }
     const timeStart = new Date()
 
+    let response
     try {
-      const response = await this.request(options)
-      this.requestLogger.log(response, options, timeStart, message)
-      return response.body
+      response = await this.request(options)
     } catch (error) {
       this.handleError(error, options, timeStart)
     }
+
+    if (!(typeof response.body === 'object')) {
+      this.requestLogger.log({}, options, timeStart, 'Request to Magento - MagentoEndpointError - Response not JSON')
+      throw new MagentoEndpointError()
+    }
+
+    this.requestLogger.log(response, options, timeStart, message)
+    return response.body
   }
 
   /**
@@ -127,7 +134,7 @@ class MagentoRequest {
       }
     }
     this.requestLogger.log(error.response || {}, options, timeStart, `Request to Magento - ${error.message || 'Unknown Error'}`)
-    throw new UnknownError()
+    throw new UnknownError(error.message)
   }
 }
 
