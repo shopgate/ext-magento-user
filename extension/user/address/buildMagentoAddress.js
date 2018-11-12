@@ -1,3 +1,5 @@
+const provinceCodeMapping = require('../../helpers/provinceCodeMapping')
+
 module.exports = async (context, input) => {
 
   /** @var {MagentoAddress} magentoAddress */
@@ -6,7 +8,7 @@ module.exports = async (context, input) => {
     lastname: input.lastName,
     postcode: input.zipCode,
     city: input.city,
-    region: input.province,
+    region: getMagentoRegion(input.country, input.province),
     country_id: input.country,
     street: [
       input.street1,
@@ -16,4 +18,16 @@ module.exports = async (context, input) => {
   }
 
   return { magentoAddress }
+
+  /**
+   * @param {string} country_id
+   * @param {string} province
+   * @return {string}
+   * @private
+   */
+  function getMagentoRegion(country_id, province) {
+    return (provinceCodeMapping().find(function (element) {
+      return element.provinceISO === province && element.countryISO === country_id
+    }) || { magentoCode: province }).magentoCode
+  }
 }
