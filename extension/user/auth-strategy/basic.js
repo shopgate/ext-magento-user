@@ -1,5 +1,5 @@
-const TokenHandler = require('../helpers/tokenHandler')
-const InvalidCredentialsError = require('../models/Errors/InvalidCredentialsError')
+const TokenHandler = require('../../helpers/tokenHandler')
+const InvalidCredentialsError = require('../../models/Errors/InvalidCredentialsError')
 
 /**
  * @typedef {Object} UserLoginInput

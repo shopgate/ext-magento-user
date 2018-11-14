@@ -1,5 +1,5 @@
 const assert = require('assert')
-const step = require('../../../user/login')
+const step = require('../../../../user/auth-strategy/basic')
 
 describe('login', () => {
   let request = null

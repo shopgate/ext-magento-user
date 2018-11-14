@@ -107,5 +107,32 @@
       "type": "translations",
       "path": "frontend/locale/nl-NL.json"
     }
+  ],
+  "steps": [
+    {
+      "path": "extension/user/auth-strategy/facebook.js",
+      "description": "Auth with facebook strategy",
+      "hooks" : ["shopgate.user.loginUser.v1:loginToService"],
+      "input" : [
+        {"key": "strategy"},
+        {"key": "parameters"}
+      ],
+      "output" : [
+        {"key": "userId", "optional": true}
+      ]
+    },
+    {
+      "path": "extension/user/auth-strategy/basic.js",
+      "description": "Auth with basic strategy",
+      "hooks" : ["shopgate.user.loginUser.v1:loginToService"],
+      "input" : [
+        {"key": "strategy"},
+        {"key": "parameters"}
+      ],
+      "output" : [
+        {"key": "userId", "optional": true},
+        {"key": "magentoTokenResponse", "optional": true}
+      ]
+    }
   ]
 }
