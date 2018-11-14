@@ -1,5 +1,4 @@
-const provinceCodeMapping = require('../../helpers/provinceCodeMapping')
-const provinceCodeHelper = new provinceCodeMapping()
+const provinceCodeMapper = require('../../helpers/provinceCodeMapper')
 
 module.exports = async (context, input) => {
 
@@ -9,7 +8,7 @@ module.exports = async (context, input) => {
     lastname: input.lastName,
     postcode: input.zipCode,
     city: input.city,
-    region: provinceCodeHelper.getMagentoRegion(input.country, input.province),
+    region: provinceCodeMapper.getMagentoRegion(input.country, input.province),
     country_id: input.country,
     street: [
       input.street1,

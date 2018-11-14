@@ -1,7 +1,6 @@
 const Unauthorized = require('../../models/Errors/Unauthorized')
 const MagentoRequest = require('../../lib/MagentoRequest')
-const provinceCodeMapping = require('../../helpers/provinceCodeMapping')
-const provinceCodeHelper = new provinceCodeMapping()
+const provinceCodeMapper = require('../../helpers/provinceCodeMapper')
 
 module.exports = async (context, input) => {
   if (!context.meta.userId) {
@@ -21,7 +20,7 @@ module.exports = async (context, input) => {
       ...getStreet(address.street),
       zipCode: address.postcode,
       city: address.city,
-      province: provinceCodeHelper.getProvince(address.country_id, address.region_code),
+      province: provinceCodeMapper.getProvince(address.country_id, address.region_code),
       country: address.country_id,
       tags: getTags(address),
       customAttributes: getCustomAttributes(address)
