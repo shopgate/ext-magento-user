@@ -2,26 +2,26 @@ const provinceCodeMappingByCountry = require('./provinceMap')
 
 module.exports = {
   /**
-   * @param {string} country_id
+   * @param {string} countryId
    * @param {string} province
    * @return {string}
    */
-  getMagentoRegion : (country_id, province) => {
-    const mapping = provinceCodeMappingByCountry[country_id] || []
+  getMagentoRegion : (countryId, province) => {
+    const mapping = provinceCodeMappingByCountry[countryId] || []
     const result = mapping.find((item) => item.shopgateCode === province) || {}
 
     return result.magentoCode || province
   },
 
   /**
-   * @param {string} country_id
-   * @param {string} region_code
+   * @param {string} countryId
+   * @param {string} regionCode
    * @return {string}
    */
-  getProvince : (country_id, region_code) => {
-    const mapping = provinceCodeMappingByCountry[country_id] || []
-    const result = mapping.find((item) => item.magentoCode === region_code) || {}
+  getProvince : (countryId, regionCode) => {
+    const mapping = provinceCodeMappingByCountry[countryId] || []
+    const result = mapping.find((item) => item.magentoCode === regionCode) || {}
 
-    return result.shopgateCode || region_code
+    return result.shopgateCode || regionCode
   }
 }
