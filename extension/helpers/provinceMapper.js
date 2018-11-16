@@ -8,7 +8,7 @@ module.exports = {
    */
   getMagentoRegion : (country_id, province) => {
     const mapping = provinceCodeMappingByCountry[country_id] || []
-    const result = mapping.find((item) => item.provinceISO === province) || {}
+    const result = mapping.find((item) => item.shopgateCode === province) || {}
 
     return result.magentoCode || province
   },
@@ -22,6 +22,6 @@ module.exports = {
     const mapping = provinceCodeMappingByCountry[country_id] || []
     const result = mapping.find((item) => item.magentoCode === region_code) || {}
 
-    return result.provinceISO || region_code
+    return result.shopgateCode || region_code
   }
 }

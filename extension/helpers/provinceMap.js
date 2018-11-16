@@ -1,909 +1,909 @@
 module.exports = {
   DE: [
     {
-      provinceISO: 'BW',
+      shopgateCode: 'BW',
       magentoCode: 'BAW'
     },
     {
-      provinceISO: 'BY',
+      shopgateCode: 'BY',
       magentoCode: 'BAY'
     },
     {
-      provinceISO: 'BE',
+      shopgateCode: 'BE',
       magentoCode: 'BER'
     },
     {
-      provinceISO: 'BB',
+      shopgateCode: 'BB',
       magentoCode: 'BRG'
     },
     {
-      provinceISO: 'HB',
+      shopgateCode: 'HB',
       magentoCode: 'BRE'
     },
     {
-      provinceISO: 'HH',
+      shopgateCode: 'HH',
       magentoCode: 'HAM'
     },
     {
-      provinceISO: 'HE',
+      shopgateCode: 'HE',
       magentoCode: 'HES'
     },
     {
-      provinceISO: 'MV',
+      shopgateCode: 'MV',
       magentoCode: 'MEC'
     },
     {
-      provinceISO: 'NI',
+      shopgateCode: 'NI',
       magentoCode: 'NDS'
     },
     {
-      provinceISO: 'NW',
+      shopgateCode: 'NW',
       magentoCode: 'NRW'
     },
     {
-      provinceISO: 'RP',
+      shopgateCode: 'RP',
       magentoCode: 'RHE'
     },
     {
-      provinceISO: 'SL',
+      shopgateCode: 'SL',
       magentoCode: 'SAR'
     },
     {
-      provinceISO: 'SN',
+      shopgateCode: 'SN',
       magentoCode: 'SAS'
     },
     {
-      provinceISO: 'ST',
+      shopgateCode: 'ST',
       magentoCode: 'SAC'
     },
     {
-      provinceISO: 'SH',
+      shopgateCode: 'SH',
       magentoCode: 'SCN'
     },
     {
-      provinceISO: 'TH',
+      shopgateCode: 'TH',
       magentoCode: 'THE'
     }
   ],
   AT: [
     {
-      provinceISO: '1',
+      shopgateCode: '1',
       magentoCode: 'BL'
     },
     {
-      provinceISO: '2',
+      shopgateCode: '2',
       magentoCode: 'KN'
     },
     {
-      provinceISO: '3',
+      shopgateCode: '3',
       magentoCode: 'NO'
     },
     {
-      provinceISO: '4',
+      shopgateCode: '4',
       magentoCode: 'OO'
     },
     {
-      provinceISO: '5',
+      shopgateCode: '5',
       magentoCode: 'SB'
     },
     {
-      provinceISO: '6',
+      shopgateCode: '6',
       magentoCode: 'ST'
     },
     {
-      provinceISO: '7',
+      shopgateCode: '7',
       magentoCode: 'TI'
     },
     {
-      provinceISO: '8',
+      shopgateCode: '8',
       magentoCode: 'VB'
     },
     {
-      provinceISO: '9',
+      shopgateCode: '9',
       magentoCode: 'WI'
     }
   ],
   ES: [
     {
-      provinceISO: 'C',
+      shopgateCode: 'C',
       magentoCode: 'A Coruсa'
     },
     {
-      provinceISO: 'VI',
+      shopgateCode: 'VI',
       magentoCode: 'Alava'
     },
     {
-      provinceISO: 'AB',
+      shopgateCode: 'AB',
       magentoCode: 'Albacete'
     },
     {
-      provinceISO: 'A',
+      shopgateCode: 'A',
       magentoCode: 'Alicante'
     },
     {
-      provinceISO: 'AL',
+      shopgateCode: 'AL',
       magentoCode: 'Almeria'
     },
     {
-      provinceISO: 'O',
+      shopgateCode: 'O',
       magentoCode: 'Asturias'
     },
     {
-      provinceISO: 'AV',
+      shopgateCode: 'AV',
       magentoCode: 'Avila'
     },
     {
-      provinceISO: 'BA',
+      shopgateCode: 'BA',
       magentoCode: 'Badajoz'
     },
     {
-      provinceISO: 'PM',
+      shopgateCode: 'PM',
       magentoCode: 'Baleares'
     },
     {
-      provinceISO: 'B',
+      shopgateCode: 'B',
       magentoCode: 'Barcelona'
     },
     {
-      provinceISO: 'BU',
+      shopgateCode: 'BU',
       magentoCode: 'Burgos'
     },
     {
-      provinceISO: 'CC',
+      shopgateCode: 'CC',
       magentoCode: 'Caceres'
     },
     {
-      provinceISO: 'CA',
+      shopgateCode: 'CA',
       magentoCode: 'Cadiz'
     },
     {
-      provinceISO: 'CS',
+      shopgateCode: 'CS',
       magentoCode: 'Castellon'
     },
     {
-      provinceISO: 'GI',
+      shopgateCode: 'GI',
       magentoCode: 'Girona'
     },
     {
-      provinceISO: 'CO',
+      shopgateCode: 'CO',
       magentoCode: 'Cordoba'
     },
     {
-      provinceISO: 'CU',
+      shopgateCode: 'CU',
       magentoCode: 'Cuenca'
     },
     {
-      provinceISO: 'GR',
+      shopgateCode: 'GR',
       magentoCode: 'Granada'
     },
     {
-      provinceISO: 'GU',
+      shopgateCode: 'GU',
       magentoCode: 'Guadalajara'
     },
     {
-      provinceISO: 'SS',
+      shopgateCode: 'SS',
       magentoCode: 'Guipuzcoa'
     },
     {
-      provinceISO: 'H',
+      shopgateCode: 'H',
       magentoCode: 'Huelva'
     },
     {
-      provinceISO: 'HU',
+      shopgateCode: 'HU',
       magentoCode: 'Huesca'
     },
     {
-      provinceISO: 'J',
+      shopgateCode: 'J',
       magentoCode: 'Jaen'
     },
     {
-      provinceISO: 'CR',
+      shopgateCode: 'CR',
       magentoCode: 'Ciudad Real'
     },
     {
-      provinceISO: 'S',
+      shopgateCode: 'S',
       magentoCode: 'Cantabria'
     },
     {
-      provinceISO: 'LO',
+      shopgateCode: 'LO',
       magentoCode: 'La Rioja'
     },
     {
-      provinceISO: 'GC',
+      shopgateCode: 'GC',
       magentoCode: 'Las Palmas'
     },
     {
-      provinceISO: 'LE',
+      shopgateCode: 'LE',
       magentoCode: 'Leon'
     },
     {
-      provinceISO: 'L',
+      shopgateCode: 'L',
       magentoCode: 'Lleida'
     },
     {
-      provinceISO: 'LU',
+      shopgateCode: 'LU',
       magentoCode: 'Lugo'
     },
     {
-      provinceISO: 'M',
+      shopgateCode: 'M',
       magentoCode: 'Madrid'
     },
     {
-      provinceISO: 'MA',
+      shopgateCode: 'MA',
       magentoCode: 'Malaga'
     },
     {
-      provinceISO: 'MU',
+      shopgateCode: 'MU',
       magentoCode: 'Murcia'
     },
     {
-      provinceISO: 'NA',
+      shopgateCode: 'NA',
       magentoCode: 'Navarra'
     },
     {
-      provinceISO: 'OR',
+      shopgateCode: 'OR',
       magentoCode: 'Ourense'
     },
     {
-      provinceISO: 'P',
+      shopgateCode: 'P',
       magentoCode: 'Palencia'
     },
     {
-      provinceISO: 'PO',
+      shopgateCode: 'PO',
       magentoCode: 'Pontevedra'
     },
     {
-      provinceISO: 'SA',
+      shopgateCode: 'SA',
       magentoCode: 'Salamanca'
     },
     {
-      provinceISO: 'TF',
+      shopgateCode: 'TF',
       magentoCode: 'Santa Cruz de Tenerife'
     },
     {
-      provinceISO: 'Z',
+      shopgateCode: 'Z',
       magentoCode: 'Zaragoza'
     },
     {
-      provinceISO: 'SG',
+      shopgateCode: 'SG',
       magentoCode: 'Segovia'
     },
     {
-      provinceISO: 'SE',
+      shopgateCode: 'SE',
       magentoCode: 'Sevilla'
     },
     {
-      provinceISO: 'SO',
+      shopgateCode: 'SO',
       magentoCode: 'Soria'
     },
     {
-      provinceISO: 'T',
+      shopgateCode: 'T',
       magentoCode: 'Tarragona'
     },
     {
-      provinceISO: 'TE',
+      shopgateCode: 'TE',
       magentoCode: 'Teruel'
     },
     {
-      provinceISO: 'TO',
+      shopgateCode: 'TO',
       magentoCode: 'Toledo'
     },
     {
-      provinceISO: 'V',
+      shopgateCode: 'V',
       magentoCode: 'Valencia'
     },
     {
-      provinceISO: 'VA',
+      shopgateCode: 'VA',
       magentoCode: 'Valladolid'
     },
     {
-      provinceISO: 'BI',
+      shopgateCode: 'BI',
       magentoCode: 'Vizcaya'
     },
     {
-      provinceISO: 'ZA',
+      shopgateCode: 'ZA',
       magentoCode: 'Zamora'
     },
     {
-      provinceISO: 'CE',
+      shopgateCode: 'CE',
       magentoCode: 'Ceuta'
     },
     {
-      provinceISO: 'ML',
+      shopgateCode: 'ML',
       magentoCode: 'Melilla'
     }
   ],
   LT: [
     {
-      provinceISO: 'AL',
+      shopgateCode: 'AL',
       magentoCode: 'LT-AL'
     },
     {
-      provinceISO: 'KU',
+      shopgateCode: 'KU',
       magentoCode: 'LT-KU'
     },
     {
-      provinceISO: 'KL',
+      shopgateCode: 'KL',
       magentoCode: 'LT-KL'
     },
     {
-      provinceISO: 'MR',
+      shopgateCode: 'MR',
       magentoCode: 'LT-MR'
     },
     {
-      provinceISO: 'PN',
+      shopgateCode: 'PN',
       magentoCode: 'LT-PN'
     },
     {
-      provinceISO: 'SA',
+      shopgateCode: 'SA',
       magentoCode: 'LT-SA'
     },
     {
-      provinceISO: 'TA',
+      shopgateCode: 'TA',
       magentoCode: 'LT-TA'
     },
     {
-      provinceISO: 'TE',
+      shopgateCode: 'TE',
       magentoCode: 'LT-TE'
     },
     {
-      provinceISO: 'UT',
+      shopgateCode: 'UT',
       magentoCode: 'LT-UT'
     },
     {
-      provinceISO: 'VL',
+      shopgateCode: 'VL',
       magentoCode: 'LT-VL'
     }
   ],
   FI: [
     {
-      provinceISO: '01',
+      shopgateCode: '01',
       magentoCode: 'Ahvenanmaa'
     },
     {
-      provinceISO: '02',
+      shopgateCode: '02',
       magentoCode: 'Etelä-Karjala'
     },
     {
-      provinceISO: '03',
+      shopgateCode: '03',
       magentoCode: 'Etelä-Pohjanmaa'
     },
     {
-      provinceISO: '04',
+      shopgateCode: '04',
       magentoCode: 'Etelä-Savo'
     },
     {
-      provinceISO: '05',
+      shopgateCode: '05',
       magentoCode: 'Kainuu'
     },
     {
-      provinceISO: '06',
+      shopgateCode: '06',
       magentoCode: 'Kanta-Häme'
     },
     {
-      provinceISO: '07',
+      shopgateCode: '07',
       magentoCode: 'Keski-Pohjanmaa'
     },
     {
-      provinceISO: '08',
+      shopgateCode: '08',
       magentoCode: 'Keski-Suomi'
     },
     {
-      provinceISO: '09',
+      shopgateCode: '09',
       magentoCode: 'Kymenlaakso'
     },
     {
-      provinceISO: '10',
+      shopgateCode: '10',
       magentoCode: 'Lappi'
     },
     {
-      provinceISO: '11',
+      shopgateCode: '11',
       magentoCode: 'Pirkanmaa'
     },
     {
-      provinceISO: '12',
+      shopgateCode: '12',
       magentoCode: 'Pohjanmaa'
     },
     {
-      provinceISO: '13',
+      shopgateCode: '13',
       magentoCode: 'Pohjois-Karjala'
     },
     {
-      provinceISO: '14',
+      shopgateCode: '14',
       magentoCode: 'Pohjois-Pohjanmaa'
     },
     {
-      provinceISO: '15',
+      shopgateCode: '15',
       magentoCode: 'Pohjois-Savo'
     },
     {
-      provinceISO: '16',
+      shopgateCode: '16',
       magentoCode: 'Päijät-Häme'
     },
     {
-      provinceISO: '17',
+      shopgateCode: '17',
       magentoCode: 'Satakunta'
     },
     {
-      provinceISO: '18',
+      shopgateCode: '18',
       magentoCode: 'Uusimaa'
     },
     {
-      provinceISO: '19',
+      shopgateCode: '19',
       magentoCode: 'Varsinais-Suomi'
     },
     {
-      provinceISO: '00',
+      shopgateCode: '00',
       magentoCode: 'Itä-Uusimaa'
     }
   ],
   LV: [
     {
-      provinceISO: '001',
+      shopgateCode: '001',
       magentoCode: 'Aglonas novads'
     },
     {
-      provinceISO: '002',
+      shopgateCode: '002',
       magentoCode: 'AI'
     },
     {
-      provinceISO: '003',
+      shopgateCode: '003',
       magentoCode: 'Aizputes novads'
     },
     {
-      provinceISO: '004',
+      shopgateCode: '004',
       magentoCode: 'Aknīstes novads'
     },
     {
-      provinceISO: '005',
+      shopgateCode: '005',
       magentoCode: 'Alojas novads'
     },
     {
-      provinceISO: '006',
+      shopgateCode: '006',
       magentoCode: 'Alsungas novads'
     },
     {
-      provinceISO: '007',
+      shopgateCode: '007',
       magentoCode: 'AL'
     },
     {
-      provinceISO: '008',
+      shopgateCode: '008',
       magentoCode: 'Amatas novads'
     },
     {
-      provinceISO: '009',
+      shopgateCode: '009',
       magentoCode: 'Apes novads'
     },
     {
-      provinceISO: '010',
+      shopgateCode: '010',
       magentoCode: 'Auces novads'
     },
     {
-      provinceISO: '011',
+      shopgateCode: '011',
       magentoCode: 'Ādažu novads'
     },
     {
-      provinceISO: '012',
+      shopgateCode: '012',
       magentoCode: 'Babītes novads'
     },
     {
-      provinceISO: '013',
+      shopgateCode: '013',
       magentoCode: 'Baldones novads'
     },
     {
-      provinceISO: '014',
+      shopgateCode: '014',
       magentoCode: 'Baltinavas novads'
     },
     {
-      provinceISO: '015',
+      shopgateCode: '015',
       magentoCode: 'BL'
     },
     {
-      provinceISO: '016',
+      shopgateCode: '016',
       magentoCode: 'BU'
     },
     {
-      provinceISO: '017',
+      shopgateCode: '017',
       magentoCode: 'Beverīnas novads'
     },
     {
-      provinceISO: '018',
+      shopgateCode: '018',
       magentoCode: 'Brocēnu novads'
     },
     {
-      provinceISO: '019',
+      shopgateCode: '019',
       magentoCode: 'Burtnieku novads'
     },
     {
-      provinceISO: '020',
+      shopgateCode: '020',
       magentoCode: 'Carnikavas novads'
     },
     {
-      provinceISO: '021',
+      shopgateCode: '021',
       magentoCode: 'Cesvaines novads'
     },
     {
-      provinceISO: '022',
+      shopgateCode: '022',
       magentoCode: 'CE'
     },
     {
-      provinceISO: '023',
+      shopgateCode: '023',
       magentoCode: 'Ciblas novads'
     },
     {
-      provinceISO: '024',
+      shopgateCode: '024',
       magentoCode: 'Dagdas novads'
     },
     {
-      provinceISO: '025',
+      shopgateCode: '025',
       magentoCode: 'DA'
     },
     {
-      provinceISO: '026',
+      shopgateCode: '026',
       magentoCode: 'DO'
     },
     {
-      provinceISO: '027',
+      shopgateCode: '027',
       magentoCode: 'Dundagas novads'
     },
     {
-      provinceISO: '028',
+      shopgateCode: '028',
       magentoCode: 'Durbes novads'
     },
     {
-      provinceISO: '029',
+      shopgateCode: '029',
       magentoCode: 'Engures novads'
     },
     {
-      provinceISO: '030',
+      shopgateCode: '030',
       magentoCode: 'Ērgļu novads'
     },
     {
-      provinceISO: '031',
+      shopgateCode: '031',
       magentoCode: 'Garkalnes novads'
     },
     {
-      provinceISO: '032',
+      shopgateCode: '032',
       magentoCode: 'Grobiņas novads'
     },
     {
-      provinceISO: '033',
+      shopgateCode: '033',
       magentoCode: 'GU'
     },
     {
-      provinceISO: '034',
+      shopgateCode: '034',
       magentoCode: 'Iecavas novads'
     },
     {
-      provinceISO: '035',
+      shopgateCode: '035',
       magentoCode: 'Ikšķiles novads'
     },
     {
-      provinceISO: '036',
+      shopgateCode: '036',
       magentoCode: 'Ilūkstes novads'
     },
     {
-      provinceISO: '037',
+      shopgateCode: '037',
       magentoCode: 'Inčukalna novads'
     },
     {
-      provinceISO: '038',
+      shopgateCode: '038',
       magentoCode: 'Jaunjelgavas novads'
     },
     {
-      provinceISO: '039',
+      shopgateCode: '039',
       magentoCode: 'Jaunpiebalgas novads'
     },
     {
-      provinceISO: '040',
+      shopgateCode: '040',
       magentoCode: 'Jaunpils novads'
     },
     {
-      provinceISO: '041',
+      shopgateCode: '041',
       magentoCode: 'JL'
     },
     {
-      provinceISO: '042',
+      shopgateCode: '042',
       magentoCode: 'JK'
     },
     {
-      provinceISO: '043',
+      shopgateCode: '043',
       magentoCode: 'Kandavas novads'
     },
     {
-      provinceISO: '044',
+      shopgateCode: '044',
       magentoCode: 'Kārsavas novads'
     },
     {
-      provinceISO: '046',
+      shopgateCode: '046',
       magentoCode: 'Kokneses novads'
     },
     {
-      provinceISO: '047',
+      shopgateCode: '047',
       magentoCode: 'KR'
     },
     {
-      provinceISO: '048',
+      shopgateCode: '048',
       magentoCode: 'Krimuldas novads'
     },
     {
-      provinceISO: '049',
+      shopgateCode: '049',
       magentoCode: 'Krustpils novads'
     },
     {
-      provinceISO: '050',
+      shopgateCode: '050',
       magentoCode: 'KU'
     },
     {
-      provinceISO: '051',
+      shopgateCode: '051',
       magentoCode: 'Ķeguma novads'
     },
     {
-      provinceISO: '052',
+      shopgateCode: '052',
       magentoCode: 'Ķekavas novads'
     },
     {
-      provinceISO: '053',
+      shopgateCode: '053',
       magentoCode: 'Lielvārdes novads'
     },
     {
-      provinceISO: '054',
+      shopgateCode: '054',
       magentoCode: 'LM'
     },
     {
-      provinceISO: '055',
+      shopgateCode: '055',
       magentoCode: 'Līgatnes novads'
     },
     {
-      provinceISO: '056',
+      shopgateCode: '056',
       magentoCode: 'Līvānu novads'
     },
     {
-      provinceISO: '057',
+      shopgateCode: '057',
       magentoCode: 'Lubānas novads'
     },
     {
-      provinceISO: '058',
+      shopgateCode: '058',
       magentoCode: 'LU'
     },
     {
-      provinceISO: '059',
+      shopgateCode: '059',
       magentoCode: 'MA'
     },
     {
-      provinceISO: '060',
+      shopgateCode: '060',
       magentoCode: 'Mazsalacas novads'
     },
     {
-      provinceISO: '061',
+      shopgateCode: '061',
       magentoCode: 'Mālpils novads'
     },
     {
-      provinceISO: '062',
+      shopgateCode: '062',
       magentoCode: 'Mārupes novads'
     },
     {
-      provinceISO: '064',
+      shopgateCode: '064',
       magentoCode: 'Naukšēnu novads'
     },
     {
-      provinceISO: '065',
+      shopgateCode: '065',
       magentoCode: 'Neretas novads'
     },
     {
-      provinceISO: '066',
+      shopgateCode: '066',
       magentoCode: 'Nīcas novads'
     },
     {
-      provinceISO: '067',
+      shopgateCode: '067',
       magentoCode: 'OG'
     },
     {
-      provinceISO: '068',
+      shopgateCode: '068',
       magentoCode: 'Olaines novads'
     },
     {
-      provinceISO: '069',
+      shopgateCode: '069',
       magentoCode: 'Ozolnieku novads'
     },
     {
-      provinceISO: '070',
+      shopgateCode: '070',
       magentoCode: 'Pārgaujas novads'
     },
     {
-      provinceISO: '071',
+      shopgateCode: '071',
       magentoCode: 'Pāvilostas novads'
     },
     {
-      provinceISO: '072',
+      shopgateCode: '072',
       magentoCode: 'Pļaviņu novads'
     },
     {
-      provinceISO: '073',
+      shopgateCode: '073',
       magentoCode: 'PR'
     },
     {
-      provinceISO: '074',
+      shopgateCode: '074',
       magentoCode: 'Priekules novads'
     },
     {
-      provinceISO: '075',
+      shopgateCode: '075',
       magentoCode: 'Priekuļu novads'
     },
     {
-      provinceISO: '076',
+      shopgateCode: '076',
       magentoCode: 'Raunas novads'
     },
     {
-      provinceISO: '077',
+      shopgateCode: '077',
       magentoCode: 'RE'
     },
     {
-      provinceISO: '078',
+      shopgateCode: '078',
       magentoCode: 'Riebiņu novads'
     },
     {
-      provinceISO: '079',
+      shopgateCode: '079',
       magentoCode: 'Rojas novads'
     },
     {
-      provinceISO: '080',
+      shopgateCode: '080',
       magentoCode: 'Ropažu novads'
     },
     {
-      provinceISO: '081',
+      shopgateCode: '081',
       magentoCode: 'Rucavas novads'
     },
     {
-      provinceISO: '082',
+      shopgateCode: '082',
       magentoCode: 'Rugāju novads'
     },
     {
-      provinceISO: '083',
+      shopgateCode: '083',
       magentoCode: 'Rundāles novads'
     },
     {
-      provinceISO: '084',
+      shopgateCode: '084',
       magentoCode: 'Rūjienas novads'
     },
     {
-      provinceISO: '085',
+      shopgateCode: '085',
       magentoCode: 'Salas novads'
     },
     {
-      provinceISO: '086',
+      shopgateCode: '086',
       magentoCode: 'Salacgrīvas novads'
     },
     {
-      provinceISO: '087',
+      shopgateCode: '087',
       magentoCode: 'Salaspils novads'
     },
     {
-      provinceISO: '088',
+      shopgateCode: '088',
       magentoCode: 'SA'
     },
     {
-      provinceISO: '089',
+      shopgateCode: '089',
       magentoCode: 'Saulkrastu novads'
     },
     {
-      provinceISO: '090',
+      shopgateCode: '090',
       magentoCode: 'Sējas novads'
     },
     {
-      provinceISO: '091',
+      shopgateCode: '091',
       magentoCode: 'Siguldas novads'
     },
     {
-      provinceISO: '092',
+      shopgateCode: '092',
       magentoCode: 'Skrīveru novads'
     },
     {
-      provinceISO: '093',
+      shopgateCode: '093',
       magentoCode: 'Skrundas novads'
     },
     {
-      provinceISO: '094',
+      shopgateCode: '094',
       magentoCode: 'Smiltenes novads'
     },
     {
-      provinceISO: '095',
+      shopgateCode: '095',
       magentoCode: 'Stopiņu novads'
     },
     {
-      provinceISO: '096',
+      shopgateCode: '096',
       magentoCode: 'Strenču novads'
     },
     {
-      provinceISO: '097',
+      shopgateCode: '097',
       magentoCode: 'TA'
     },
     {
-      provinceISO: '098',
+      shopgateCode: '098',
       magentoCode: 'Tērvetes novads'
     },
     {
-      provinceISO: '099',
+      shopgateCode: '099',
       magentoCode: 'TU'
     },
     {
-      provinceISO: '100',
+      shopgateCode: '100',
       magentoCode: 'Vaiņodes novads'
     },
     {
-      provinceISO: '101',
+      shopgateCode: '101',
       magentoCode: 'VK'
     },
     {
-      provinceISO: '102',
+      shopgateCode: '102',
       magentoCode: 'Varakļānu novads'
     },
     {
-      provinceISO: '103',
+      shopgateCode: '103',
       magentoCode: 'Vārkavas novads'
     },
     {
-      provinceISO: '104',
+      shopgateCode: '104',
       magentoCode: 'Vecpiebalgas novads'
     },
     {
-      provinceISO: '105',
+      shopgateCode: '105',
       magentoCode: 'Vecumnieku novads'
     },
     {
-      provinceISO: '106',
+      shopgateCode: '106',
       magentoCode: 'VE'
     },
     {
-      provinceISO: '107',
+      shopgateCode: '107',
       magentoCode: 'Viesītes novads'
     },
     {
-      provinceISO: '108',
+      shopgateCode: '108',
       magentoCode: 'Viļakas novads'
     },
     {
-      provinceISO: '109',
+      shopgateCode: '109',
       magentoCode: 'Viļānu novads'
     },
     {
-      provinceISO: '110',
+      shopgateCode: '110',
       magentoCode: 'Zilupes novads'
     },
     {
-      provinceISO: 'DGV',
+      shopgateCode: 'DGV',
       magentoCode: 'LV-DGV'
     },
     {
-      provinceISO: 'JKB',
+      shopgateCode: 'JKB',
       magentoCode: 'Jēkabpils'
     },
     {
-      provinceISO: 'JEL',
+      shopgateCode: 'JEL',
       magentoCode: 'LV-JEL'
     },
     {
-      provinceISO: 'JUR',
+      shopgateCode: 'JUR',
       magentoCode: 'LV-JUR'
     },
     {
-      provinceISO: 'LPX',
+      shopgateCode: 'LPX',
       magentoCode: 'LV-LPX'
     },
     {
-      provinceISO: 'REZ',
+      shopgateCode: 'REZ',
       magentoCode: 'LV-REZ'
     },
     {
-      provinceISO: 'RIX',
+      shopgateCode: 'RIX',
       magentoCode: 'LV-RIX'
     },
     {
-      provinceISO: 'VMR',
+      shopgateCode: 'VMR',
       magentoCode: 'Valmiera'
     },
     {
-      provinceISO: 'VEN',
+      shopgateCode: 'VEN',
       magentoCode: 'LV-VEN'
     }
   ]
