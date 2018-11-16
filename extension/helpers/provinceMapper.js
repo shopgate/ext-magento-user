@@ -6,11 +6,11 @@ module.exports = {
    * @param {string} province
    * @return {string}
    */
-  getMagentoRegion : (country_id , province) => {
+  getMagentoRegion : (country_id, province) => {
     const mapping = provinceCodeMappingByCountry[country_id] || []
-    const result = mapping.find((item) => item.provinceISO === province) || { magentoCode : province }
+    const result = mapping.find((item) => item.provinceISO === province) || {}
 
-    return result.magentoCode
+    return result.magentoCode || province
   },
 
   /**
@@ -18,10 +18,10 @@ module.exports = {
    * @param {string} region_code
    * @return {string}
    */
-  getProvince : (country_id , region_code) => {
+  getProvince : (country_id, region_code) => {
     const mapping = provinceCodeMappingByCountry[country_id] || []
-    const result = mapping.find((item) => item.magentoCode === region_code) || { provinceISO : region_code }
+    const result = mapping.find((item) => item.magentoCode === region_code) || {}
 
-    return result.provinceISO
+    return result.provinceISO || region_code
   }
 }
