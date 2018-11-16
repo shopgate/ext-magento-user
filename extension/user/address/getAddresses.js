@@ -1,6 +1,6 @@
 const Unauthorized = require('../../models/Errors/Unauthorized')
 const MagentoRequest = require('../../lib/MagentoRequest')
-const provinceCodeMapper = require('../../helpers/provinceCodeMapper')
+const provinceCodeMapper = require('../../helpers/provinceMapper')
 
 module.exports = async (context, input) => {
   if (!context.meta.userId) {

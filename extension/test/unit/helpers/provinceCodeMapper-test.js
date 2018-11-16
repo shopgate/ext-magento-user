@@ -1,5 +1,5 @@
 const assert = require('assert')
-const provinceCodeMapper = require('../../../helpers/provinceCodeMapper')
+const provinceCodeMapper = require('../../../helpers/provinceMapper')
 
 describe('provinceCodeMapper', () => {
   describe('get Magento code from ISO code', () => {

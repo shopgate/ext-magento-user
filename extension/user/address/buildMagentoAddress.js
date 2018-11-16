@@ -1,4 +1,4 @@
-const provinceCodeMapper = require('../../helpers/provinceCodeMapper')
+const provinceCodeMapper = require('../../helpers/provinceMapper')
 
 module.exports = async (context, input) => {
 
