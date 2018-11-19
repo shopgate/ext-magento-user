@@ -1,7 +1,6 @@
 const provinceCodeMapper = require('../../helpers/provinceMapper')
 
 module.exports = async (context, input) => {
-
   /** @var {MagentoAddress} magentoAddress */
   const magentoAddress = {
     firstname: input.firstName,
