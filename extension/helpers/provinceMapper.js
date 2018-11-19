@@ -6,7 +6,7 @@ module.exports = {
    * @param {string} province
    * @return {string}
    */
-  getMagentoRegion : (countryId, province) => {
+  getMagentoRegion: (countryId, province) => {
     const mapping = provinceCodeMappingByCountry[countryId] || []
     const result = mapping.find((item) => item.shopgateCode === province) || {}
 
@@ -18,7 +18,7 @@ module.exports = {
    * @param {string} regionCode
    * @return {string}
    */
-  getProvince : (countryId, regionCode) => {
+  getProvince: (countryId, regionCode) => {
     const mapping = provinceCodeMappingByCountry[countryId] || []
     const result = mapping.find((item) => item.magentoCode === regionCode) || {}
 
