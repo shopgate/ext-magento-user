@@ -41,10 +41,6 @@ describe('Tokenhandler', () => {
     }
   })
 
-  tracedRequest.defaults = () => {
-    return post = () => {}
-  }
-
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
   describe('logout', () => {
     it('should logout the user by deleting the tokens', (done) => {
