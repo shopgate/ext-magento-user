@@ -12,6 +12,18 @@
     ],
     "steps": [
       {
+        "type": "staticValue",
+        "input": [],
+        "values": [
+          {"key": "userId", "value": null},
+          {"key": "magentoTokenResponse", "value": null}
+        ],
+        "output": [
+          {"key": "userId", "id": "1050"},
+          {"key": "magentoTokenResponse", "id": "1070"}
+        ]
+      },
+      {
         "type": "pipeline",
         "id": "shopgate.cart.getCartIdInt.v1",
         "trusted": false,
@@ -19,19 +31,30 @@
         "output": [
           {"key": "cartId", "id": "1"}
         ]
-      }, {
-        "type": "extension",
-        "id": "@shopgate/magento-user",
-        "path": "@shopgate/magento-user/user/login.js",
+      },
+      {
+        "id": "loginToService",
+        "type": "hook",
         "input": [
-          {"key": "strategy", "id": "1010"},
+          {"key": "strategy",  "id": "1010"},
           {"key": "parameters", "id": "1020"}
         ],
         "output": [
-          {"key": "userId", "id": "1050"},
-          {"key": "magentoTokenResponse", "id": "1070"}
+          {"key": "userId", "id": "1050", "optional": true},
+          {"key": "magentoTokenResponse", "id": "1070", "optional": true}
         ]
-      }, {
+      },
+      {
+        "type": "extension",
+        "id": "@shopgate/magento-user",
+        "path": "@shopgate/magento-user/user/auth-strategy/unknown.js",
+        "input": [
+          {"key": "strategy",  "id": "1010"},
+          {"key": "userId", "id": "1050"}
+        ],
+        "output": []
+      },
+      {
         "type": "auth",
         "input": [
           {"key": "userId", "id": "1050"}
