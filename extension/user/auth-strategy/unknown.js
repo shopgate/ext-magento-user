@@ -1,8 +1,9 @@
 const InvalidCallError = require('../../models/Errors/InvalidCallError')
 
 /**
- * @param {Object} context The connect context.
+ * @param {StepContext} context The connect context.
  * @param {Object} input The step input
+ * @throws {InvalidCallError}
  * @return {Object}
  */
 module.exports = async (context, input) => {
