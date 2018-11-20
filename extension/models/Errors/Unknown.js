@@ -1,6 +1,6 @@
 const ERROR_CODE = 'EUNKNOWN'
 
-class UnknownError extends Error {
+class Unknown extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -8,4 +8,4 @@ class UnknownError extends Error {
   }
 }
 
-module.exports = UnknownError
+module.exports = Unknown

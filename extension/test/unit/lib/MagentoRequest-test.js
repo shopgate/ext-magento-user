@@ -6,11 +6,12 @@ const it = require('mocha').it
 const request = require('request-promise-native')
 
 const MagentoRequest = require('../../../lib/MagentoRequest')
-const UnauthorizedError = require('../../../models/Errors/UnauthorizedError')
-const EndpointNotFound = require('../../../models/Errors/MagentoEndpointNotFoundError')
-const EndpointNotAllowed = require('../../../models/Errors/MagentoEndpointNotAllowedError')
-const FieldValidationError = require('../../../models/Errors/FieldValidationError')
-const EndpointError = require('../../../models/Errors/MagentoEndpointError')
+const Unauthorized = require('../../../models/Errors/Unauthorized')
+const EndpointNotFound = require('../../../models/Errors/MagentoEndpointNotFound')
+const EndpointNotAllowed = require('../../../models/Errors/MagentoEndpointNotAllowed')
+const FieldValidation = require('../../../models/Errors/FieldValidation')
+const EndpointError = require('../../../models/Errors/MagentoEndpoint')
+const MagentoEndpointError = require('../../../models/Errors/MagentoEndpoint')
 
 const magentoUrl = 'http://magento.shopgate.com/shopgate/v2'
 const path = '/test/endpoint'
@@ -61,7 +62,7 @@ describe('MagentoRequest', () => {
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
       .catch((error) => {
-        assert(error instanceof FieldValidationError, 'Improper error returned')
+        assert(error instanceof FieldValidation, 'Improper error returned')
         assert.equal(error.validationErrors[0].message, messages.join(' '))
         assert.equal(error.validationErrors[0].path, pathName)
       })
@@ -72,7 +73,7 @@ describe('MagentoRequest', () => {
     // noinspection JSUnusedLocalSymbols
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
-      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+      .catch(error => assert(error instanceof Unauthorized, 'Improper error returned'))
   })
 
   it('Returns proper Unauthorized error', async () => {
@@ -80,7 +81,7 @@ describe('MagentoRequest', () => {
     // noinspection JSUnusedLocalSymbols
     await mageRequest.send(magentoUrl + path)
       .then(result => assert(false, 'Should not be successful'))
-      .catch(error => assert(error instanceof UnauthorizedError, 'Improper error returned'))
+      .catch(error => assert(error instanceof Unauthorized, 'Improper error returned'))
   })
 
   it('Returns proper 404 error', async () => {
@@ -108,23 +109,21 @@ describe('MagentoRequest', () => {
   })
 
   it('should return a valid response', async () => {
-    const debugLogSpy = sinon.spy(context.log, 'debug')
     nock(magentoUrl)
       .get(path)
-      .reply(200, 'ok')
+      .reply(200, {})
 
-    await mageRequest.send(magentoUrl + path)
-
-    sinon.assert.calledWith(debugLogSpy, sinon.match.has('duration'))
-    sinon.assert.calledWith(debugLogSpy, sinon.match.has('request'))
-    sinon.assert.calledWith(debugLogSpy, sinon.match.has('response'))
-    sinon.assert.calledWith(debugLogSpy, sinon.match({ statusCode: 200 }))
+    try {
+      await mageRequest.send(magentoUrl + path)
+    } catch (err) {
+      assert.ifError(err)
+    }
   })
 
   it('should trigger a POST request to magento', async () => {
     nock(magentoUrl)
       .post(path)
-      .reply(200, 'ok')
+      .reply(200, {})
 
     const postData = {
       post: true
@@ -137,7 +136,7 @@ describe('MagentoRequest', () => {
   it('should trigger a DELETE request to magento', async () => {
     nock(magentoUrl)
       .delete(path)
-      .reply(200, 'ok')
+      .reply(200, {})
 
     const postData = {
       post: true
@@ -145,5 +144,23 @@ describe('MagentoRequest', () => {
 
     await mageRequest.delete(magentoUrl + path, postData)
     sinon.assert.calledWith(requestStub, magentoUrl + path, 'Request to Magento', 'DELETE', postData)
+  })
+
+  it('should throw a MagentoEndpointError when the response is not JSON', async () => {
+    nock(magentoUrl)
+      .get(path)
+      .reply(200, 'not json uno!?')
+
+    try {
+      await mageRequest.send(magentoUrl + path)
+    } catch (err) {
+      if (!(err instanceof MagentoEndpointError)) {
+        assert.fail(`Expected a MagentoEndpointError to be thrown, got ${err.constructor.name} instead; message: ${err.message}`)
+      }
+
+      return
+    }
+
+    assert.fail('Expected a MagentoEndpointError to be thrown, no error at all occured.')
   })
 })

@@ -1,6 +1,6 @@
 const ERROR_CODE = 'EINVALIDCREDENTIALS'
 
-class InvalidCredentialsError extends Error {
+class InvalidCredentials extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -8,4 +8,4 @@ class InvalidCredentialsError extends Error {
   }
 }
 
-module.exports = InvalidCredentialsError
+module.exports = InvalidCredentials

@@ -31,11 +31,7 @@ describe('login', () => {
       }
     },
     tracedRequest: () => {
-      return {
-        defaults: () => {
-          return request
-        }
-      }
+      return request
     }
   }
 
@@ -100,7 +96,7 @@ describe('login', () => {
     }
 
     step(context, input, (err) => {
-      assert.equal(err.constructor.name, 'InvalidCredentialsError')
+      assert.equal(err.constructor.name, 'InvalidCredentials')
       assert.equal(err.code, 'EINVALIDCREDENTIALS')
       done()
     })

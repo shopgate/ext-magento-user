@@ -41,10 +41,6 @@ describe('Tokenhandler', () => {
     }
   })
 
-  tracedRequest.defaults = () => {
-    return post = () => {}
-  }
-
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
   describe('logout', () => {
     it('should logout the user by deleting the tokens', (done) => {
@@ -97,7 +93,7 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
+        assert.equal(err.constructor.name, 'MagentoEndpoint')
         assert.equal(err.code, 'EINTERNAL')
         done()
       })

@@ -1,5 +1,5 @@
 const TokenHandler = require('../../helpers/tokenHandler')
-const InvalidCredentialsError = require('../../models/Errors/InvalidCredentialsError')
+const InvalidCredentials = require('../../models/Errors/InvalidCredentials')
 
 /**
  * @typedef {Object} UserLoginInput
@@ -22,7 +22,7 @@ module.exports = function (context, input, cb) {
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest('magento-user-extension:login', {log: true})
+  const request = context.tracedRequest('magento-user-extension:login')
 
   const strategy = input.strategy
   const userCredentials = input.parameters
@@ -36,7 +36,7 @@ module.exports = function (context, input, cb) {
 
   login(th, userCredentials, strategy, (err, magentoTokenResponse) => {
     if (err) {
-      return cb(new InvalidCredentialsError('Invalid credentials were entered.'))
+      return cb(new InvalidCredentials('Invalid credentials were entered.'))
     }
 
     // delete token from device storage if it exists
