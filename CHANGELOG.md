@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - pipeline for updating a customer email
 - pipeline for updating a customer
 - support for guest checkout
+- login pipeline hook step to allow external identity authorization (facebook)
 
 ### Fixed
 - pipeline for retrieving customer details
