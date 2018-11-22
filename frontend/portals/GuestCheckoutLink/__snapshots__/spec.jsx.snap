@@ -1,66 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<GuestCheckoutLink /> should render null in case of all other 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Connect(GuestCheckoutLink)>
+<Component>
+  <Consumer>
     <GuestCheckoutLink
-      dispatch={[Function]}
-      redirect="/"
+      redirectLocation="/"
+      visible={true}
     />
-  </Connect(GuestCheckoutLink)>
-</Provider>
+  </Consumer>
+</Component>
 `;
 
 exports[`<GuestCheckoutLink /> should render null in case of default login 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Connect(GuestCheckoutLink)>
+<Component>
+  <Consumer>
     <GuestCheckoutLink
-      dispatch={[Function]}
-      redirect="/more"
+      redirectLocation="/more"
+      visible={true}
     />
-  </Connect(GuestCheckoutLink)>
-</Provider>
+  </Consumer>
+</Component>
 `;
 
 exports[`<GuestCheckoutLink /> should render with one link for login in checkout page 1`] = `
-<Provider
-  store={
-    Object {
-      "clearActions": [Function],
-      "dispatch": [Function],
-      "getActions": [Function],
-      "getState": [Function],
-      "replaceReducer": [Function],
-      "subscribe": [Function],
-    }
-  }
->
-  <Connect(GuestCheckoutLink)>
+<Component>
+  <Consumer>
     <GuestCheckoutLink
-      dispatch={[Function]}
-      redirect="/checkout"
+      redirectLocation="/checkout"
+      visible={true}
     >
       <div
         className="css-nil"
@@ -76,34 +43,12 @@ exports[`<GuestCheckoutLink /> should render with one link for login in checkout
             checkout.or
           </span>
         </Translate>
-        <Link
+        <Connect(Link)
           className="css-13v1itq"
-          disabled={false}
           href="/checkout_guest"
-        >
-          <div
-            aria-hidden={true}
-            className="css-c6ki83 css-13v1itq"
-            data-test-id="link: /checkout_guest"
-            onClick={[Function]}
-            role="link"
-          >
-            <Translate
-              className=""
-              params={Object {}}
-              string="checkout.continue_as_guest"
-            >
-              <span
-                className=""
-              >
-                checkout.continue_as_guest
-              </span>
-            </Translate>
-            .
-          </div>
-        </Link>
+        />
       </div>
     </GuestCheckoutLink>
-  </Connect(GuestCheckoutLink)>
-</Provider>
+  </Consumer>
+</Component>
 `;
