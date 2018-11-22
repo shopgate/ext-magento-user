@@ -6,6 +6,8 @@ import buildRegisterUrl from '@shopgate/pwa-common/subscriptions/helpers/buildRe
 import fetchRegisterUrl from '@shopgate/pwa-common/actions/user/fetchRegisterUrl';
 import { getRegisterUrl } from '@shopgate/pwa-common/selectors/user';
 import { getCurrentRoute } from '@shopgate/pwa-common/helpers/router';
+import { userDidLogin$ } from '@shopgate/pwa-common/streams/user';
+import { historyPop } from '@shopgate/pwa-common/actions/router';
 
 export default (subscribe) => {
   /**
@@ -27,11 +29,14 @@ export default (subscribe) => {
       // Fetch a fresh url if none was found within the store.
       url = await dispatch(fetchRegisterUrl());
     }
-
     return buildRegisterUrl(url || LEGACY_URL, location);
   };
 
   subscribe(appWillStart$, () => {
     redirects.set(REGISTER_PATH, redirectHandler, true);
+  });
+
+  subscribe(userDidLogin$, ({dispatch}) => {
+    dispatch(historyPop());
   });
 };
