@@ -1,6 +1,7 @@
 const util = require('util')
-const MagentoError = require('../models/Errors/MagentoEndpointError')
-const InvalidCallError = require('../models/Errors/InvalidCallError')
+const MagentoError = require('../models/Errors/MagentoEndpoint')
+const InvalidCallError = require('../models/Errors/InvalidCall')
+const RequestLogger = require('./RequestLogger')
 const TOKEN_KEY = 'token'
 /**
  * @class
@@ -11,7 +12,7 @@ class TokenHandler {
    * @param {?StepContextCredentials} clientCredentials
    * @param {string} authUrl
    * @param {StepContextStorageContainer} storages
-   * @param {Logger} log
+   * @param {StepContextLogger} log
    * @param {?Request} request
    * @param {?boolean} rejectUnauthorized
    *
@@ -19,19 +20,17 @@ class TokenHandler {
    */
   constructor (clientCredentials, authUrl, storages, log, request, rejectUnauthorized = true) {
     this.log = log
+    this.requestLogger = new RequestLogger(log)
     this.storages = storages
     if (!request || !clientCredentials) {
       throw new InvalidCallError('request or client credentials are not defined')
     }
 
-    this.request = request.defaults({
-      url: authUrl,
-      auth: {
-        username: clientCredentials.id,
-        password: clientCredentials.secret
-      },
-      rejectUnauthorized
-    })
+    this.request = request
+    this.authUrl = authUrl
+    this.username = clientCredentials.id
+    this.password = clientCredentials.secret
+    this.rejectUnauthorized = rejectUnauthorized
   }
 
   /**
@@ -238,12 +237,18 @@ class TokenHandler {
    * @param {?SgTokenData} cb.result
    */
   _getTokensFromMagento (options, cb) {
-    // A short cleanup to not log plaintext user login data to kibana
-    const objToLog = Object.assign({}, options.json)
-    objToLog.password = 'xxxxxx'
+    const requestOptions = {
+      url: this.authUrl,
+      auth: {
+        username: this.username,
+        password: this.password
+      },
+      rejectUnauthorized: this.rejectUnauthorized,
+      ...options
+    }
 
     const requestStart = new Date()
-    this.request.post(options, (err, res) => {
+    this.request.post(requestOptions, (err, res) => {
       if (err) return cb(err)
       if (res.statusCode !== 200) {
         this.log.error(`Got ${res.statusCode} from magento: ${JSON.stringify(res.body)}`)
@@ -259,20 +264,11 @@ class TokenHandler {
         lifeSpan: res.body.expires_in,
         tokens: {
           accessToken: res.body.access_token,
-          // this is null in case of an guest token req
-          refreshToken: res.body.refresh_token
+          refreshToken: res.body.refresh_token // this is null in case of a guest token request
         }
       }
 
-      this.log.debug(
-        {
-          duration: new Date() - requestStart,
-          statusCode: res.statusCode,
-          request: util.inspect(objToLog, true, 5),
-          response: util.inspect(res.body, true, 5)
-        },
-        'Request to Magento: tokenHandler'
-      )
+      this.requestLogger.log(res, requestOptions, requestStart, 'Request to Magento: tokenHandler')
 
       cb(null, tokenData)
     })

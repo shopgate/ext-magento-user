@@ -2,37 +2,37 @@
  * Mocked state with redirectLocation to checkout page.
  * @type {Object}
  */
-export const mockedStateFromCartView = {
-  history: {
-    pathname: '/',
-    redirectLocation: {
-      pathname: '/checkout',
+export const mockedContextFromCartView = {
+  state: {
+    redirect: {
+      location: '/checkout',
     },
   },
+  visible: true,
 };
 
 /**
  * Mocked state with redirectLocation to more page.
  * @type {Object}
  */
-export const mockedStateFromMyAccountView = {
-  history: {
-    pathname: '/',
-    redirectLocation: {
-      pathname: '/more',
+export const mockedContextFromMyAccountView = {
+  state: {
+    redirect: {
+      location: '/more',
     },
   },
+  visible: true,
 };
 
 /**
  * Mocked state with redirectLocation to home page.
  * @type {Object}
  */
-export const mockedStateFromAnyOtherView = {
-  history: {
-    pathname: '/',
-    redirectLocation: {
-      pathname: '/',
+export const mockedContextFromAnyOtherView = {
+  state: {
+    redirect: {
+      location: '/',
     },
   },
+  visible: true,
 };

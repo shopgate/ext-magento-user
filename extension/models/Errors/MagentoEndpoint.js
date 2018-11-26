@@ -7,7 +7,7 @@ const ERROR_CODE = 'EINTERNAL'
  *
  * @param {string} message - error text message received from Magento
  */
-class MagentoEndpointError extends Error {
+class MagentoEndpoint extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -15,4 +15,4 @@ class MagentoEndpointError extends Error {
   }
 }
 
-module.exports = MagentoEndpointError
+module.exports = MagentoEndpoint

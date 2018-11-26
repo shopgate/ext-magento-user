@@ -7,7 +7,7 @@ const ERROR_CODE = 'EINVALIDCALL'
  * @param {string} [message=An extension error occurred.]
  * @default An extension error occurred.
  */
-class InvalidCallError extends Error {
+class InvalidCall extends Error {
   constructor (message) {
     super()
     this.code = ERROR_CODE
@@ -15,4 +15,4 @@ class InvalidCallError extends Error {
   }
 }
 
-module.exports = InvalidCallError
+module.exports = InvalidCall

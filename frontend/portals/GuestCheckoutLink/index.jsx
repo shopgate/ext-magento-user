@@ -1,29 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { RouteContext } from '@shopgate/pwa-common/context';
 import I18n from '@shopgate/pwa-common/components/I18n';
-import Link from '@shopgate/pwa-common/components/Router/components/Link';
-import { CHECKOUT_GUEST_PATH } from './route';
-import connect from './connector';
+import Link from '@shopgate/pwa-common/components/Link';
+import { CHECKOUT_PATH } from '@shopgate/pwa-common/constants/RoutePaths';
 import styles from './style';
-import config from './config'
+import {CHECKOUT_GUEST_PATH} from './../../constants/RoutePaths';
+import config from '../../config';
 
 /**
- * Check is the guest checkout disabled
+ * Check whether the guest checkout is disabled
  * @private
  * @returns {boolean}
  */
-const disableGuestCheckout = () => !config.getUserAccountSettings || config.getUserAccountSettings === 'required';
+const disableGuestCheckout = () => !config.getUserAccountSettings;
 
 /**
- * @returns {JSX}
+ * The GuestCheckoutLink component.
+ * @param {Object} redirect The redirect object.
+ * @return {JSX}
  */
-const GuestCheckoutLink = ({ redirect }) => {
-  const isCheckoutLogin = redirect === '/checkout';
+const GuestCheckoutLink = ({ visible, redirectLocation }) => {
+  const isCheckoutLogin = redirectLocation === CHECKOUT_PATH;
 
-  if (disableGuestCheckout() || !isCheckoutLogin) {
+  if (disableGuestCheckout() || !visible || !isCheckoutLogin) {
     return null;
   }
-
   return (
     <div className={styles.container}>
       <I18n.Text string="checkout.or" className={styles.or} />
@@ -35,7 +37,17 @@ const GuestCheckoutLink = ({ redirect }) => {
 };
 
 GuestCheckoutLink.propTypes = {
-  redirect: PropTypes.string.isRequired,
+  visible: PropTypes.bool.isRequired,
+  redirectLocation: PropTypes.string.isRequired,
 };
 
-export default connect(GuestCheckoutLink);
+export default () => (
+  <RouteContext.Consumer>
+    {({ state: {redirect: {location: redirectLocation = ''} = {}}, visible }) => (
+      <GuestCheckoutLink
+        redirectLocation={redirectLocation}
+        visible={visible}
+      />
+    )}
+  </RouteContext.Consumer>
+);

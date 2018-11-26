@@ -1,12 +1,13 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "prototype",
   "scripts": {
     "test": "JUNIT_REPORT_PATH=../build/mocha.xml JUNIT_REPORT_STACK=1 mocha --recursive test -R mochawesome --reporter-options reportDir=coverage",
     "cover": "istanbul cover _mocha -- --recursive",
     "standard": "./node_modules/.bin/standard",
-    "newman": "newman run ./test/newman/collection.json --environment ./test/newman/environment.json --globals ./test/newman/globals.json"
+    "newman": "newman run ./test/newman/collection.json --color on --environment ./test/newman/environment.json --globals ./test/newman/globals.json",
+    "init-newman": "node ./test/newman/setup.js"
   },
   "repository": {
     "type": "git",

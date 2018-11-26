@@ -6,9 +6,7 @@
     "input": [
       {"key": "ids", "id": "10"}
     ],
-    "output": [
-      {"key": "success", "id": "100", "optional": true}
-    ],
+    "output": [],
     "steps": [
       {
         "type": "pipeline",
@@ -39,9 +37,7 @@
           {"key": "userId", "id": "30"},
           {"key": "ids", "id": "10"}
         ],
-        "output": [
-          {"key": "success", "id": "100",  "optional": true}
-        ]
+        "output": []
       }
     ]
   }
