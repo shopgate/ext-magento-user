@@ -24,7 +24,7 @@ beforeEach(() => {
 const createComponent = (mockedContext) => {
   const mockContext = jest.fn();
   mockContext.mockReturnValue(mockedContext);
-  jest.mock('@virtuous/react-conductor/Router', () => ({
+  jest.mock('@shopgate/pwa-common/context', () => ({
     RouteContext: {
       Consumer: ({children}) => children(mockContext()),
     }
