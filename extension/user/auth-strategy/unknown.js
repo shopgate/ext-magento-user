@@ -1,4 +1,4 @@
-const InvalidCallError = require('../../models/Errors/InvalidCallError')
+const InvalidCallError = require('../../models/Errors/InvalidCall')
 
 /**
  * @param {StepContext} context The connect context.

@@ -1,4 +1,4 @@
-const InvalidCredentialsError = require('../../models/Errors/InvalidCredentialsError')
+const InvalidCredentialsError = require('../../models/Errors/InvalidCredentials')
 
 /**
  * Not implemented yet

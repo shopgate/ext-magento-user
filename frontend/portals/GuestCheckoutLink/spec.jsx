@@ -1,53 +1,55 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import mockRenderOptions from '@shopgate/pwa-common/helpers/mocks/mockRenderOptions';
-import { mockedStateFromCartView, mockedStateFromMyAccountView, mockedStateFromAnyOtherView } from './mock';
-
-const mockedStore = configureStore();
-Enzyme.configure({ adapter: new Adapter() });
+import {mount} from 'enzyme';
+import {
+  mockedContextFromCartView,
+  mockedContextFromMyAccountView,
+  mockedContextFromAnyOtherView
+} from './mock';
 
 jest.mock('./config', () => ({
   getUserAccountSettings: 1,
 }));
+
+jest.mock('@shopgate/pwa-common/components/Link');
 
 beforeEach(() => {
   jest.resetModules();
 });
 
 /**
- * Creates component with provided store state.
- * @param {Object} mockedState Mocked stage.
+ * Creates component with provided context state.
+ * @param {Object} mockedContext Mocked context.
  * @return {ReactWrapper}
  */
-const createComponent = (mockedState) => {
+const createComponent = (mockedContext) => {
+  const mockContext = jest.fn();
+  mockContext.mockReturnValue(mockedContext);
+  jest.mock('@shopgate/pwa-common/context', () => ({
+    RouteContext: {
+      Consumer: ({children}) => children(mockContext()),
+    }
+  }));
+
   const GuestCheckoutLink = require('./index').default;
-  return Enzyme.mount(
-    <Provider store={mockedStore(mockedState)}>
-      <GuestCheckoutLink />
-    </Provider>,
-    mockRenderOptions
-  );
+  return mount(<GuestCheckoutLink />);
 };
 
 describe('<GuestCheckoutLink />', () => {
   it('should render with one link for login in checkout page', () => {
-    const component = createComponent(mockedStateFromCartView);
+    const component = createComponent(mockedContextFromCartView);
     expect(component).toMatchSnapshot();
-    expect(component.find('Link').exists()).toBe(true);
+    expect(component.find('Connect(Link)').exists()).toBe(true);
   });
 
   it('should render null in case of default login', () => {
-    const component = createComponent(mockedStateFromMyAccountView);
+    const component = createComponent(mockedContextFromMyAccountView);
     expect(component).toMatchSnapshot();
-    expect(component.find('Link').exists()).toBe(false);
+    expect(component.find('Connect(Link)').exists()).toBe(false);
   });
 
   it('should render null in case of all other', () => {
-    const component = createComponent(mockedStateFromAnyOtherView);
+    const component = createComponent(mockedContextFromAnyOtherView);
     expect(component).toMatchSnapshot();
-    expect(component.find('Link').exists()).toBe(false);
+    expect(component.find('Connect(Link)').exists()).toBe(false);
   });
 });

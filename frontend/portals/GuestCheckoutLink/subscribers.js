@@ -1,48 +1,37 @@
-import goBackHistory from '@shopgate/pwa-common/actions/history/goBackHistory';
+import { appWillStart$ } from '@shopgate/pwa-common/streams/app';
+import { redirects } from '@shopgate/pwa-common/collections';
 import { isUserLoggedIn } from '@shopgate/pwa-common/selectors/user';
-import ParsedLink from '@shopgate/pwa-common/components/Router/helpers/parsed-link';
+import { INDEX_PATH } from '@shopgate/pwa-common/constants/RoutePaths';
 import trackingCore from '@shopgate/tracking-core/core/Core';
 import { FETCH_CHECKOUT_URL_TIMEOUT } from '@shopgate/pwa-common-commerce/checkout/constants';
-import { routeDidEnter } from '@shopgate/pwa-common/streams/history';
 import fetchCheckoutUrl from '@shopgate/pwa-common-commerce/checkout/actions/fetchCheckoutUrl';
-import { CHECKOUT_GUEST_PATH } from './route';
+import { CHECKOUT_GUEST_PATH } from './../../constants/RoutePaths';
 
 /**
  * Checkout subscriptions.
  * @param {Function} subscribe The subscribe function.
  */
 export default function checkout(subscribe) {
-  const checkoutGuestRouteDidEnter$ = routeDidEnter(CHECKOUT_GUEST_PATH);
   /**
-   * Gets triggered when the user enters the checkout.
+   * @param {Object} params params
+   * @return {Promise<string>}
    */
-  subscribe(checkoutGuestRouteDidEnter$, ({ dispatch, getState }) => {
-    // Check if user is logged in.
+  const guestCheckoutHandler = async ({ dispatch, getState }) => {
     if (isUserLoggedIn(getState())) {
-      return;
+      return INDEX_PATH;
     }
 
     const started = Date.now();
+    const url = await dispatch(fetchCheckoutUrl());
+    if (Date.now() - started > FETCH_CHECKOUT_URL_TIMEOUT) {
+      return INDEX_PATH;
+    }
 
-    dispatch(fetchCheckoutUrl())
-      .then((url) => {
-        // Forget if it took more than PWA allows. User is already back.
-        if (Date.now() - started > FETCH_CHECKOUT_URL_TIMEOUT) {
-          return;
-        }
-        /**
-         * Build the complete checkout url. Fallback to the
-         * legacy url if the Pipeline returns an invalid url.
-         * Add some tracking params for cross domain tracking.
-         */
-        let checkoutUrl = trackingCore.crossDomainTracking(url);
-        checkoutUrl = `${checkoutUrl}is_guest_checkout/1`;
+    let checkoutUrl = trackingCore.crossDomainTracking(url);
+    return `${checkoutUrl}is_guest_checkout/1`;
+  };
 
-        // Open the checkout.
-        const link = new ParsedLink(checkoutUrl);
-        link.open();
-        dispatch(goBackHistory(1));
-      })
-      .catch(() => dispatch(goBackHistory(1)));
+  subscribe(appWillStart$, () => {
+    redirects.set(CHECKOUT_GUEST_PATH, guestCheckoutHandler, true);
   });
 }
