@@ -3,6 +3,7 @@
 build
 npm-debug.log
 extension/coverage
+extension/.nyc_output
 extension/node_modules
 extension/config.json
 extension/package-lock.json
