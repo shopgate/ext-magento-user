@@ -1,4 +1,5 @@
 const assert = require('assert')
+const expect = require('chai').expect
 const step = require('../../../user/login')
 
 describe('login', () => {
@@ -79,8 +80,8 @@ describe('login', () => {
 
     step(context, input, (err, result) => {
       assert.ifError(err)
-      assert.equal(result.userId, input.parameters.login)
-      assert.deepEqual(result.magentoTokenResponse, magentoTokenResponse)
+      assert.strictEqual(result.userId, input.parameters.login)
+      expect(magentoTokenResponse).to.eql(result.magentoTokenResponse)
       done()
     })
   })
@@ -89,7 +90,7 @@ describe('login', () => {
     input.strategy = 'sthWeird'
 
     step(context, input, (err) => {
-      assert.equal(err.message, 'invalid login strategy')
+      assert.strictEqual(err.message, 'invalid login strategy')
       done()
     })
   })
@@ -100,8 +101,8 @@ describe('login', () => {
     }
 
     step(context, input, (err) => {
-      assert.equal(err.constructor.name, 'InvalidCredentialsError')
-      assert.equal(err.code, 'EINVALIDCREDENTIALS')
+      assert.strictEqual(err.constructor.name, 'InvalidCredentialsError')
+      assert.strictEqual(err.code, 'EINVALIDCREDENTIALS')
       done()
     })
   })
@@ -126,7 +127,7 @@ describe('login', () => {
     }
 
     step(context, input, (err) => {
-      assert.equal(err.message, 'error')
+      assert.strictEqual(err.message, 'error')
       done()
     })
   })

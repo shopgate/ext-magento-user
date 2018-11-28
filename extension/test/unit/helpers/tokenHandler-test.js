@@ -22,27 +22,19 @@ describe('Tokenhandler', () => {
     }
   }
 
-  const request = {
-    defaults: () => {
-      return {
-        post: () => {
-        }
-      }
-    }
-  }
-
-  const tracedRequest = () => {
-    return request
-  }
-
   beforeEach(() => {
     storages.device.del = (key, cb) => {
       cb(null)
     }
   })
 
-  tracedRequest.defaults = () => {
-    return post = () => {}
+  const tracedRequest = {
+    defaults: () => {
+      return {
+        post: () => {
+        }
+      }
+    }
   }
 
   const th = new TokenHandler(credentials, 'http://some.url', storages, log, tracedRequest)
@@ -60,7 +52,7 @@ describe('Tokenhandler', () => {
       }
 
       TokenHandler.logout(storages, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -80,7 +72,7 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -97,8 +89,8 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
-        assert.equal(err.code, 'EINTERNAL')
+        assert.strictEqual(err.constructor.name, 'MagentoEndpointError')
+        assert.strictEqual(err.code, 'EINTERNAL')
         done()
       })
     })

@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shopgate/ext-magento-user"
+    "url": "https://github.com/shopgate/ext-magento-user.git"
   },
   "license": "Apache-2.0",
   "dependencies": {
