@@ -32,7 +32,7 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
-    "eslint": "^4.9.0",
+    "eslint": "^4.19.1",
     "jest": "^23.6.0",
     "prop-types": "^15.6.0",
     "react": "~16.3.2",
@@ -46,7 +46,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "node_modules/",
-      "coverage/"
+      "coverage/",
+      "locale"
     ]
   }
 }
