@@ -49,6 +49,10 @@
     ],
     "exclude": [
       "build",
+      "docs",
+      "coverage",
+      "models/sgAppParameters",
+      "models/utmParameters",
       "test"
     ],
     "reporter": [
