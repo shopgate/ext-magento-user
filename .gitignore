@@ -2,9 +2,9 @@
 .idea
 build
 npm-debug.log
-extension/coverage
+package-lock.json
+node_modules
+config.json
+coverage
 extension/.nyc_output
-extension/node_modules
-extension/config.json
-extension/package-lock.json
 extension/test/newman/environment.json

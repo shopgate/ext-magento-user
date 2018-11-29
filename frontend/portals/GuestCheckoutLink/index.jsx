@@ -5,7 +5,7 @@ import Link from '@shopgate/pwa-common/components/Router/components/Link';
 import { CHECKOUT_GUEST_PATH } from './route';
 import connect from './connector';
 import styles from './style';
-import config from './config'
+import config from './config';
 
 /**
  * Check is the guest checkout disabled
