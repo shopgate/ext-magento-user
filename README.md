@@ -1,7 +1,7 @@
 # Shopgate Connect - Magento User Extension
 
 [![GitHub license](http://dmlc.github.io/img/apache2.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/shopgate/ext-magento-cart.svg?branch=master)](https://travis-ci.org/shopgate/ext-magento-user)
+[![Build Status](https://travis-ci.org/shopgate/ext-magento-user.svg?branch=master)](https://travis-ci.org/shopgate/ext-magento-user)
 
 This Magento extension will handle the synchronisation of user related data between Magento and Shopgate Connect.
 
