@@ -63,8 +63,8 @@ describe('MagentoRequest', () => {
       .then(result => assert(false, 'Should not be successful'))
       .catch((error) => {
         assert(error instanceof FieldValidation, 'Improper error returned')
-        assert.equal(error.validationErrors[0].message, messages.join(' '))
-        assert.equal(error.validationErrors[0].path, pathName)
+        assert.strictEqual(error.validationErrors[0].message, messages.join(' '))
+        assert.strictEqual(error.validationErrors[0].path, pathName)
       })
   })
 

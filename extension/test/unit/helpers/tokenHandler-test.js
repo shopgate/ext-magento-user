@@ -56,7 +56,7 @@ describe('Tokenhandler', () => {
       }
 
       TokenHandler.logout(storages, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -76,7 +76,7 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -93,8 +93,8 @@ describe('Tokenhandler', () => {
 
       // noinspection JSAccessibilityCheck
       th._getTokensFromMagento(options, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpoint')
-        assert.equal(err.code, 'EINTERNAL')
+        assert.strictEqual(err.constructor.name, 'MagentoEndpoint')
+        assert.strictEqual(err.code, 'EINTERNAL')
         done()
       })
     })

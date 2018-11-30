@@ -32,7 +32,7 @@ describe('logout', () => {
   it('should return an error because deletion failed', (done) => {
     context.storage.device.del = (key, cb) => { cb(new Error('error')) }
     step(context, null, (err, result) => {
-      assert.equal(err.message, 'error')
+      assert.strictEqual(err.message, 'error')
       done()
     })
   })

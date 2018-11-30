@@ -1,6 +1,6 @@
 /**
- * config mapper
+ * Config mapper
  */
-import config from "../../config";
+import config from '../../config';
 
-export default config
+export default config;

@@ -28,6 +28,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - checkout button to not be clickable multiple times
 
-[Unreleased]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?targetBranch=refs%2Fheads%2Fmaster&sourceBranch=refs%2Ftags%2Fv1.3.0
-[1.3.0]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?targetBranch=refs%2Ftags%2Fv1.2.0&sourceBranch=refs%2Ftags%2Fv1.3.0
-[1.2.0]: https://stash.localdev.cc/projects/SGX/repos/magento-user/commits?until=refs%2Ftags%2Fv1.2.0
+[Unreleased]: https://github.com/shopgate/ext-magento-user/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/shopgate/ext-magento-user/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/shopgate/ext-magento-user/compare/v1.1.7...v1.2.0
