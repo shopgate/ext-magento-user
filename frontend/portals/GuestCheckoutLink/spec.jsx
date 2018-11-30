@@ -6,6 +6,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import mockRenderOptions from '@shopgate/pwa-common/helpers/mocks/mockRenderOptions';
 import { mockedStateFromCartView, mockedStateFromMyAccountView, mockedStateFromAnyOtherView } from './mock';
 
+const GuestCheckoutLink = require('./index').default;
+
 const mockedStore = configureStore();
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -22,15 +24,14 @@ beforeEach(() => {
  * @param {Object} mockedState Mocked stage.
  * @return {ReactWrapper}
  */
-const createComponent = (mockedState) => {
-  const GuestCheckoutLink = require('./index').default;
+function createComponent(mockedState) {
   return Enzyme.mount(
     <Provider store={mockedStore(mockedState)}>
       <GuestCheckoutLink />
     </Provider>,
     mockRenderOptions
   );
-};
+}
 
 describe('<GuestCheckoutLink />', () => {
   it('should render with one link for login in checkout page', () => {

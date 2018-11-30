@@ -55,7 +55,7 @@ describe('getToken', () => {
 
       step(context, null, (err, result) => {
         assert.ifError(err)
-        assert.equal(result.token, 'a1')
+        assert.strictEqual(result.token, 'a1')
         done()
       })
     })
@@ -74,7 +74,7 @@ describe('getToken', () => {
 
       step(context, null, (err, result) => {
         assert.ifError(err)
-        assert.equal(result.token, 'a1')
+        assert.strictEqual(result.token, 'a1')
         done()
       })
     })
@@ -82,7 +82,7 @@ describe('getToken', () => {
     it('should return an error because getting token from storage fails', (done) => {
       context.storage.device.get = (key, cb) => { cb(new Error('error')) }
       step(context, null, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -108,7 +108,7 @@ describe('getToken', () => {
 
       step(context, null, (err, result) => {
         assert.ifError(err)
-        assert.equal(result.token, 'a2')
+        assert.strictEqual(result.token, 'a2')
         done()
       })
     })
@@ -119,8 +119,8 @@ describe('getToken', () => {
       request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
 
       step(context, null, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
-        assert.equal(err.code, 'EINTERNAL')
+        assert.strictEqual(err.constructor.name, 'MagentoEndpointError')
+        assert.strictEqual(err.code, 'EINTERNAL')
         done()
       })
     })
@@ -149,7 +149,7 @@ describe('getToken', () => {
       context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 
       step(context, null, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -170,7 +170,7 @@ describe('getToken', () => {
 
       step(context, null, (err, result) => {
         assert.ifError(err)
-        assert.equal(result.token, 'a1')
+        assert.strictEqual(result.token, 'a1')
         done()
       })
     })
@@ -199,7 +199,7 @@ describe('getToken', () => {
 
       step(context, null, (err, result) => {
         assert.ifError(err)
-        assert.equal(result.token, 'a2')
+        assert.strictEqual(result.token, 'a2')
         done()
       })
     })
@@ -210,7 +210,7 @@ describe('getToken', () => {
       context.storage.device.get = (key, cb) => { cb(new Error('error')) }
 
       step(context, null, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
@@ -221,7 +221,7 @@ describe('getToken', () => {
       context.storage.device.get = (key, cb) => { cb(null, null) }
 
       step(context, null, (err) => {
-        assert.equal(err.message, 'user is not logged in')
+        assert.strictEqual(err.message, 'user is not logged in')
         done()
       })
     })
@@ -245,8 +245,8 @@ describe('getToken', () => {
       request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
 
       step(context, null, (err) => {
-        assert.equal(err.constructor.name, 'MagentoEndpointError')
-        assert.equal(err.code, 'EINTERNAL')
+        assert.strictEqual(err.constructor.name, 'MagentoEndpointError')
+        assert.strictEqual(err.code, 'EINTERNAL')
         done()
       })
     })
@@ -278,7 +278,7 @@ describe('getToken', () => {
       context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 
       step(context, null, (err) => {
-        assert.equal(err.message, 'error')
+        assert.strictEqual(err.message, 'error')
         done()
       })
     })
