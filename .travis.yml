@@ -20,6 +20,7 @@ matrix:
     - cd ../frontend
     - npm run test
     - npm run lint
+    - npm audit
 
 notifications:
   slack:
