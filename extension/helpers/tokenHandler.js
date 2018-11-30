@@ -65,7 +65,7 @@ class TokenHandler {
       if (!tokens || !tokens.accessToken) {
         // get token from magento by client credentials
         const options = {
-          json: {'grant_type': 'client_credentials'}
+          json: { 'grant_type': 'client_credentials' }
         }
 
         return this._getTokensFromMagento(options, (err, response) => {

@@ -22,7 +22,7 @@ module.exports = function (context, input, cb) {
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest('magento-user-extension:login', {log: true})
+  const request = context.tracedRequest('magento-user-extension:login', { log: true })
 
   const strategy = input.strategy
   const userCredentials = input.parameters
@@ -43,7 +43,7 @@ module.exports = function (context, input, cb) {
     // TODO: initiate cart merging here by passing sth. to the next step
     th.deleteGuestTokens((err) => {
       if (err) return cb(err)
-      cb(null, {userId: _getUserId(strategy, userCredentials), magentoTokenResponse})
+      cb(null, { userId: _getUserId(strategy, userCredentials), magentoTokenResponse })
     })
   })
 }

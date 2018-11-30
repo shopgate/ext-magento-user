@@ -54,7 +54,7 @@ describe('deleteAddress', () => {
 
   it('should return unauthorized error because of missing context.meta', async () => {
     try {
-      await deleteAddress({meta: {}}, input)
+      await deleteAddress({ meta: {} }, input)
     } catch (e) {
       assert.strictEqual('EACCESS', e.code)
     }
