@@ -1,0 +1,30 @@
+language: node_js
+
+install:
+- cd extension && npm install && cd ..
+- cd frontend && npm install && cd ..
+
+env: # important! Without the top-level env, no job will be allowed to fail.
+- JOB_DEFAULT=test
+
+matrix:
+  fast_finish: true
+  include:
+  - node_js: 8
+    env: TYPE=UNIT_CODESTYLE_DEPENDENCY
+    script:
+    - cd extension
+    - npm run cover
+    - npm run lint
+    - npm run checkVulnerabilities
+    - cd ../frontend
+    - npm run test
+    - npm run lint
+    - npm audit
+
+notifications:
+  slack:
+    rooms:
+      secure: uS5FKx1ANCyfBgBl9NWnVArBZjBjgi2/YqcBzpLEEJeLXpXhA/Rv80jULj1Gpy493HKCU2nY70G7ET0npSKiXlOLznGCQCjCZm5lKXAtlcxZQE7IudK14+rqwtzVaKKG49yhOKPfo3dczPoFZJBF0KG2gD0QUXzwNAkzc5g4cI22V9Kv3p4bLFGC+706nk3txweJ721pUH4P1csGhaSr2V4FQNNacGREJ+M78HKhfhc0c66GTShWJATjxaM4NwBx14H6Aj1vC3G4W4wdoihTT70oYxh8ORY95jpn+8YG7k2BWJiHl//ZAeeXvQ2j92d0WlWYzTNcYZ/lf82ZmqVoPta1/8O47acckycKOjbi3/g4mGUqu+iScTG9r/xNZbh3O/+bP10GOfCsaQYWLEnnHKOSMn9PG3bMaoWwPi3iP7qr4aUrdLe/uCrP60TauvOYGGPPGMd4sZV6r/PFWxGkpl92WJab6fLbAaLUhMlqGSYCTDqoUoIStXoImBM4krXPJwAweZHFX5929VhkAiS24HOdOXBEVSzY2O5B5Jn+Vykpgy2RmcIcnbscIYnGHrMogwBwDzF0s/xaSiyhRZdmg5l0OuzSr0AsAQ0IrLgnfLNNHBR3r4tRujcmKBOcTOUZgl+ampXFeJn8U7kKKGpVpIc1fd3K6e6PkRRiuXN0uOg=
+    on_success: change
+    on_failure: always

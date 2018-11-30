@@ -1,5 +1,6 @@
 const nock = require('nock')
 const assert = require('assert')
+const expect = require('chai').expect
 const request = require('request-promise-native')
 const getUser = require('../../../user/getUser')
 
@@ -46,8 +47,8 @@ describe('getUser', () => {
       .reply(200, magentoResponse)
 
     const userData = await getUser(context, input)
-    assert.equal(magentoResponse.email, userData.mail)
-    assert.equal(magentoResponse.customer_id, userData.id)
+    assert.strictEqual(magentoResponse.email, userData.mail)
+    assert.strictEqual(magentoResponse.customer_id, userData.id)
   })
 
   it('should return valid user data with user group and custom attributes', async () => {
@@ -56,20 +57,20 @@ describe('getUser', () => {
       .reply(200, magentoResponse)
 
     const userData = await getUser(context, input)
-    assert.equal(magentoResponse.email, userData.mail)
-    assert.equal(magentoResponse.customer_id, userData.id)
-    assert.equal(magentoResponse.firstname, userData.firstName)
-    assert.equal(magentoResponse.lastname, userData.lastName)
+    assert.strictEqual(magentoResponse.email, userData.mail)
+    assert.strictEqual(magentoResponse.customer_id, userData.id)
+    assert.strictEqual(magentoResponse.firstname, userData.firstName)
+    assert.strictEqual(magentoResponse.lastname, userData.lastName)
 
     const magentoCustomerGroup = magentoResponse.customer_group
     const userGroup = userData.userGroups.pop()
-    assert.equal(magentoCustomerGroup.customer_group_id, userGroup.id)
-    assert.equal(magentoCustomerGroup.customer_group_code, userGroup.name)
+    assert.strictEqual(magentoCustomerGroup.customer_group_id, userGroup.id)
+    assert.strictEqual(magentoCustomerGroup.customer_group_code, userGroup.name)
 
     const customAttributes = userData.customAttributes
-    assert.equal(magentoResponse.dob, customAttributes.dob)
-    assert.equal(magentoResponse.gender, customAttributes.gender)
-    assert.equal(magentoResponse.middlename, customAttributes.middlename)
+    assert.strictEqual(magentoResponse.dob, customAttributes.dob)
+    assert.strictEqual(magentoResponse.gender, customAttributes.gender)
+    assert.strictEqual(magentoResponse.middlename, customAttributes.middlename)
   })
 
   it('should return valid user data, even if no userGroups are exported', async () => {
@@ -81,9 +82,9 @@ describe('getUser', () => {
       .reply(200, customResponse)
 
     const userData = await getUser(context, input)
-    assert.equal(magentoResponse.email, userData.mail)
-    assert.equal(magentoResponse.customer_id, userData.id)
-    assert.deepEqual(userData.userGroups, undefined)
+    assert.strictEqual(magentoResponse.email, userData.mail)
+    assert.strictEqual(magentoResponse.customer_id, userData.id)
+    expect(userData.userGroups).to.eql(undefined)
   })
 
   it('should return valid user data, even if no customAttributes are exported', async () => {
@@ -97,16 +98,16 @@ describe('getUser', () => {
       .reply(200, customResponse)
 
     const userData = await getUser(context, input)
-    assert.equal(userData.mail, magentoResponse.email)
-    assert.equal(userData.id, magentoResponse.customer_id)
-    assert.deepEqual(userData.customAttributes, {})
+    assert.strictEqual(userData.mail, magentoResponse.email)
+    assert.strictEqual(userData.id, magentoResponse.customer_id)
+    expect(userData.customAttributes).to.eql({})
   })
 
   it('should return unauthorized error because of missing context.meta', async () => {
     try {
       await getUser({meta: {}}, input)
     } catch (e) {
-      assert.equal('EACCESS', e.code)
+      assert.strictEqual('EACCESS', e.code)
     }
   })
 })
