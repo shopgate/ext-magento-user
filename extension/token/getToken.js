@@ -11,7 +11,7 @@ module.exports = function (context, input, cb) {
   const authUrl = context.config.magentoUrl + '/auth/token'
   const storages = context.storage
   const log = context.log
-  const request = context.tracedRequest('magento-user-extension:getToken')
+  const request = context.tracedRequest('magento-user-extension:getToken', { log: true })
 
   const isLoggedIn = !!context.meta.userId
 
@@ -19,6 +19,6 @@ module.exports = function (context, input, cb) {
 
   th.getToken(isLoggedIn, (err, token) => {
     if (err) return cb(err)
-    cb(null, {token})
+    cb(null, { token })
   })
 }

@@ -67,7 +67,7 @@ describe('login', () => {
     }
 
     request.post = (options, cb) => {
-      cb(null, {statusCode: 200, body: magentoResponse})
+      cb(null, { statusCode: 200, body: magentoResponse })
     }
 
     context.storage.device.del = (key, cb) => {
@@ -93,7 +93,7 @@ describe('login', () => {
 
   it('should return an error because login to magento failed', (done) => {
     request.post = (options, cb) => {
-      cb(null, {statusCode: 456, body: {foo: 'bar'}})
+      cb(null, { statusCode: 456, body: { foo: 'bar' } })
     }
 
     step(context, input, (err) => {
@@ -115,7 +115,7 @@ describe('login', () => {
     }
 
     request.post = (options, cb) => {
-      cb(null, {statusCode: 200, body: magentoResponse})
+      cb(null, { statusCode: 200, body: magentoResponse })
     }
 
     context.storage.device.del = (key, cb) => {

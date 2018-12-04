@@ -82,7 +82,7 @@ describe('Tokenhandler', () => {
     })
     it('should return a magento endpoint error because the endpoint returned a bad result', (done) => {
       th.request.post = (options, cb) => {
-        cb(null, {statusCode: 500, body: {error: 'error'}})
+        cb(null, { statusCode: 500, body: { error: 'error' } })
       }
 
       const options = {
