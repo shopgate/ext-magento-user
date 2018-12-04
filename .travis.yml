@@ -19,7 +19,6 @@ matrix:
     - npm run checkVulnerabilities
     - cd ../frontend
     - npm run test
-    - npm run lint
     - npm audit
 
 notifications:

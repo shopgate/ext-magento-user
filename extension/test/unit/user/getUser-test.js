@@ -105,7 +105,7 @@ describe('getUser', () => {
 
   it('should return unauthorized error because of missing context.meta', async () => {
     try {
-      await getUser({meta: {}}, input)
+      await getUser({ meta: {} }, input)
     } catch (e) {
       assert.strictEqual('EACCESS', e.code)
     }

@@ -53,7 +53,7 @@ describe('updateMail', () => {
 
   it('should return unauthorized error because of missing context.meta', async () => {
     try {
-      await updateMail({meta: {}}, input)
+      await updateMail({ meta: {} }, input)
     } catch (e) {
       assert.strictEqual('EACCESS', e.code)
     }

@@ -16,5 +16,5 @@ module.exports = function (context, input, cb) {
   WebCheckoutUrlSgAppParameters.sgcloudInapp = 1
 
   const RegistrationUrlUtmParameters = new UtmParameters(context.config.utmParameters)
-  cb(null, {url: context.config.registrationUrl + WebCheckoutUrlSgAppParameters.getQueryParameters() + RegistrationUrlUtmParameters.getQueryParameters()})
+  cb(null, { url: context.config.registrationUrl + WebCheckoutUrlSgAppParameters.getQueryParameters() + RegistrationUrlUtmParameters.getQueryParameters() })
 }

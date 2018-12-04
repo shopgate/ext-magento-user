@@ -64,7 +64,7 @@ describe('getToken', () => {
         'access_token': 'a1'
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 200, body: magentoResponse}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
 
       context.storage.device.set = (key, value, cb) => { cb(null) }
 
@@ -98,7 +98,7 @@ describe('getToken', () => {
         'access_token': 'a2'
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 200, body: magentoResponse}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
 
       context.storage.device.set = (key, value, cb) => { cb(null) }
 
@@ -112,7 +112,7 @@ describe('getToken', () => {
     it('should return an error because getting token from magento fails', (done) => {
       context.storage.device.get = (key, cb) => { cb(null, null) }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 456, body: { foo: 'bar' } }) }
 
       step(context, null, (err) => {
         assert.strictEqual(err.constructor.name, 'MagentoEndpoint')
@@ -140,7 +140,7 @@ describe('getToken', () => {
         ]
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 200, body: magentoResponse}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
 
       context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 
@@ -189,7 +189,7 @@ describe('getToken', () => {
         'refresh_token': 'r2'
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 200, body: magentoResponse}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
 
       context.storage.device.set = (key, value, cb) => { cb(null) }
 
@@ -238,7 +238,7 @@ describe('getToken', () => {
         cb(null)
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 456, body: {foo: 'bar'}}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 456, body: { foo: 'bar' } }) }
 
       step(context, null, (err) => {
         assert.strictEqual(err.constructor.name, 'MagentoEndpoint')
@@ -269,7 +269,7 @@ describe('getToken', () => {
         ]
       }
 
-      request.post = (options, cb) => { cb(null, {statusCode: 200, body: magentoResponse}) }
+      request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
 
       context.storage.device.set = (key, value, cb) => { cb(new Error('error')) }
 

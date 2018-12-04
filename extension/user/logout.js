@@ -8,6 +8,6 @@ const TokenHandler = require('../helpers/tokenHandler')
 module.exports = function (context, input, cb) {
   TokenHandler.logout(context.storage, (err) => {
     if (err) return cb(err)
-    cb(null, {success: true})
+    cb(null, { success: true })
   })
 }
