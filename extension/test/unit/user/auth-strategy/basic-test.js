@@ -86,7 +86,7 @@ describe('login', () => {
     input.strategy = 'sthWeird'
 
     step(context, input, (err, data) => {
-      assert.deepEqual(data, {})
+      assert.deepStrictEqual(data, {})
       done()
     })
   })
