@@ -82,11 +82,11 @@ describe('login', () => {
     })
   })
 
-  it('should return an error because the input strategy is not supported', (done) => {
+  it('should return an empty object if the input strategy "basic" does not match', (done) => {
     input.strategy = 'sthWeird'
 
-    step(context, input, (err) => {
-      assert.strictEqual(err.message, 'invalid login strategy')
+    step(context, input, (err, data) => {
+      assert.deepEqual(data, {})
       done()
     })
   })
