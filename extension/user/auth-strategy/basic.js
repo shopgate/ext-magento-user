@@ -31,7 +31,7 @@ module.exports = function (context, input, cb) {
 
   // TODO: clarify if that is correct
   if (!_isValidStrategy(strategy)) {
-    return cb(new Error('invalid login strategy'))
+    return cb(null, {})
   }
 
   login(th, userCredentials, strategy, (err, magentoTokenResponse) => {
