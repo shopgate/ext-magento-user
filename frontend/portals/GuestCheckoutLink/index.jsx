@@ -5,8 +5,8 @@ import I18n from '@shopgate/pwa-common/components/I18n';
 import Link from '@shopgate/pwa-common/components/Link';
 import { CHECKOUT_PATH } from '@shopgate/pwa-common/constants/RoutePaths';
 import styles from './style';
-import {CHECKOUT_GUEST_PATH} from './../../constants/RoutePaths';
-import config from '../../config';
+import { CHECKOUT_GUEST_PATH } from './../../constants/RoutePaths';
+import config from './config';
 
 /**
  * Check whether the guest checkout is disabled
