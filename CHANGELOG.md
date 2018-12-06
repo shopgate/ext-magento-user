@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.3.1] - 2018-12-05
 ### Fixed
 - internal debug logging of requests to Magento
 - incompatible addresses due to different province codes
@@ -28,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - checkout button to not be clickable multiple times
 
-[Unreleased]: https://github.com/shopgate/ext-magento-user/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/shopgate/ext-magento-user/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/shopgate/ext-magento-user/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/shopgate/ext-magento-user/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/shopgate/ext-magento-user/compare/v1.1.7...v1.2.0
