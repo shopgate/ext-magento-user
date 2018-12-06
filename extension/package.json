@@ -1,9 +1,9 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "prototype",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx .",
+    "lint": "./node_modules/.bin/eslint --fix --ignore-path ../.gitignore --ext .js --ext .jsx .",
     "test": "./node_modules/.bin/_mocha --use_strict --recursive ./test/unit",
     "cover": "./node_modules/.bin/nyc npm test && ./node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
     "checkVulnerabilities": "check-audit",
