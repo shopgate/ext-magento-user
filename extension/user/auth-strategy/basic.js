@@ -29,9 +29,8 @@ module.exports = function (context, input, cb) {
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
-  // TODO: clarify if that is correct
   if (!_isValidStrategy(strategy)) {
-    return cb(new Error('invalid login strategy'))
+    return cb(null, {})
   }
 
   login(th, userCredentials, strategy, (err, magentoTokenResponse) => {
@@ -40,7 +39,6 @@ module.exports = function (context, input, cb) {
     }
 
     // delete token from device storage if it exists
-    // TODO: initiate cart merging here by passing sth. to the next step
     th.deleteGuestTokens((err) => {
       if (err) return cb(err)
       cb(null, { userId: _getUserId(strategy, userCredentials), magentoTokenResponse })
