@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - internal debug logging of requests to Magento
 - incompatible addresses due to different province codes
+- fixed handling of the login strategy in the hook step for basic strategy
 
 ### Changed
 - guest checkout now depends on the config 'guest_login_mode'
