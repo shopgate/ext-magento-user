@@ -7,9 +7,13 @@ import fetchRegisterUrl from '@shopgate/pwa-common/actions/user/fetchRegisterUrl
 import { getRegisterUrl } from '@shopgate/pwa-common/selectors/user';
 import { getCurrentRoute } from '@shopgate/pwa-common/helpers/router';
 import { userDidLogin$ } from '@shopgate/pwa-common/streams/user';
-import { historyPop } from '@shopgate/pwa-common/actions/router';
-import { webCheckoutRegisterRedirect$ } from '@shopgate/pwa-webcheckout-shopify/streams'
-import { registerRedirect } from '@shopgate/pwa-webcheckout-shopify/action-creators/register'
+import { historyPop, historyPush } from '@shopgate/pwa-common/actions/router';
+import { webCheckoutRegisterRedirect$ } from '@shopgate/pwa-webcheckout-shopify/streams';
+import { registerRedirect } from '@shopgate/pwa-webcheckout-shopify/action-creators/register';
+import { routeDidEnter$ } from '@shopgate/pwa-common/streams';
+import closeInAppBrowser from '@shopgate/pwa-core/commands/closeInAppBrowser';
+import { isAndroid } from '@shopgate/pwa-common/selectors/client';
+import broadcastEvent from '@shopgate/pwa-core/commands/broadcastEvent';
 
 export default (subscribe) => {
   /**
@@ -23,7 +27,7 @@ export default (subscribe) => {
      * When the register url was opened from a login page, a redirect to the original target
      * page needs to happen after a successful registration. It's added by buildRegisterUrl.
      */
-    const { state: {redirect: {location = ''} = {}} } = getCurrentRoute();
+    const { state: { redirect: { location = '' } = {} } } = getCurrentRoute();
 
     let url = getRegisterUrl(getState());
 
@@ -43,12 +47,33 @@ export default (subscribe) => {
     redirects.set(REGISTER_PATH, redirectHandler, true);
   });
 
-  const popHistory$ = webCheckoutRegisterRedirect$
-    .switchMap(ignore => userDidLogin$.first());
+  const loginAfterRegisterRedirect$ = webCheckoutRegisterRedirect$
+    .switchMap(() => userDidLogin$.first());
+  const nextRouterAfterLoginRegister$ = loginAfterRegisterRedirect$
+    .switchMap(() => routeDidEnter$.first())
+    .debounceTime(1000);
+
   /**
-   * Pop history (back 1) after success web registration
+   * Pop a login page after web registration / and redirect to checkout
    */
-  subscribe(popHistory$, ({ dispatch }) => {
+  subscribe(loginAfterRegisterRedirect$, ({ dispatch, getState }) => {
+    const { state: { redirect: { location = '' } = {} } } = getCurrentRoute();
     dispatch(historyPop());
+
+    closeInAppBrowser(isAndroid(getState()));
+
+    if (location) {
+      dispatch(historyPush({
+        pathname: location,
+      }));
+    }
+  });
+
+  /**
+   * Close loading spinner on next after login route
+   */
+  subscribe(nextRouterAfterLoginRegister$, () => {
+    // Close loading view
+    broadcastEvent({ event: 'closeNotification' });
   });
 };

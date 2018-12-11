@@ -1,9 +1,9 @@
 import React from 'react';
-import {mount} from 'enzyme';
+import { mount } from 'enzyme';
 import {
   mockedContextFromCartView,
   mockedContextFromMyAccountView,
-  mockedContextFromAnyOtherView
+  mockedContextFromAnyOtherView,
 } from './mock';
 
 jest.mock('./config', () => ({
@@ -26,8 +26,8 @@ const createComponent = (mockedContext) => {
   mockContext.mockReturnValue(mockedContext);
   jest.mock('@shopgate/pwa-common/context', () => ({
     RouteContext: {
-      Consumer: ({children}) => children(mockContext()),
-    }
+      Consumer: ({ children }) => children(mockContext()),
+    },
   }));
 
   const GuestCheckoutLink = require('./index').default;

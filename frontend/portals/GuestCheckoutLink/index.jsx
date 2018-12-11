@@ -37,13 +37,13 @@ const GuestCheckoutLink = ({ visible, redirectLocation }) => {
 };
 
 GuestCheckoutLink.propTypes = {
-  visible: PropTypes.bool.isRequired,
   redirectLocation: PropTypes.string.isRequired,
+  visible: PropTypes.bool.isRequired,
 };
 
 export default () => (
   <RouteContext.Consumer>
-    {({ state: {redirect: {location: redirectLocation = ''} = {}}, visible }) => (
+    {({ state: { redirect: { location: redirectLocation = '' } = {} }, visible }) => (
       <GuestCheckoutLink
         redirectLocation={redirectLocation}
         visible={visible}

@@ -27,8 +27,7 @@ export default function checkout(subscribe) {
       return INDEX_PATH;
     }
 
-    let checkoutUrl = trackingCore.crossDomainTracking(url);
-    return `${checkoutUrl}is_guest_checkout/1`;
+    return `${trackingCore.crossDomainTracking(url)}is_guest_checkout/1`;
   };
 
   subscribe(appWillStart$, () => {
