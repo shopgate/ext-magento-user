@@ -1,3 +1,4 @@
+const TokenHandler = require('../../helpers/tokenHandler')
 const InvalidCredentialsError = require('../../models/Errors/InvalidCredentials')
 
 /**
@@ -12,6 +13,44 @@ module.exports = async (context, input) => {
     return {}
   }
 
-  context.log.error('Facebook strategy is not implemented')
-  throw new InvalidCredentialsError()
+  const clientCredentials = context.config.credentials
+  const authUrl = context.config.magentoUrl + '/auth/token'
+  const { parameters: { success, profile } } = input
+  const log = context.log
+  const storages = context.storage
+  const request = context.tracedRequest('magento-user-extension:login', { log: true })
+
+  if (!success) {
+    throw new InvalidCredentialsError()
+  }
+
+  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
+
+  await login(th, profile, input.strategy)
+
+  await new Promise((resolve, reject) => {
+    th.deleteGuestTokens((err) => {
+      if (err) return reject(err)
+      resolve()
+    })
+  })
+
+  /**
+ * @param {TokenHandler} tokenHandler
+ * @param {UserLoginInputParameters} userCredentials
+ * @param {string} strategy
+ *
+ * @param {StepCallback} cb
+ * @param {?Error} cb.error
+ * @param {?object} cb.result
+ */
+  async function login (tokenHandler, userCredentials, strategy) {
+    return new Promise((resolve, reject) => {
+      tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
+        if (err) return reject(err)
+        console.log(magentoTokenResponse)
+        resolve(magentoTokenResponse)
+      })
+    })
+  }
 }

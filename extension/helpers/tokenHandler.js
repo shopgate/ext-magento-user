@@ -117,6 +117,13 @@ class TokenHandler {
           'password': userCredentials.password
         }
         break
+      case 'facebook' : {
+        jsonData = {
+          'grant_type': 'facebook',
+          'user_id': userCredentials.email
+        }
+        break
+      }
       case 'auth_code' :
         jsonData = {
           'grant_type': 'authorization_code',
@@ -208,6 +215,7 @@ class TokenHandler {
    * @param {StepCallback} cb
    */
   setTokenInStorage (storage, key, tokens, lifeSpan, cb) {
+    console.log('##################### SET TOKEN ################', storage)
     const tokenData = {
       tokens: tokens,
       expires: (new Date()).getTime() + lifeSpan * 1000
