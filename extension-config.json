@@ -118,7 +118,8 @@
         {"key": "parameters"}
       ],
       "output" : [
-        {"key": "userId", "optional": true}
+        {"key": "userId", "optional": true},
+        {"key": "magentoTokenResponse", "optional": true}
       ]
     },
     {
