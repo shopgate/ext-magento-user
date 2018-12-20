@@ -26,14 +26,15 @@ module.exports = async (context, input) => {
 
   const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
 
-  await login(th, profile, input.strategy)
-
+  const magentoTokenResponse = await login(th, profile, input.strategy)
   await new Promise((resolve, reject) => {
     th.deleteGuestTokens((err) => {
       if (err) return reject(err)
       resolve()
     })
   })
+
+  return { userId: profile.email, magentoTokenResponse }
 
   /**
  * @param {TokenHandler} tokenHandler
@@ -48,7 +49,6 @@ module.exports = async (context, input) => {
     return new Promise((resolve, reject) => {
       tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
         if (err) return reject(err)
-        console.log(magentoTokenResponse)
         resolve(magentoTokenResponse)
       })
     })
