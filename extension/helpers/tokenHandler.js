@@ -215,7 +215,6 @@ class TokenHandler {
    * @param {StepCallback} cb
    */
   setTokenInStorage (storage, key, tokens, lifeSpan, cb) {
-    console.log('##################### SET TOKEN ################', storage)
     const tokenData = {
       tokens: tokens,
       expires: (new Date()).getTime() + lifeSpan * 1000

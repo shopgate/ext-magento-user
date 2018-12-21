@@ -37,15 +37,11 @@ module.exports = async (context, input) => {
   return { userId: profile.email, magentoTokenResponse }
 
   /**
- * @param {TokenHandler} tokenHandler
- * @param {UserLoginInputParameters} userCredentials
- * @param {string} strategy
- *
- * @param {StepCallback} cb
- * @param {?Error} cb.error
- * @param {?object} cb.result
- */
-  async function login (tokenHandler, userCredentials, strategy) {
+   * @param {TokenHandler} tokenHandler
+   * @param {UserLoginInputParameters} userCredentials
+   * @param {string} strategy
+   */
+  async function login(tokenHandler, userCredentials, strategy) {
     return new Promise((resolve, reject) => {
       tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
         if (err) return reject(err)
