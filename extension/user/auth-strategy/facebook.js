@@ -41,7 +41,7 @@ module.exports = async (context, input) => {
    * @param {UserLoginInputParameters} userCredentials
    * @param {string} strategy
    */
-  async function login(tokenHandler, userCredentials, strategy) {
+  async function login (tokenHandler, userCredentials, strategy) {
     return new Promise((resolve, reject) => {
       tokenHandler.login(userCredentials, strategy, (err, magentoTokenResponse) => {
         if (err) return reject(err)

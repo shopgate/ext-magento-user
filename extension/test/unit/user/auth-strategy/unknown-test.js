@@ -9,7 +9,6 @@ const input = {
 }
 
 describe('unknown strategy', () => {
-
   beforeEach(() => {
     input.strategy = 'test'
     input.userId = 1
@@ -25,7 +24,7 @@ describe('unknown strategy', () => {
     try {
       await unknownStrategy(context, input)
     } catch (err) {
-      return assert.equal(err.code, 'EINVALIDCALL')
+      return assert.strictEqual(err.code, 'EINVALIDCALL')
     }
     assert.fail('Expected an error to be thrown.')
   })

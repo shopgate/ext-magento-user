@@ -23,7 +23,6 @@ const input = {
 }
 
 describe('facebook login', () => {
-
   beforeEach(() => {
     input.strategy = 'facebook'
     input.parameters.success = true
@@ -47,7 +46,7 @@ describe('facebook login', () => {
     try {
       await facebookStrategy(context, input)
     } catch (err) {
-      return assert.equal(err.code, 'EINVALIDCREDENTIALS')
+      return assert.strictEqual(err.code, 'EINVALIDCREDENTIALS')
     }
     assert.fail('Expected an error to be thrown.')
   })
