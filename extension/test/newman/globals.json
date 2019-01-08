@@ -3,24 +3,6 @@
   "name": "Magento Connect User",
   "values": [
     {
-      "key": "username_fb",
-      "value": "***",
-      "description": "",
-      "enabled": true
-    },
-    {
-      "key": "username",
-      "value": "***",
-      "description": "",
-      "enabled": true
-    },
-    {
-      "key": "password",
-      "value": "***",
-      "description": "",
-      "enabled": true
-    },
-    {
       "key": "domain",
       "value": "http://localhost:{{port}}",
       "description": "",
