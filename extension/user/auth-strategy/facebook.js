@@ -18,7 +18,7 @@ module.exports = async (context, input) => {
   const { parameters: { success, profile } } = input
   const log = context.log
   const storages = context.storage
-  const request = context.tracedRequest('magento-user-extension:login', { log: true })
+  const request = context.tracedRequest('magento-user-extension:facebook-login', { log: true })
 
   if (!success) {
     throw new InvalidCredentialsError()
