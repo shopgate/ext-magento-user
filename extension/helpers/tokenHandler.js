@@ -117,6 +117,13 @@ class TokenHandler {
           'password': userCredentials.password
         }
         break
+      case 'facebook' : {
+        jsonData = {
+          'grant_type': 'facebook',
+          'user_id': userCredentials.email
+        }
+        break
+      }
       case 'auth_code' :
         jsonData = {
           'grant_type': 'authorization_code',

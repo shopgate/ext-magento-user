@@ -3764,6 +3764,143 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "facebook",
+			"item": [
+				{
+					"name": "errors",
+					"item": [
+						{
+							"name": "user does not exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test('Bad credentials provided', function() {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EINVALIDCREDENTIALS');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": false\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+								"exec": [
+									"pm.test('Status code is 200', function() {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": true,\n    \t\"profile\": {\n    \t\t\"id\": \"12345\",\n    \t\t\"email\": \"{{username_fb}}\",\n    \t\t\"first_name\": \"firstname\",\n    \t\t\"last_name\": \"lastname\"\n    \t}\n    }\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_login}}",
+							"host": [
+								"{{domain}}{{endpoint_user_login}}"
+							]
+						},
+						"description": "customerLogin"
+					},
+					"response": []
+				},
+				{
+					"name": "check data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91eb703d-9b34-437a-ad54-f4f7e966d31b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.with.body;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Make sure correct user is logged in\", function() {",
+									"    const response = pm.response.json();",
+									"    const user = response;",
+									"    pm.expect(user.mail).to.eql(pm.environment.get(\"username_fb\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_get}}",
+							"host": [
+								"{{domain}}{{endpoint_user_get}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"variable": [
