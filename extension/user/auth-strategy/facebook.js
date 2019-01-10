@@ -13,18 +13,15 @@ module.exports = async (context, input) => {
     return {}
   }
 
-  const clientCredentials = context.config.credentials
   const authUrl = context.config.magentoUrl + '/auth/token'
   const { parameters: { success, profile } } = input
-  const log = context.log
-  const storages = context.storage
   const request = context.tracedRequest('magento-user-extension:facebook-login', { log: true })
 
   if (!success) {
     throw new InvalidCredentialsError()
   }
 
-  const th = new TokenHandler(clientCredentials, authUrl, storages, log, request, !context.config.allowSelfSignedCertificate)
+  const th = new TokenHandler(context.config.credentials, authUrl, context.storage, context.log, request, !context.config.allowSelfSignedCertificate)
 
   const magentoTokenResponse = await login(th, profile, input.strategy)
   await new Promise((resolve, reject) => {
