@@ -26,14 +26,11 @@ module.exports = async (context, input) => {
   const th = new TokenHandler(context.config.credentials, authUrl, context.storage, context.log, request, !context.config.allowSelfSignedCertificate)
 
   try {
-    console.log('jo')
     magentoTokenResponse = await login(th, profile, input.strategy)
   } catch (e) {
-    console.log('jo2')
     await register(await getAuthToken(th), profile)
     magentoTokenResponse = await login(th, profile, input.strategy)
   }
-  console.log('jo3')
 
   await new Promise((resolve, reject) => {
     th.deleteGuestTokens((err) => {
