@@ -1,0 +1,6 @@
+{
+  "checkout": {
+    "or": "O",
+    "continue_as_guest": "Ordine come ospite"
+  }
+}
