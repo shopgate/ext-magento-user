@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [2.0.0] - 2019-02-08
 ### Changed
-- Switched frontend to support PWA 6.X
+- Moved frontend to support PWA 6.X
 
 ## [1.3.1] - 2018-12-05
 ### Fixed
@@ -34,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - checkout button to not be clickable multiple times
 
 [Unreleased]: https://github.com/shopgate/ext-magento-user/compare/v1.3.1...HEAD
+[2.0.0]: https://github.com/shopgate/ext-magento-user/compare/v1.3.1...v2.0.0
 [1.3.1]: https://github.com/shopgate/ext-magento-user/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/shopgate/ext-magento-user/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/shopgate/ext-magento-user/compare/v1.1.7...v1.2.0
