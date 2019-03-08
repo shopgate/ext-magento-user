@@ -11,6 +11,7 @@ install:
 - mv pipelines extensions/ext-magento-user/
 - mv extension-config.json extensions/ext-magento-user/
 - mv .gitignore extensions/ext-magento-user/
+- npm -i -g sgconnect
 - cd extensions/ext-magento-user/
 
 env: # important! Without the top-level env, no job will be allowed to fail.
