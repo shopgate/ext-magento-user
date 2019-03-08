@@ -3,7 +3,14 @@ language: node_js
 install:
 - cd extension && npm install && cd ..
 - cd frontend && npm install && cd ..
-- node extension/test/newman/setup.js MAGENTO_USER MAGENTO_PASS
+- node extension/test/newman/setup.js $MAGENTO_USER $MAGENTO_PASS
+- mkdir extensions
+- mkdir extensions/ext-magento-user
+- mv extension extensions/ext-magento-user/
+- mv frontend/ extensions/ext-magento-user/
+- mv pipelines extensions/ext-magento-user/
+- mv extension-config.json extensions/ext-magento-user/
+- cd extensions/ext-magento-user/
 
 env: # important! Without the top-level env, no job will be allowed to fail.
 - JOB_DEFAULT=test
@@ -20,7 +27,6 @@ matrix:
     - npm run checkVulnerabilities
     - cd ../frontend
     - npm run test
-    - npm audit --only=prod
 
 notifications:
   slack:
