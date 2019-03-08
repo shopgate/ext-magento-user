@@ -15,7 +15,7 @@ install:
 - sgconnect login
 - expect "Enter your email address:"
 - send $SG_USER
-- expect "Enter your password: [input is hidden]"
+- expect "Enter your password:"
 - send $SG_PASS
 - cd extensions/ext-magento-user/
 
