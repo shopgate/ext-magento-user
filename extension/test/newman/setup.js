@@ -17,4 +17,4 @@ envTemplate.values = envTemplate.values.map(value => {
 })
 
 fs.writeFileSync(path.join(__dirname, 'environment.json'), JSON.stringify(envTemplate, null, 2))
-console.log('done')
+console.log('done for user ' + process.argv[2])
