@@ -4,7 +4,9 @@
   "description": "prototype",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix --ignore-path ../.gitignore --ext .js --ext .jsx .",
+    "unittest": "./node_modules/.bin/_mocha --use_strict --recursive ./test/unit/*/*",
     "test": "./node_modules/.bin/_mocha --use_strict --recursive ./test/unit",
+    "coverUnitTests": "./node_modules/.bin/nyc npm unittest && ./node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
     "cover": "./node_modules/.bin/nyc npm test && ./node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
     "checkVulnerabilities": "check-audit",
     "newman": "./node_modules/.bin/newman run ./test/newman/collection.json --environment ./test/newman/environment.json --globals ./test/newman/globals.json"
