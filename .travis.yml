@@ -12,6 +12,11 @@ install:
 - mv extension-config.json extensions/ext-magento-user/
 - mv .gitignore extensions/ext-magento-user/
 - npm install -g @shopgate/platform-sdk
+- sgconnect login
+- expect "Enter your email address:"
+- send $SG_USER
+- expect "Enter your password: [input is hidden]"
+- send $SG_PASS
 - cd extensions/ext-magento-user/
 
 env: # important! Without the top-level env, no job will be allowed to fail.
