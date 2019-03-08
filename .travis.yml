@@ -20,7 +20,7 @@ matrix:
     - npm run checkVulnerabilities
     - cd ../frontend
     - npm run test
-    - npm audit
+    - npm audit --only=prod
 
 notifications:
   slack:
