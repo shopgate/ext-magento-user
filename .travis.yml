@@ -1,46 +1,47 @@
 language: node_js
+node_js: "8"
+
+env:
+  global:
+    - EXT_NAME=magento-user
+    - MAGENTO_USER=tester@test.de
+    - APP_ID=shop_31676
+    - INTEGRATION_TEST=true
+    - LOG_LEVEL=debug
+    - CONNECT_DIR="${TRAVIS_BUILD_DIR}/connect"
+    - EXT_DIR="${CONNECT_DIR}/extensions/${EXT_NAME}"
+    - TRAVIS_DIR="extension/test/newman/travis"
+  matrix:
+    - TYPE=TEST_SUITE
 
 install:
-- cd extension && npm install && cd ..
-- cd frontend && npm install && cd ..
-- node extension/test/newman/setup.js $MAGENTO_USER $MAGENTO_PASS
-- mkdir extensions
-- mkdir extensions/ext-magento-user
-- mv extension extensions/ext-magento-user/
-- mv frontend/ extensions/ext-magento-user/
-- mv pipelines extensions/ext-magento-user/
-- mv extension-config.json extensions/ext-magento-user/
-- mv .gitignore extensions/ext-magento-user/
-- npm install -g @shopgate/platform-sdk
-#- sgconnect login
-#- expect "Enter your email address:"
-#- send $SG_USER
-#- expect "Enter your password:"
-#- send $SG_PASS
-#- sgconnect init
-#- expect "Enter your Sandbox App ID:"
-#- send $APP_ID
-- cd extensions/ext-magento-user/
+  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
+    chmod +x ./${TRAVIS_DIR}/install.sh;
+    ./${TRAVIS_DIR}/install.sh;
+    fi
 
-env: # important! Without the top-level env, no job will be allowed to fail.
-- JOB_DEFAULT=test
+script:
+  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
+    chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+    ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+    cd ${EXT_DIR}/extension;
+    npm run newman;
+    fi
+  - npm run coverUnitTests
+  - npm run lint
+  - npm run checkVulnerabilities
+  - cd ${EXT_DIR}/frontend
+  - npm run test
 
-matrix:
-  fast_finish: true
-  include:
-  - node_js: 8
-    env: TYPE=UNIT_CODESTYLE_DEPENDENCY
-    script:
-    - cd extension
-    - npm run coverUnitTests
-    - npm run lint
-    - npm run checkVulnerabilities
-    - cd ../frontend
-    - npm run test
+after_script:
+  - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}')
+
+after_failure:
+  - tail -n20 ${CONNECT_DIR}/connect.out
 
 notifications:
   slack:
+    on_failure: always
+    on_success: change
     rooms:
       secure: uS5FKx1ANCyfBgBl9NWnVArBZjBjgi2/YqcBzpLEEJeLXpXhA/Rv80jULj1Gpy493HKCU2nY70G7ET0npSKiXlOLznGCQCjCZm5lKXAtlcxZQE7IudK14+rqwtzVaKKG49yhOKPfo3dczPoFZJBF0KG2gD0QUXzwNAkzc5g4cI22V9Kv3p4bLFGC+706nk3txweJ721pUH4P1csGhaSr2V4FQNNacGREJ+M78HKhfhc0c66GTShWJATjxaM4NwBx14H6Aj1vC3G4W4wdoihTT70oYxh8ORY95jpn+8YG7k2BWJiHl//ZAeeXvQ2j92d0WlWYzTNcYZ/lf82ZmqVoPta1/8O47acckycKOjbi3/g4mGUqu+iScTG9r/xNZbh3O/+bP10GOfCsaQYWLEnnHKOSMn9PG3bMaoWwPi3iP7qr4aUrdLe/uCrP60TauvOYGGPPGMd4sZV6r/PFWxGkpl92WJab6fLbAaLUhMlqGSYCTDqoUoIStXoImBM4krXPJwAweZHFX5929VhkAiS24HOdOXBEVSzY2O5B5Jn+Vykpgy2RmcIcnbscIYnGHrMogwBwDzF0s/xaSiyhRZdmg5l0OuzSr0AsAQ0IrLgnfLNNHBR3r4tRujcmKBOcTOUZgl+ampXFeJn8U7kKKGpVpIc1fd3K6e6PkRRiuXN0uOg=
-    on_success: change
-    on_failure: always
