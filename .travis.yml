@@ -26,6 +26,7 @@ script:
     ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
     cd ${EXT_DIR}/extension;
     npm run cover;
+    ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls
     fi
 #  - npm run cover
   - npm run lint
