@@ -4,7 +4,7 @@ node_js: "8"
 env:
   global:
     - EXT_NAME=magento-user
-    - MAGENTO_USER=tester@test.de
+    - MAGENTO_USER=tester@shopgate.com
     - APP_ID=shop_31676
     - INTEGRATION_TEST=true
     - LOG_LEVEL=debug
