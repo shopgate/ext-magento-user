@@ -8,3 +8,5 @@ ${EXT_DIR}/extension/node_modules/.bin/nyc sgconnect backend start > connect.out
 echo "=== Waiting for backend ready signal ==="
 chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_wait.sh
 timeout 60s ${EXT_DIR}/${TRAVIS_DIR}/backend_wait.sh
+
+${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls
