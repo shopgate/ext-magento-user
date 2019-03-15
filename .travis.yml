@@ -31,7 +31,7 @@ script:
 ##  - npm run cover
 #  - npm run lint
 #  - npm run checkVulnerabilities
-  - cd ${EXT_DIR}/frontend
+  - cd ${EXT_DIR}/frontend;
   - npm run test
 
 after_script:
