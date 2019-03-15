@@ -17,21 +17,22 @@ env:
 install:
   - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
     chmod +x ./${TRAVIS_DIR}/install.sh;
-    ./${TRAVIS_DIR}/install.sh;
+#    ./${TRAVIS_DIR}/install.sh;
     fi
 
 script:
-  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
-    chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
-    ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
-    cd ${EXT_DIR}/extension;
-    npm run cover;
-    ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
-    fi
-#  - npm run cover
-  - npm run lint
-  - npm run checkVulnerabilities
+#  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
+#    chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+#    ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+#    cd ${EXT_DIR}/extension;
+#    npm run cover;
+#    ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
+#    fi
+##  - npm run cover
+#  - npm run lint
+#  - npm run checkVulnerabilities
   - cd ${EXT_DIR}/frontend
+  - npm i
   - npm run test
 
 after_script:
