@@ -31,6 +31,7 @@ script:
   - npm run lint
   - npm run checkVulnerabilities
   - cd ${EXT_DIR}/frontend
+  - npm install
   - npm run test
 
 after_script:
