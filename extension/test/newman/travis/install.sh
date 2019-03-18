@@ -19,10 +19,6 @@ sgconnect init --appId "${APP_ID}" --force
 # Clone extension to connect folder structure
 rsync -a --exclude 'connect' ${TRAVIS_BUILD_DIR}/ ${EXT_DIR}
 
-# Add empty config.json
-cd ${TRAVIS_BUILD_DIR}/frontend
-echo '{}' > config.json
-
 # Attach extension now that it exists
 cd ${CONNECT_DIR}
 sgconnect extension attach ${EXT_NAME}
