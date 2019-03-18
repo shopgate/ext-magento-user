@@ -4,11 +4,9 @@
 set -ev
 
 # Install dependencies
-cd ./extension
+cd ${TRAVIS_BUILD_DIR}/extension
 node ./test/newman/setup.js ${MAGENTO_USER} ${MAGENTO_PASS}
-npm install > /dev/null 2>&1
-cd ../frontend
-npm install > /dev/null 2>&1
+npm i > /dev/null 2>&1
 
 # SGConnect create folder structure
 mkdir ${CONNECT_DIR}

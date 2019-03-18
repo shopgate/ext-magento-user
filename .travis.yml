@@ -2,37 +2,46 @@ language: node_js
 node_js: "8"
 
 env:
-  global:
-    - EXT_NAME=magento-user
-    - MAGENTO_USER=tester@shopgate.com
-    - APP_ID=shop_31676
-    - INTEGRATION_TEST=true
-    - LOG_LEVEL=debug
-    - CONNECT_DIR="${TRAVIS_BUILD_DIR}/connect"
-    - EXT_DIR="${CONNECT_DIR}/extensions/${EXT_NAME}"
-    - TRAVIS_DIR="extension/test/newman/travis"
-  matrix:
-    - TYPE=TEST_SUITE
+  - JOB_DEFAULT=test
 
-install:
-  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
-    chmod +x ./${TRAVIS_DIR}/install.sh;
-    ./${TRAVIS_DIR}/install.sh;
-    fi
-
-script:
-  - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
-    chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
-    ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
-    cd ${EXT_DIR}/extension;
-    npm run cover;
-    ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
-    fi
-  - npm run lint
-  - npm run checkVulnerabilities
-  - cd ${EXT_DIR}/frontend
-  - npm install
-  - npm run test
+matrix:
+  include:
+    - name: "Backend Unit / Lint / Audit & Frontend Unit / Lint"
+      install:
+        - cd extension; npm install; cd ..
+        - cd frontend; npm install; cd ..
+      script:
+        - cd extension
+        - npm run unittest
+        - npm run lint
+        - npm run checkVulnerabilities
+        - cd ../frontend
+        - npm run lint
+        - npm run test
+    - name: "Backend Unit/Coverage and Newman Tests coverage"
+      env:
+        - EXT_NAME=magento-user
+        - MAGENTO_USER=tester@shopgate.com
+        - APP_ID=shop_31676
+        - INTEGRATION_TEST=true
+        - LOG_LEVEL=debug
+        - CONNECT_DIR="${TRAVIS_BUILD_DIR}/connect"
+        # Note that EXT_DIR has the extension files after the install.sh script
+        - EXT_DIR="${CONNECT_DIR}/extensions/${EXT_NAME}"
+        - TRAVIS_DIR="extension/test/newman/travis"
+      install:
+        - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
+          chmod +x ./${TRAVIS_DIR}/install.sh;
+          ./${TRAVIS_DIR}/install.sh;
+          fi
+      script:
+        - if [[ "${SG_USER}" && "${SG_PASS}" && "${MAGENTO_PASS}" ]]; then
+          chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+          ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
+          cd ${EXT_DIR}/extension;
+          npm run cover;
+          ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
+          fi
 
 after_script:
   - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}')
