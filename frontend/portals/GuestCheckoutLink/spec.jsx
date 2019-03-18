@@ -6,6 +6,8 @@ import {
   mockedContextFromAnyOtherView,
 } from './mock';
 
+import GuestCheckoutLink from './index';
+
 jest.mock('./config', () => ({
   getUserAccountSettings: 1,
 }));
@@ -30,7 +32,6 @@ const createComponent = (mockedContext) => {
     },
   }));
 
-  const GuestCheckoutLink = require('./index').default;
   return mount(<GuestCheckoutLink />);
 };
 
