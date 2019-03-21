@@ -40,13 +40,12 @@ matrix:
           ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
           cd ${EXT_DIR}/extension;
           npm run cover;
+          kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}');
           ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
           fi
 
-after_script:
-  - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}')
-
 after_failure:
+  - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}')
   - tail -n20 ${CONNECT_DIR}/connect.out
 
 notifications:
