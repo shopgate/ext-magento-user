@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cd ${CONNECT_DIR}
+cd ${EXT_DIR}/extension
 rm -f connect.out
 
-${EXT_DIR}/extension/node_modules/.bin/nyc sgconnect backend start > connect.out 2>&1 &
+./node_modules/.bin/nyc sgconnect backend start > connect.out 2>&1 &
 
 echo "=== Waiting for backend ready signal ==="
 chmod +x ${EXT_DIR}/${TRAVIS_DIR}/backend_wait.sh

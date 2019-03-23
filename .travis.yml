@@ -12,9 +12,9 @@ matrix:
         - cd frontend; npm install; cd ..
       script:
         - cd extension
-        - npm run unittest
+        - npm run unit:only
         - npm run lint
-        - npm run checkVulnerabilities
+        - npm run audit
         - cd ../frontend
         - npm run lint
         - npm run test
@@ -40,9 +40,11 @@ matrix:
           ${EXT_DIR}/${TRAVIS_DIR}/backend_start.sh;
           cd ${EXT_DIR}/extension;
           npm run cover;
-          kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}');
-          ${EXT_DIR}/extension/node_modules/.bin/nyc report --reporter=text-lcov | coveralls;
           fi
+
+after_success:
+  - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}');
+  - npm run travis:coveralls
 
 after_failure:
   - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}')
