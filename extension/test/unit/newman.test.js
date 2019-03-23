@@ -1,3 +1,4 @@
+const assert = require('assert').strict
 const newman = require('newman')
 
 describe('Newman code coverage', () => {
@@ -9,8 +10,10 @@ describe('Newman code coverage', () => {
       environment: (require('../newman/environment.json')),
       reporters: 'cli'
     }, (err, summary) => {
-      console.log(summary.run.failures.length)
-      if (err) { return done(err) }
+      if (err || summary.run.failures.length) {
+        assert.ok(false, `Failures encountered: ${summary.run.failures.length}`)
+        return done(err)
+      }
       done()
     })
   })

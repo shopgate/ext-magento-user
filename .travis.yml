@@ -44,6 +44,7 @@ matrix:
 
 after_success:
   - kill $(ps aux | grep '[s]gconnect backend start' | awk '{print $2}');
+  - npm run report
   - npm run travis:coveralls
 
 after_failure:
