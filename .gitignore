@@ -8,3 +8,4 @@ config.json
 coverage
 extension/.nyc_output
 extension/test/newman/environment.json
+connect.out
