@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "prototype",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix --ignore-path ../.gitignore --ext .js --ext .jsx .",

@@ -1,6 +1,6 @@
 {
 	"info": {
-      "_postman_id": "e664a463-9ef6-47a0-98d8-fde87c4cf774",
+		"_postman_id": "cf320990-8108-4681-8902-adaff155d1e5",
 		"name": "Magento Connect User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -3762,6 +3762,357 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "facebook",
+			"item": [
+				{
+					"name": "errors",
+					"item": [
+						{
+							"name": "user does not exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"pm.test('Bad credentials provided', function() {",
+											"    pm.expect(jsonData.error.code).to.be.eq('EINVALIDCREDENTIALS');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": false\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						},
+						{
+							"name": "empty required data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Code is EVALIDATION because the firstname is empty\", function () {",
+											"    pm.expect(jsonData.error.code).to.eql('EVALIDATION');",
+											"});",
+											"",
+											"pm.test(\"Incorrect validation error structure\", function () {",
+											"    pm.expect(jsonData.error.validationErrors.length).to.be.gte(1);",
+											"    jsonData.error.validationErrors.forEach((error) => {",
+											"        pm.expect(error.path).to.not.be.empty;",
+											"        pm.expect(error.message).to.not.be.empty;",
+											"    })",
+											"});",
+											"",
+											"pm.test(\"Correct firstname error is shown\", function () {",
+											"    pm.expect(jsonData.error.validationErrors[0].path).to.be.eq('firstName');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5def4380-abae-42cf-bf66-18ce350f25cb",
+										"exec": [
+											"// Create a seed to have a randomized data set",
+											"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": true,\n    \t\"profile\": {\n    \t\t\"id\": \"12345\",\n    \t\t\"email\": \"{{seed}}@shopgate.com\",\n    \t\t\"first_name\": \"\",\n    \t\t\"last_name\": \"lastname\"\n    \t}\n    }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_user_login}}",
+									"host": [
+										"{{domain}}{{endpoint_user_login}}"
+									]
+								},
+								"description": "customerLogin"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "customerLogout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_logout}}",
+							"host": [
+								"{{domain}}{{endpoint_user_logout}}"
+							]
+						},
+						"description": "customerLogout"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+								"exec": [
+									"pm.test('Status code is 200', function() {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": true,\n    \t\"profile\": {\n    \t\t\"id\": \"12345\",\n    \t\t\"email\": \"{{username_fb}}\",\n    \t\t\"first_name\": \"firstname\",\n    \t\t\"last_name\": \"lastname\"\n    \t}\n    }\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_login}}",
+							"host": [
+								"{{domain}}{{endpoint_user_login}}"
+							]
+						},
+						"description": "customerLogin"
+					},
+					"response": []
+				},
+				{
+					"name": "check data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91eb703d-9b34-437a-ad54-f4f7e966d31b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.with.body;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Make sure correct user is logged in\", function() {",
+									"    const response = pm.response.json();",
+									"    const user = response;",
+									"",
+									"    pm.expect(user.id).to.be.a('string', 'ID - not a string provided!').to.not.be.empty;",
+									"    pm.expect(user.mail).to.eql(pm.environment.get(\"username_fb\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_get}}",
+							"host": [
+								"{{domain}}{{endpoint_user_get}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "customerLogout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_logout}}",
+							"host": [
+								"{{domain}}{{endpoint_user_logout}}"
+							]
+						},
+						"description": "customerLogout"
+					},
+					"response": []
+				},
+				{
+					"name": "register/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8caf6e85-784d-4475-89e6-df12a849c808",
+								"exec": [
+									"pm.test('Status code is 200', function() {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "afbe56ac-7560-401a-89d4-490965eeaff9",
+								"exec": [
+									"// Create a seed to have a randomized data set",
+									"pm.environment.set(\"seed\", \"user-\" + Math.floor(Math.random() * Math.floor(1000)));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"strategy\": \"facebook\",\n    \"parameters\": {\n    \t\"success\": true,\n    \t\"profile\": {\n    \t\t\"id\": \"12345\",\n    \t\t\"email\": \"fb-{{seed}}@shopgate.com\",\n    \t\t\"first_name\": \"firstname\",\n    \t\t\"last_name\": \"lastname\"\n    \t}\n    }\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_login}}",
+							"host": [
+								"{{domain}}{{endpoint_user_login}}"
+							]
+						},
+						"description": "customerLogin"
+					},
+					"response": []
+				},
+				{
+					"name": "check data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91eb703d-9b34-437a-ad54-f4f7e966d31b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test if repsonse is okay, with body and json\", function () {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.be.with.body;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Make sure correct user is logged in\", function() {",
+									"    const response = pm.response.json();",
+									"    const user = response;",
+									"",
+									"    pm.expect(user.id).to.be.a('string', 'ID - not a string provided!').to.not.be.empty;",
+									"    pm.expect(user.mail).to.eql('fb-' + pm.environment.get(\"seed\") + '@shopgate.com');",
+									"});",
+									"",
+									"pm.environment.unset(\"seed\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_user_get}}",
+							"host": [
+								"{{domain}}{{endpoint_user_get}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

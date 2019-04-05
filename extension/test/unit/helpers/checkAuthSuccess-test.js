@@ -1,26 +1,28 @@
 const assert = require('assert')
 const step = require('../../../helpers/checkAuthSuccess')
 
-describe('checkAuthSuccess', () => {
+describe('checkAuthSuccess', async () => {
   const context = {
     log: {
       error: () => {}
     }
   }
 
-  it('should return successfully', (done) => {
+  it('should return successfully', async () => {
     const input = { authSuccess: true }
-    step(context, input, (err) => {
-      assert.ifError(err)
-      done()
-    })
+    try {
+      await step(context, input)
+    } catch (e) {
+      assert.fail('Expected NO error to be thrown.')
+    }
   })
 
-  it('should return an error', (done) => {
+  it('should return an error', async () => {
     const input = { authSuccess: false }
-    step(context, input, (err) => {
-      assert.strictEqual(err.message, 'auth step was unsuccessful')
-      done()
-    })
+    try {
+      await step(context, input)
+    } catch (e) {
+      assert.strictEqual('EACCESS', e.code)
+    }
   })
 })

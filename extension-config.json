@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "id": "@shopgate/magento-user",
   "trusted": true,
   "configuration": {
@@ -82,6 +82,12 @@
       "type": "portals"
     },
     {
+      "id": "GuestCheckoutLinkRoute",
+      "path": "frontend/portals/GuestCheckoutLink/route.jsx",
+      "target": "app.routes",
+      "type": "portals"
+    },
+    {
       "id": "locale/en-US",
       "type": "translations",
       "path": "frontend/locale/en-US.json"
@@ -112,7 +118,8 @@
         {"key": "parameters"}
       ],
       "output" : [
-        {"key": "userId", "optional": true}
+        {"key": "userId", "optional": true},
+        {"key": "magentoTokenResponse", "optional": true}
       ]
     },
     {
