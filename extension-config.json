@@ -1,5 +1,5 @@
 {
-  "version": "1.3.2",
+  "version": "1.4.0",
   "id": "@shopgate/magento-user",
   "trusted": true,
   "configuration": {
@@ -118,7 +118,8 @@
         {"key": "parameters"}
       ],
       "output" : [
-        {"key": "userId", "optional": true}
+        {"key": "userId", "optional": true},
+        {"key": "magentoTokenResponse", "optional": true}
       ]
     },
     {

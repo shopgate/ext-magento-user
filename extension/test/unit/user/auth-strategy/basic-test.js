@@ -2,7 +2,7 @@ const assert = require('assert')
 const expect = require('chai').expect
 const step = require('../../../../user/auth-strategy/basic')
 
-describe('login', () => {
+describe('basic login', () => {
   let request = null
 
   const context = {
