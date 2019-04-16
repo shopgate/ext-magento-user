@@ -1,0 +1,20 @@
+{
+  "788|coveralls>js-yaml": {
+    "ignore": 1
+  },
+  "788|eslint>js-yaml": {
+    "ignore": 1
+  },
+  "788|standard>eslint>js-yaml": {
+    "ignore": 1
+  },
+  "812|newman>postman-collection>marked": {
+    "ignore": 1
+  },
+  "812|newman>postman-runtime>postman-collection>marked": {
+    "ignore": 1
+  },
+  "755|nyc>istanbul-reports>handlebars": {
+    "remind": 1555494344662
+  }
+}

@@ -22,6 +22,7 @@ beforeEach(() => {
  * @return {ReactWrapper}
  */
 const createComponent = (mockedContext) => {
+  /* eslint global-require: 0 */
   const mockContext = jest.fn();
   mockContext.mockReturnValue(mockedContext);
   jest.mock('@shopgate/pwa-common/context', () => ({
@@ -29,7 +30,6 @@ const createComponent = (mockedContext) => {
       Consumer: ({ children }) => children(mockContext()),
     },
   }));
-
   const GuestCheckoutLink = require('./index').default;
   return mount(<GuestCheckoutLink />);
 };

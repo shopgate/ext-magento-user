@@ -117,6 +117,13 @@ class TokenHandler {
           'password': userCredentials.password
         }
         break
+      case 'facebook' : {
+        jsonData = {
+          'grant_type': 'facebook',
+          'user_id': userCredentials.email
+        }
+        break
+      }
       case 'auth_code' :
         jsonData = {
           'grant_type': 'authorization_code',
@@ -145,7 +152,7 @@ class TokenHandler {
     this._getTokensFromStorage('device', TOKEN_KEY, (err, tokens) => {
       if (err) return cb(err)
       // user not logged in
-      else if (!tokens) return cb(new InvalidCallError('user is not logged in'))
+      else if (!tokens) return cb(null, null)
       // if expired
       else if (!tokens.accessToken && tokens.refreshToken) {
         // use refresh token for new token
@@ -159,7 +166,7 @@ class TokenHandler {
         return this._getTokensFromMagento(options, (err, response) => {
           if (err) {
             this.log.error(err)
-            return TokenHandler.logout(this.storages, (intErr) => cb(intErr || err))
+            return cb(null, null)
           }
 
           // if invalidating refresh token is disabled, we have to pass the former refresh token to the storage

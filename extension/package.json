@@ -1,13 +1,17 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "prototype",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --fix --ignore-path ../.gitignore --ext .js --ext .jsx .",
     "test": "./node_modules/.bin/_mocha --use_strict --recursive ./test/unit",
-    "cover": "./node_modules/.bin/nyc npm test && ./node_modules/.bin/nyc report --reporter=text-lcov | coveralls",
-    "checkVulnerabilities": "check-audit",
-    "newman": "./node_modules/.bin/newman run ./test/newman/collection.json --environment ./test/newman/environment.json --globals ./test/newman/globals.json"
+    "unit:only": "./node_modules/.bin/_mocha --use_strict --recursive ./test/unit/*/*",
+    "cover": "./node_modules/.bin/nyc npm test",
+    "cover:unit:only": "./node_modules/.bin/nyc npm run unit:only",
+    "audit": "check-audit",
+    "newman": "./node_modules/.bin/newman run ./test/newman/collection.json --environment ./test/newman/environment.json --globals ./test/newman/globals.json",
+    "report": "./node_modules/.bin/nyc report",
+    "travis:coveralls": "npm run report -- --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -28,10 +32,10 @@
     "eslint-plugin-promise": "^4.0.1",
     "mocha": "^5.2.0",
     "mocha-chai-helper": "1.0.0",
-    "newman": "^4.2.2",
+    "newman": "^4.4.1",
     "nock": "^9.0.13",
     "npm-audit-resolver": "^1.4.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.3.0",
     "request-promise-native": "^1.0.5",
     "rewire": "^2.5.2",
     "sinon": "^5.0.10",

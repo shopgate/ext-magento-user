@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "prototype",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx .",
@@ -20,6 +20,7 @@
     "@shopgate/pwa-common-commerce": "^6.1.0",
     "@shopgate/pwa-core": "^6.1.0",
     "@shopgate/pwa-unit-test": "^6.1.0",
+    "@shopgate/pwa-webcheckout-shopify": "^6.1.0",
     "@shopgate/tracking-core": "^6.1.0",
     "babel-core": "^6.26.0",
     "babel-plugin-react-transform": "^3.0.0",

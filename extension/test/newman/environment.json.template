@@ -15,6 +15,20 @@
       "description": "",
       "type": "text",
       "enabled": true
+    },
+    {
+      "key": "mage_type",
+      "value": "EE",
+      "description": "",
+      "type": "text",
+      "enabled": true
+    },
+    {
+      "key": "username_fb",
+      "value": "fbuser@shopgate.com",
+      "description": "",
+      "type": "text",
+      "enabled": true
     }
   ],
   "_postman_variable_scope": "environment",
