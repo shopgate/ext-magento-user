@@ -270,7 +270,7 @@ class TokenHandler {
       const tokenData = {
         lifeSpan: res.body.expires_in,
         tokens: {
-          accessToken: res.body.access_token,
+          accessToken: res.body.access_token || '',
           refreshToken: res.body.refresh_token // this is null in case of a guest token request
         }
       }
