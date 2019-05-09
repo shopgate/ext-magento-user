@@ -35,7 +35,7 @@
     "newman": "^4.4.1",
     "nock": "^9.0.13",
     "npm-audit-resolver": "^1.4.0",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.0",
     "request-promise-native": "^1.0.5",
     "rewire": "^2.5.2",
     "sinon": "^5.0.10",
