@@ -106,13 +106,9 @@ describe('basic login', () => {
 
   it('should return an error because deleting guest tokens failed', (done) => {
     const magentoResponse = {
-      success: [
-        {
-          'expires_in': 3600,
-          'access_token': 'a1',
-          'refresh_token': 'r1'
-        }
-      ]
+      'expires_in': 3600,
+      'access_token': 'a1',
+      'refresh_token': 'r1'
     }
 
     request.post = (options, cb) => {
