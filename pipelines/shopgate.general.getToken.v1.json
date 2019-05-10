@@ -16,6 +16,18 @@
         "output": [
           {"key": "token", "id": "100"}
         ]
+      },
+      {
+        "type": "conditional",
+        "input": [{"key": "token", "id": "100"}],
+        "expression": {"null": [{"name":"token"}]},
+        "then": {
+          "type": "pipeline",
+          "id": "shopgate.user.logoutUserFrontend.v1",
+          "trusted": true,
+          "input": [],
+          "output": []
+        }
       }
     ]
   }

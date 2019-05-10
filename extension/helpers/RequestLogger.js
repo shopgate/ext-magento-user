@@ -23,11 +23,11 @@ module.exports = class {
       {
         duration: new Date() - timerStart,
         statusCode: response.statusCode || 0,
-        request: util.inspect(loggableRequest, {depth: 5}),
+        request: util.inspect(loggableRequest, { depth: 5 }),
         response: util.inspect({
           headers: loggableResponse.headers || {},
           body: loggableResponse.body || {}
-        }, {depth: 5})
+        }, { depth: 5 })
       },
       message
     )

@@ -132,12 +132,8 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2'
       }
 
       request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
@@ -216,13 +212,14 @@ describe('getToken', () => {
 
       context.storage.device.get = (key, cb) => { cb(null, null) }
 
-      step(context, null, (err) => {
-        assert.strictEqual(err.message, 'user is not logged in')
+      step(context, null, (err, result) => {
+        assert.strictEqual(err, null)
+        assert.strictEqual(result.token, null)
         done()
       })
     })
 
-    it('should return an error because magento failed', (done) => {
+    it('should return an empty token because magento failed', (done) => {
       context.meta.userId = 'u1'
 
       context.storage.device.get = (key, cb) => {
@@ -240,9 +237,9 @@ describe('getToken', () => {
 
       request.post = (options, cb) => { cb(null, { statusCode: 456, body: { foo: 'bar' } }) }
 
-      step(context, null, (err) => {
-        assert.strictEqual(err.constructor.name, 'MagentoEndpoint')
-        assert.strictEqual(err.code, 'EINTERNAL')
+      step(context, null, (err, result) => {
+        assert.strictEqual(result.token, null)
+        assert.strictEqual(err, null)
         done()
       })
     })
@@ -260,13 +257,9 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2',
-            'refresh_token': 'r2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2',
+        'refresh_token': 'r2'
       }
 
       request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }

@@ -80,6 +80,7 @@ describe('Tokenhandler', () => {
         done()
       })
     })
+
     it('should return a magento endpoint error because the endpoint returned a bad result', (done) => {
       th.request.post = (options, cb) => {
         cb(null, { statusCode: 500, body: { error: 'error' } })
@@ -89,6 +90,23 @@ describe('Tokenhandler', () => {
         json: {
 
         }
+      }
+
+      // noinspection JSAccessibilityCheck
+      th._getTokensFromMagento(options, (err) => {
+        assert.strictEqual(err.constructor.name, 'MagentoEndpoint')
+        assert.strictEqual(err.code, 'EINTERNAL')
+        done()
+      })
+    })
+
+    it('should return a magento endpoint error because the the access token is missing in the response', (done) => {
+      th.request.post = (options, cb) => {
+        cb(null, { statusCode: 200, body: {} })
+      }
+
+      const options = {
+        json: {}
       }
 
       // noinspection JSAccessibilityCheck
