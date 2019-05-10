@@ -132,12 +132,8 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2'
       }
 
       request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
@@ -261,13 +257,9 @@ describe('getToken', () => {
       }
 
       const magentoResponse = {
-        success: [
-          {
-            'expires_in': 3600,
-            'access_token': 'a2',
-            'refresh_token': 'r2'
-          }
-        ]
+        'expires_in': 3600,
+        'access_token': 'a2',
+        'refresh_token': 'r2'
       }
 
       request.post = (options, cb) => { cb(null, { statusCode: 200, body: magentoResponse }) }
