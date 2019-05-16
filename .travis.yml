@@ -19,6 +19,7 @@ matrix:
     - npm run checkVulnerabilities
     - cd ../frontend
     - npm run test
+    - nom run checkVulnerabilities
 
 notifications:
   slack:
