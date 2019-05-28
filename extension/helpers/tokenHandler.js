@@ -267,6 +267,11 @@ class TokenHandler {
         return cb(new MagentoError())
       }
 
+      if (!res.body.access_token) {
+        this.log.error(res, `Access token missing in response for request with options: ${util.inspect(options, false, 3)}`)
+        return cb(new MagentoError())
+      }
+
       const tokenData = {
         lifeSpan: res.body.expires_in,
         tokens: {
