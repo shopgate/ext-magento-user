@@ -11,7 +11,9 @@
     "audit": "check-audit",
     "newman": "./node_modules/.bin/newman run ./test/newman/collection.json --environment ./test/newman/environment.json --globals ./test/newman/globals.json",
     "report": "./node_modules/.bin/nyc report",
-    "travis:coveralls": "npm run report -- --reporter=text-lcov | coveralls"
+    "travis:coveralls": "npm run report -- --reporter=text-lcov | coveralls",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "lodash": "^4.17.5",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -65,5 +68,6 @@
     ],
     "all": true,
     "report-dir": "build"
-  }
+  },
+  "snyk": true
 }
