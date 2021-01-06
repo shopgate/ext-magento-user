@@ -92,13 +92,23 @@
         "output": [
           {"key": "token", "id": "2"}
         ]
-      }, {
+      },
+      {
         "type": "pipeline",
         "id": "shopgate.cart.setCartCustomerInt.v1",
         "trusted": false,
         "input": [
           {"key": "cartId", "id": "1"},
           {"key": "token", "id": "2"}
+        ],
+        "output": []
+      },
+      {
+        "type": "hook",
+        "id": "after.magento",
+        "input": [
+          {"key": "token", "id": "2"},
+          {"key": "success", "id": "1030"}
         ],
         "output": []
       }
