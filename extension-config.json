@@ -1,5 +1,5 @@
 {
-  "version": "2.1.3",
+  "version": "2.1.4",
   "id": "@shopgate/magento-user",
   "trusted": true,
   "configuration": {
@@ -100,6 +100,16 @@
       "id": "locale/nl-NL",
       "type": "translations",
       "path": "frontend/locale/nl-NL.json"
+    },
+    {
+      "id": "locale/pl-PL",
+      "type": "translations",
+      "path": "frontend/locale/pl-PL.json"
+    },
+    {
+      "id": "locale/pt-PT",
+      "type": "translations",
+      "path": "frontend/locale/pt-PT.json"
     }
   ],
   "steps": [
