@@ -5,32 +5,32 @@
   "configuration": {
     "registrationUrl": {
       "type": "bigApi",
-      "destination" : "backend",
+      "destination": "backend",
       "default": null,
       "params": {
-        "method":  "GET",
+        "method": "GET",
         "service": "config",
         "path": "/v1/shop/%(shopId)s/checkout_web_checkout_shopify?parsed=true",
         "key": "value.backend.registrationUrl"
       }
     },
-    "magentoUrl" : {
+    "magentoUrl": {
       "type": "bigApi",
-      "destination" : "backend",
+      "destination": "backend",
       "default": null,
       "params": {
-        "method":  "GET",
+        "method": "GET",
         "service": "config",
         "path": "/v1/shop/%(shopId)s/checkout_web_checkout_shopify?parsed=true",
         "key": "value.backend.magentoUrl"
       }
     },
-    "credentials" : {
+    "credentials": {
       "type": "bigApi",
-      "destination" : "backend",
+      "destination": "backend",
       "default": null,
       "params": {
-        "method":  "GET",
+        "method": "GET",
         "service": "config",
         "path": "/v1/shop/%(shopId)s/checkout_web_checkout_shopify?parsed=true",
         "key": "value.backend.credentials"
@@ -47,12 +47,12 @@
         "key": "value"
       }
     },
-    "allowSelfSignedCertificate" : {
+    "allowSelfSignedCertificate": {
       "type": "bigApi",
-      "destination" : "backend",
+      "destination": "backend",
       "default": false,
       "params": {
-        "method":  "GET",
+        "method": "GET",
         "service": "config",
         "path": "/v1/shop/%(shopId)s/checkout_web_checkout_shopify?parsed=true",
         "key": "value.backend.allowSelfSignedCertificate"
@@ -97,6 +97,16 @@
       "path": "frontend/locale/fr-FR.json"
     },
     {
+      "id": "locale/es-ES",
+      "type": "translations",
+      "path": "frontend/locale/es-ES.json"
+    },
+    {
+      "id": "locale/it-IT",
+      "type": "translations",
+      "path": "frontend/locale/it-IT.json"
+    },
+    {
       "id": "locale/nl-NL",
       "type": "translations",
       "path": "frontend/locale/nl-NL.json"
@@ -116,27 +126,51 @@
     {
       "path": "extension/user/auth-strategy/facebook.js",
       "description": "Auth with facebook strategy",
-      "hooks" : ["shopgate.user.loginUser.v1:loginToService"],
-      "input" : [
-        {"key": "strategy"},
-        {"key": "parameters"}
+      "hooks": [
+        "shopgate.user.loginUser.v1:loginToService"
       ],
-      "output" : [
-        {"key": "userId", "optional": true},
-        {"key": "magentoTokenResponse", "optional": true}
+      "input": [
+        {
+          "key": "strategy"
+        },
+        {
+          "key": "parameters"
+        }
+      ],
+      "output": [
+        {
+          "key": "userId",
+          "optional": true
+        },
+        {
+          "key": "magentoTokenResponse",
+          "optional": true
+        }
       ]
     },
     {
       "path": "extension/user/auth-strategy/basic.js",
       "description": "Auth with basic strategy",
-      "hooks" : ["shopgate.user.loginUser.v1:loginToService"],
-      "input" : [
-        {"key": "strategy"},
-        {"key": "parameters"}
+      "hooks": [
+        "shopgate.user.loginUser.v1:loginToService"
       ],
-      "output" : [
-        {"key": "userId", "optional": true},
-        {"key": "magentoTokenResponse", "optional": true}
+      "input": [
+        {
+          "key": "strategy"
+        },
+        {
+          "key": "parameters"
+        }
+      ],
+      "output": [
+        {
+          "key": "userId",
+          "optional": true
+        },
+        {
+          "key": "magentoTokenResponse",
+          "optional": true
+        }
       ]
     }
   ]
