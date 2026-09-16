@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/magento-user",
-  "version": "2.1.2",
+  "version": "2.1.6",
   "description": "prototype",
   "scripts": {
     "lint": "./node_modules/.bin/eslint --ignore-path ../.gitignore --ext .js --ext .jsx .",
@@ -50,8 +50,5 @@
       "coverage/",
       "locale"
     ]
-  },
-  "peerDependencies": {
-    "@shopgate/pwa-common": "6.x"
   }
 }
